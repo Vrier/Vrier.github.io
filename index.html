@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Stephen — Formal Semanticist, Trinity College Dublin</title>
+<meta name="description" content="Thomas Stephen is a Semanticist at Trinity College Dublin working on formal semantics, the syntax–semantics interface, and the philosophy of language.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: oklch(0.986 0.004 95);
+    --paper-2: oklch(0.968 0.006 88);
+    --ink: oklch(0.245 0.012 260);
+    --ink-soft: oklch(0.44 0.012 260);
+    --ink-faint: oklch(0.6 0.01 260);
+    --rule: oklch(0.885 0.008 260);
+    --rule-strong: oklch(0.8 0.01 260);
+    --accent: oklch(0.55 0.15 33);
+    --accent-deep: oklch(0.46 0.14 33);
+    --accent-soft: oklch(0.95 0.03 45);
+    --sans: "Space Grotesk", system-ui, sans-serif;
+    --serif: "Newsreader", Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --maxw: 1180px;
+    --gutter: clamp(20px, 5vw, 64px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--serif);font-size:clamp(1.02rem,0.5vw + 0.95rem,1.16rem);
+    line-height:1.62;-webkit-font-smoothing:antialiased;font-synthesis:none;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--accent-soft);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter);}
+  .mono{font-family:var(--mono);}
+
+  /* ---- header ---- */
+  header.site{
+    position:sticky;top:0;z-index:50;background:color-mix(in oklab, var(--paper) 88%, transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);
+  }
+  .bar{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:baseline;gap:12px;text-decoration:none;}
+  .brand b{font-family:var(--sans);font-weight:600;font-size:1.02rem;letter-spacing:-0.01em;}
+  .brand .tag{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);}
+  nav.main{display:flex;gap:4px;align-items:center;}
+  nav.main a{
+    font-family:var(--mono);font-size:0.74rem;letter-spacing:0.04em;text-transform:uppercase;
+    text-decoration:none;color:var(--ink-soft);padding:8px 11px;border-radius:6px;position:relative;
+    transition:color .18s, background .18s;
+  }
+  nav.main a:hover{color:var(--ink);background:var(--paper-2);}
+  nav.main a.active{color:var(--accent-deep);}
+  nav.main a.active::before{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1.5px;background:var(--accent);}
+  .navtoggle{display:none;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;
+    border:1px solid var(--rule-strong);background:none;color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer;}
+
+  /* ---- section scaffolding ---- */
+  section{padding-block:clamp(56px,7vw,104px);border-top:1px solid var(--rule);}
+  section:first-of-type{border-top:none;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:38px;}
+  .sec-num{font-family:var(--mono);font-size:0.78rem;color:var(--accent-deep);font-weight:600;letter-spacing:0.04em;}
+  .sec-title{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.05rem);letter-spacing:-0.02em;margin:0;}
+  .sec-title .sub{display:block;font-family:var(--mono);font-weight:400;font-size:0.72rem;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+
+  /* ---- hero ---- */
+  .hero{padding-top:clamp(48px,7vw,96px);}
+  .hero-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;}
+  .eyebrow{font-family:var(--mono);font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 22px;}
+  h1.name{font-family:var(--sans);font-weight:600;letter-spacing:-0.035em;line-height:0.95;
+    font-size:clamp(3rem,9vw,6.4rem);margin:0 0 22px;}
+  .lede{font-size:clamp(1.18rem,1.4vw,1.42rem);line-height:1.5;color:var(--ink);max-width:30ch;margin:0 0 30px;}
+  .lede em{font-style:italic;color:var(--accent-deep);}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--ink-soft);
+    border:1px solid var(--rule-strong);border-radius:999px;padding:6px 13px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:7px;transition:.18s;white-space:nowrap;}
+  .chip:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft);}
+  .chip .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+  .portrait{position:relative;}
+  .portrait .frame{aspect-ratio:4/5;border:1px solid var(--rule-strong);background:var(--paper-2);overflow:hidden;}
+  .portrait img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.12) contrast(1.02);}
+  .portrait figcaption{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:10px;display:flex;justify-content:space-between;}
+
+  /* ---- about ---- */
+  .about-grid{display:grid;grid-template-columns:1fr 280px;gap:clamp(28px,5vw,72px);align-items:start;}
+  .prose p{margin:0 0 1.1em;max-width:64ch;}
+  .prose p:last-child{margin-bottom:0;}
+  .prose a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;text-decoration-color:var(--rule-strong);}
+  .prose a:hover{text-decoration-color:var(--accent);}
+  .aside{position:sticky;top:88px;}
+  .aside h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+    margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule);}
+  .keys{display:flex;flex-wrap:wrap;gap:8px;}
+  .key{font-family:var(--mono);font-size:0.72rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);
+    border-radius:5px;padding:5px 9px;}
+  a.keylink{text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:.16s;}
+  a.keylink:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft);}
+  a.keylink .lk{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:0.55;}
+  a.keylink:hover .lk{opacity:1;}
+  .aside + .aside, .aside .blk{margin-top:30px;}
+
+  /* ---- research / projects ---- */
+  .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--rule);
+    border:1px solid var(--rule);}
+  .proj{background:var(--paper);padding:28px 26px;display:flex;flex-direction:column;min-height:230px;transition:background .2s;}
+  .proj:hover{background:var(--paper-2);}
+  .proj .pn{font-family:var(--mono);font-size:0.72rem;color:var(--accent-deep);letter-spacing:0.05em;margin-bottom:16px;}
+  .proj h3{font-family:var(--sans);font-weight:600;font-size:1.24rem;letter-spacing:-0.015em;margin:0 0 12px;line-height:1.15;}
+  .proj p{font-size:0.99rem;line-height:1.55;color:var(--ink-soft);margin:0;}
+  .proj p a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--rule-strong);}
+  .proj p a:hover{text-decoration-color:var(--accent);}
+  .proj .stat{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--ink-faint);}
+
+  /* ---- talks table ---- */
+  .talks{display:flex;flex-direction:column;}
+  .talk{display:grid;grid-template-columns:64px 1fr 0.7fr;gap:22px;align-items:baseline;
+    padding:18px 0;border-top:1px solid var(--rule);}
+  .talk:first-child{border-top:1px solid var(--rule-strong);}
+  .talk .yr{font-family:var(--mono);font-size:0.82rem;color:var(--accent-deep);font-weight:500;}
+  .talk .tt{font-family:var(--serif);font-style:italic;font-size:1.06rem;line-height:1.4;}
+  .talk .tt .ev{display:block;font-style:normal;font-family:var(--sans);font-size:0.8rem;font-weight:500;
+    letter-spacing:-0.01em;color:var(--ink);margin-bottom:3px;}
+  .talk .tt .co{font-style:normal;font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);display:block;margin-top:4px;}
+  .talk .vn{font-family:var(--mono);font-size:0.74rem;color:var(--ink-soft);letter-spacing:0.01em;text-align:right;}
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:46px;}
+  .roles h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+    margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule);}
+  .roles ul{list-style:none;margin:0;padding:0;}
+  .roles li{font-family:var(--sans);font-size:0.94rem;padding:5px 0;color:var(--ink-soft);}
+
+  /* ---- teaching ---- */
+  .teach-inst{padding:30px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:240px 1fr;gap:28px;}
+  .teach-inst:first-of-type{border-top:none;padding-top:0;}
+  .teach-inst .inst{font-family:var(--sans);font-weight:600;font-size:1.12rem;letter-spacing:-0.015em;}
+  .teach-inst .inst span{display:block;font-family:var(--mono);font-weight:400;font-size:0.68rem;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--ink-faint);margin-top:6px;}
+  .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px 28px;}
+  .level h5{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 9px;}
+  .level ul{list-style:none;margin:0;padding:0;}
+  .level li{font-size:0.97rem;padding:3px 0;color:var(--ink-soft);}
+  .feature{margin-top:40px;background:var(--paper-2);border:1px solid var(--rule);padding:30px 30px;display:grid;
+    grid-template-columns:1fr;gap:14px;}
+  .feature .ftag{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent-deep);}
+  .feature h3{font-family:var(--sans);font-weight:600;font-size:1.3rem;letter-spacing:-0.015em;margin:0;}
+  .feature h3 .feat-link{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .16s;}
+  .feature h3 .feat-link:hover{color:var(--accent-deep);}
+  .feature h3 .feat-link .lk{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:0.5;}
+  .feature h3 .feat-link:hover .lk{opacity:1;}
+  .feature .meta a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--rule-strong);}
+  .feature .meta a:hover{text-decoration-color:var(--accent);}
+  .feature .meta{font-family:var(--mono);font-size:0.76rem;color:var(--ink-soft);}
+  .feature p{margin:0;font-size:1.0rem;line-height:1.6;color:var(--ink-soft);max-width:72ch;}
+  .sup{margin-top:40px;}
+  .sup h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+    margin:0 0 4px;}
+  .sup .row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:14px 0;border-top:1px solid var(--rule);}
+  .sup .row .who{font-family:var(--sans);font-weight:500;font-size:0.98rem;}
+  .sup .row .ti{font-style:italic;color:var(--ink-soft);font-size:0.98rem;}
+  .sup .row .deg{font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);text-align:right;white-space:nowrap;letter-spacing:0.02em;}
+
+  /* ---- cv + contact ---- */
+  .cv-row{display:flex;flex-wrap:wrap;align-items:center;gap:24px;justify-content:space-between;}
+  .cv-row p{margin:0;max-width:46ch;color:var(--ink-soft);}
+  .btn{font-family:var(--mono);font-size:0.78rem;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;
+    background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:7px;display:inline-flex;gap:10px;align-items:center;
+    transition:.18s;white-space:nowrap;}
+  .btn:hover{background:var(--accent-deep);}
+  .btn .ar{transition:transform .2s;}
+  .btn:hover .ar{transform:translateX(3px) translateY(-3px);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start;}
+  .bigmail{font-family:var(--sans);font-weight:600;letter-spacing:-0.02em;font-size:clamp(1.5rem,3.6vw,2.5rem);
+    text-decoration:none;color:var(--ink);display:inline-block;line-height:1.1;}
+  .bigmail:hover{color:var(--accent-deep);}
+  .links{display:flex;flex-direction:column;gap:2px;}
+  .links a{font-family:var(--mono);font-size:0.84rem;text-decoration:none;color:var(--ink-soft);
+    padding:11px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;transition:.18s;}
+  .links a:first-child{border-top:1px solid var(--rule-strong);}
+  .links a:hover{color:var(--accent-deep);padding-left:8px;}
+  .links a .ext{color:var(--ink-faint);}
+
+  footer{border-top:1px solid var(--rule);padding-block:34px;}
+  .foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:0.7rem;letter-spacing:0.04em;color:var(--ink-faint);text-transform:uppercase;}
+
+  /* ---- about band image ---- */
+  .band{margin-top:48px;}
+  .band img{width:100%;height:clamp(220px,32vw,400px);object-fit:cover;object-position:center 40%;display:block;
+    border:1px solid var(--rule-strong);filter:grayscale(0.08) contrast(1.02);}
+  .band figcaption{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:10px;display:flex;justify-content:space-between;}
+
+  /* ---- research intro + cube ---- */
+  .res-intro{display:grid;grid-template-columns:1fr 280px;gap:clamp(28px,5vw,64px);align-items:center;margin-bottom:40px;}
+  .res-intro .res-lead p{font-family:var(--serif);font-size:clamp(1.16rem,1.6vw,1.48rem);line-height:1.45;margin:0;max-width:32ch;}
+  .res-intro .res-lead em{font-style:italic;color:var(--accent-deep);}
+  .cube-fig{margin:0;}
+  .cube-fig svg{width:100%;height:auto;display:block;overflow:visible;}
+  .cube-fig .bk{stroke:var(--rule-strong);stroke-width:1.4;fill:none;}
+  .cube-fig .fr{stroke:var(--ink);stroke-width:1.6;fill:none;}
+  .cube-fig .nf{fill:var(--paper);stroke:var(--ink);stroke-width:1.6;}
+  .cube-fig .nb{fill:var(--paper);stroke:var(--rule-strong);stroke-width:1.4;}
+  .cube-fig text{fill:var(--accent-deep);font-family:var(--mono);font-size:13px;}
+  .cube-fig figcaption{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:10px;text-align:right;}
+
+  /* ---- resources ---- */
+  .res-groups{display:flex;flex-direction:column;gap:46px;}
+  .res-feature{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);overflow:hidden;}
+  .res-feature .rf-text{padding:34px 32px;display:flex;flex-direction:column;gap:15px;align-items:flex-start;}
+  .res-feature .pn{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);}
+  .res-feature h3{font-family:var(--sans);font-weight:600;font-size:1.5rem;letter-spacing:-0.02em;margin:0;line-height:1.1;}
+  .res-feature p{margin:0;color:var(--ink-soft);font-size:1.0rem;line-height:1.55;}
+  .res-feature .rf-media{min-height:240px;border-left:1px solid var(--rule);display:flex;align-items:center;justify-content:center;}
+  .res-block h4{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-faint);
+    margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--rule-strong);}
+  .res-note{font-size:0.98rem;color:var(--ink-soft);margin:-4px 0 18px;max-width:62ch;}
+  .res-note a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule-strong);}
+  .res-note a:hover{text-decoration-color:var(--accent);}
+  .dl-list{display:flex;flex-direction:column;}
+  .dl{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 0;border-top:1px solid var(--rule);
+    text-decoration:none;color:var(--ink);transition:.16s;}
+  .dl:first-child{border-top:none;}
+  .dl:hover{padding-left:10px;color:var(--accent-deep);}
+  .dl .nm{font-family:var(--serif);font-size:1.06rem;}
+  .dl .nm small{display:block;font-family:var(--mono);font-size:0.68rem;color:var(--ink-faint);text-transform:uppercase;
+    letter-spacing:0.04em;margin-top:4px;}
+  .dl:hover .nm small{color:var(--ink-soft);}
+  .dl .ty{font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);white-space:nowrap;}
+  .vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+  .vid{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:11px;transition:transform .18s;}
+  .vid:hover{transform:translateY(-3px);}
+  .vid .vthumb{aspect-ratio:16/9;border:1px solid var(--rule-strong);display:flex;align-items:center;justify-content:center;}
+  .vid:hover .vthumb{border-color:var(--accent);}
+  .vid .play{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent-deep);
+    display:flex;align-items:center;justify-content:center;font-size:0.85rem;background:var(--paper);padding-left:3px;}
+  .vid .vt{font-family:var(--sans);font-weight:500;font-size:0.99rem;letter-spacing:-0.01em;}
+  .vid .vd{font-family:var(--mono);font-size:0.66rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.04em;}
+  /* ---- research lede ---- */
+  .res-lede{font-family:var(--serif);font-size:clamp(1.1rem,1.4vw,1.36rem);line-height:1.5;margin:0 0 36px;max-width:58ch;color:var(--ink-soft);}
+  .res-lede em{font-style:italic;color:var(--accent-deep);}
+
+  /* ---- compose standalone section ---- */
+  .cmp-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(24px,4vw,52px);align-items:start;}
+  .cmp-intro{font-size:1.0rem;line-height:1.6;color:var(--ink-soft);margin:0 0 26px;max-width:50ch;}
+  .cmp-intro a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--rule-strong);}
+  .cmp-intro a:hover{text-decoration-color:var(--accent);}
+  .cmp-versions{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+  .cmpv{display:block;padding:18px 22px;text-decoration:none;color:var(--ink);background:var(--paper);transition:background .16s;}
+  .cmpv:hover{background:var(--accent-soft);}
+  .cmpv-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px;}
+  .cmpv-name{font-family:var(--sans);font-weight:600;font-size:0.97rem;letter-spacing:-0.01em;}
+  .cmpv-arr{font-family:var(--mono);font-size:0.82rem;color:var(--ink-faint);transition:transform .18s,color .18s;}
+  .cmpv:hover .cmpv-arr{color:var(--accent-deep);transform:translate(2px,-2px);}
+  .cmpv-desc{font-size:0.88rem;line-height:1.5;color:var(--ink-soft);margin:0;}
+  .cmpv-desc a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;}
+  .cmpv-desc em{font-style:italic;}
+  .cmp-col-demo{height:400px;border:1px solid var(--rule);overflow:hidden;}
+  .cmp-iframe{width:100%;height:100%;border:0;display:block;}
+
+  /* ---- compose button colours ---- */
+  .cmpv-student{background:oklch(0.94 0.04 78);color:oklch(0.38 0.06 65);}
+  .cmpv-student:hover{background:oklch(0.88 0.05 74);}
+  .cmpv-student .cmpv-arr{color:oklch(0.55 0.08 60);}
+  .cmpv-student:hover .cmpv-arr{color:oklch(0.38 0.06 65);}
+  .cmpv-full{background:oklch(0.93 0.012 248);color:oklch(0.30 0.018 252);}
+  .cmpv-full:hover{background:oklch(0.88 0.016 246);}
+  .cmpv-full .cmpv-arr{color:oklch(0.52 0.014 250);}
+  .cmpv-full .cmpv-desc{color:oklch(0.44 0.013 250);}
+  .cmpv-full .cmpv-desc a{color:oklch(0.38 0.02 250);text-decoration-color:oklch(0.72 0.013 248);}
+  .cmpv-full:hover .cmpv-arr{color:oklch(0.32 0.02 250);}
+  /* ---- research stat anchor ---- */
+  .proj .stat a.stat-anchor{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-color:var(--rule-strong);font-family:var(--mono);font-size:0.68rem;
+    letter-spacing:0.04em;text-transform:uppercase;}
+  .proj .stat a.stat-anchor:hover{text-decoration-color:var(--accent);}
+  .kripke-preview{border-left:1px solid var(--rule);background:var(--paper-2);padding:0;overflow:hidden;cursor:pointer;border:none;}
+  .kripke-preview:hover{filter:brightness(0.97);}
+
+  /* ---- ghost button + pdf trigger ---- */
+  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--rule-strong);}
+  .btn.ghost:hover{background:var(--paper-2);border-color:var(--accent);color:var(--accent-deep);}
+  button.btn{cursor:pointer;font-family:var(--mono);}
+  .pdf-trigger{border:none;border-left:1px solid var(--rule);cursor:pointer;color:inherit;width:100%;
+    transition:background .2s;}
+  .pdf-trigger:hover{filter:brightness(0.985);}
+  .pdf-trigger:hover .lbl{border-color:var(--accent);color:var(--accent-deep);}
+
+  /* ---- pdf modal ---- */
+  .pdf-modal{position:fixed;inset:0;z-index:200;display:none;}
+  .pdf-modal.open{display:block;}
+  .pdf-modal-backdrop{position:absolute;inset:0;background:oklch(0.2 0.01 260 / 0.62);backdrop-filter:blur(3px);}
+  .pdf-modal-panel{position:absolute;inset:clamp(16px,4vw,56px);background:var(--paper);border:1px solid var(--rule-strong);
+    border-radius:10px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px oklch(0.2 0.02 260 / 0.35);}
+  .pdf-modal-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 18px;
+    border-bottom:1px solid var(--rule);background:var(--paper-2);}
+  .pmb-title{font-family:var(--sans);font-weight:600;font-size:0.98rem;letter-spacing:-0.01em;}
+  .pmb-actions{display:flex;align-items:center;gap:8px;}
+  .pmb-dl{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;text-transform:uppercase;text-decoration:none;
+    color:var(--ink);border:1px solid var(--rule-strong);border-radius:6px;padding:8px 13px;transition:.16s;display:inline-flex;gap:7px;}
+  .pmb-dl:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--paper);}
+  .pmb-close{font-family:var(--mono);font-size:0.9rem;line-height:1;border:1px solid var(--rule-strong);background:none;
+    color:var(--ink);width:34px;height:34px;border-radius:6px;cursor:pointer;transition:.16s;}
+  .pmb-close:hover{border-color:var(--accent);color:var(--accent-deep);}
+  .pdf-modal-body{flex:1;min-height:0;background:oklch(0.3 0.01 260);}
+  .pdf-modal-body iframe{width:100%;height:100%;border:0;display:block;}
+  .ph{background:repeating-linear-gradient(135deg, var(--paper-2), var(--paper-2) 10px, var(--paper) 10px, var(--paper) 20px);}
+  .ph .lbl{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-faint);
+    background:var(--paper);padding:5px 10px;border:1px solid var(--rule);border-radius:4px;}
+
+  /* ---- pdf embed ---- */
+  .pdf-embed{margin-top:30px;border:1px solid var(--rule-strong);background:var(--paper-2);}
+  .pdf-embed object{display:block;}
+  .pdf-fallback{padding:64px 30px;text-align:center;font-family:var(--mono);font-size:0.82rem;color:var(--ink-soft);line-height:1.7;}
+  .pdf-fallback code{background:var(--paper);padding:2px 6px;border:1px solid var(--rule);border-radius:4px;}
+  .pdf-fallback a{color:var(--accent-deep);}
+
+  /* ---- responsive ---- */
+  @media (max-width: 900px){
+    .res-intro{grid-template-columns:1fr;}
+    .cube-fig{max-width:300px;}
+    .res-feature{grid-template-columns:1fr;}
+    .res-feature .rf-media{order:-1;border-left:none;border-bottom:1px solid var(--rule);min-height:180px;}
+    .cmp-grid{grid-template-columns:1fr;}
+    .cmp-col-demo{height:360px;}
+    .hero-grid{grid-template-columns:1fr;}
+    .portrait{max-width:340px;}
+    .about-grid{grid-template-columns:1fr;}
+    .aside{position:static;}
+    .teach-inst{grid-template-columns:1fr;gap:16px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .talk{grid-template-columns:50px 1fr;}
+    .talk .vn{grid-column:2;text-align:left;margin-top:2px;}
+  }
+  @media (max-width: 680px){
+    nav.main{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;
+      background:var(--paper);border-bottom:1px solid var(--rule);padding:8px var(--gutter) 16px;}
+    nav.main.open{display:flex;}
+    nav.main a{padding:11px 4px;border-bottom:1px solid var(--rule);border-radius:0;}
+    nav.main a.active::before{display:none;}
+    .navtoggle{display:inline-block;}
+    .roles{grid-template-columns:1fr;}
+    .sup .row{grid-template-columns:1fr;gap:4px;}
+    .sup .row .deg{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#top">
+      <b>Thomas Stephen</b>
+      <span class="tag">Formal Semantics · TCD</span>
+    </a>
+    <nav class="main" id="nav">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#compose">COMPOSE</a>
+      <a href="#resources">Resources</a>
+      <a href="#talks">Talks</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation">Menu</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Fellow in Linguistics — Trinity College Dublin</p>
+          <h1 class="name">Thomas<br>Stephen</h1>
+          <p class="lede">Formal semanticist working on the meaning of <em>clauses</em> and the syntax–semantics interface.</p>
+          <div class="hero-meta">
+            <a class="chip" href="#research"><span class="dot"></span>Research</a>
+            <a class="chip" href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">Curriculum Vitae ↗</a>
+            <a class="chip" href="mailto:tmurrays@tcd.ie">tmurrays@tcd.ie</a>
+          </div>
+        </div>
+        <figure class="portrait" style="margin:0;">
+          <div class="frame">
+            <img src="https://tom-stephen.com/wp-content/uploads/2025/05/468324341_10226588187757584_7603611326052652907_n.jpg" alt="Thomas Stephen">
+          </div>
+          <figcaption><span>Thomas Stephen</span><span>Dublin, IE</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2 class="sec-title">About<span class="sub">Bio &amp; research focus</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="prose">
+          <p>I completed my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD</a> in Linguistics at the University of Edinburgh in 2023, under the supervision of Robert Truswell, Bryan Pickel, and Wataru Uegaki. Before starting a fellowship at Trinity College Dublin, I was a Lecturer in Semantics at Queen Mary University of London.</p>
+          <p>My work focuses on formal semantics, with particular attention to the syntax–semantics interface, the connections between linguistic theory and philosophy of language, and the relationship between grammar and cognition. I explore the semantics of finite clausal embedding and argument structure, aiming to give a unified explanation of their entailment patterns and alternations.</p>
+          <p>I am developing <strong>DACE</strong> (the <em>Dictionary of Alternations in Clause Embedding</em>), an online resource mapping the alternation patterns of clause-embedding predicates, initially with a focus on English.</p>
+          <p>I am also currently interested in the mechanistic interpretation of LLMs and, together with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>, in the evolution of compositionality in natural languages.</p>
+          <p>I have also developed several tools and resources for teaching formal semantics, most significantly <a href="#compose">COMPOSE</a> (Compositional Meaning Practice and Online Semantics Engine), which you can view below.</p>
+        </div>
+        <div class="aside">
+          <div class="blk">
+            <h4>Research keywords</h4>
+            <div class="keys">
+              <span class="key">Formal semantics</span>
+              <span class="key">Clausal embedding</span>
+              <span class="key">Syntax–semantics interface</span>
+              <span class="key">Philosophy of language</span>
+              <span class="key">Argument structure</span>
+              <span class="key">Compositionality</span>
+              <span class="key">Grammar &amp; cognition</span>
+            </div>
+          </div>
+          <div class="blk">
+            <h4>Doctoral supervision</h4>
+            <div class="keys">
+              <a class="key keylink" href="http://robtruswell.com/" target="_blank" rel="noopener">R. Truswell <svg class="lk" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+              <a class="key keylink" href="https://bryanpickel.weebly.com/" target="_blank" rel="noopener">B. Pickel <svg class="lk" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+              <a class="key keylink" href="https://www.wataruuegaki.com/" target="_blank" rel="noopener">W. Uegaki <svg class="lk" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figure class="band">
+        <img src="https://tom-stephen.com/wp-content/uploads/2025/05/54386776365_7579d19bd9_o.jpg" alt="In the hills">
+      </figure>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2 class="sec-title">Research<span class="sub">Current projects</span></h2>
+      </div>
+      <p class="res-lede">My primary research aims to give a formally explicit account of how <em>clauses</em> contribute to meaning, working in the interface of semantics, syntax, philosophy of language and the study of cognition.</p>
+      <div class="projects">
+        <div class="proj">
+          <div class="pn">→ 01</div>
+          <h3>DACE</h3>
+          <p>The <em>Dictionary of Alternations in Clause Embedding</em> — an online resource mapping the alternation patterns of clause-embedding predicates in English. Inspired by Levin's <em>English Verb Classes and Alternations</em>.</p>
+          <div class="stat">In development · Online resource</div>
+        </div>
+        <div class="proj">
+          <div class="pn">→ 02</div>
+          <h3>Clausal embedding</h3>
+          <p>A unified account of the entailment patterns and alternations of finite clausal embedding and argument structure at the syntax–semantics interface, which was the subject of my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD thesis ↗</a>.</p>
+          <div class="stat">Ongoing · Core programme</div>
+        </div>
+        <div class="proj">
+          <div class="pn">→ 03</div>
+          <h3>Evolution of compositionality</h3>
+          <p>With <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a> — explaining the observed inventory of composition operations in natural language and the universals that constrain it. Taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
+          <div class="stat">Collaboration · F. Carcassi</div>
+        </div>
+        <div class="proj">
+          <div class="pn">→ 04</div>
+          <h3>COMPOSE</h3>
+          <p>Compositional Meaning Practice and Online Semantics Engine — an interactive tool and problem-set builder for teaching formal semantics.</p>
+          <div class="stat"><a href="#compose" class="stat-anchor">Demo ↓</a> · <a href="compose/teacher-ch6-8.html" target="_blank" rel="noopener" class="stat-anchor">Full version ↗</a><br><span style="margin-top:5px;display:inline-block;">Teaching Tool · Online Resource</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2 class="sec-title">Teaching<span class="sub">Courses, summer school &amp; supervision</span></h2>
+      </div>
+
+      <div class="teach-inst">
+        <div class="inst">Trinity College Dublin<span>Current</span></div>
+        <div class="levels">
+          <div class="level"><h5>Undergraduate</h5><ul><li>Semantics I</li><li>Semantics II</li><li>Semantics III</li><li>Pragmatics I</li><li>Pragmatics II</li></ul></div>
+          <div class="level"><h5>Postgraduate</h5><ul><li>Linguistic Pragmatics</li><li>Describing Meaning</li></ul></div>
+          <div class="level"><h5>11-Week In-depth</h5><ul><li>Scalar Implicature</li><li>Presuppositions</li><li>Model Theory &amp; Indirect Semantics</li><li>Modality</li></ul></div>
+        </div>
+      </div>
+
+      <div class="teach-inst">
+        <div class="inst">Queen Mary, London<span>Lecturer in Semantics</span></div>
+        <div class="levels">
+          <div class="level"><h5>Undergraduate</h5><ul><li>Introduction to Semantics</li><li>Syntax II</li><li>Meaning in the Real World</li></ul></div>
+          <div class="level"><h5>Postgraduate</h5><ul><li>Formal Semantics</li><li>Research Practicum</li></ul></div>
+        </div>
+      </div>
+
+      <div class="teach-inst">
+        <div class="inst">University of Edinburgh<span>Lecturer &amp; Tutor</span></div>
+        <div class="levels">
+          <div class="level"><h5>UG — as Lecturer</h5><ul><li>Logic 1</li><li>Puzzles and Paradoxes</li></ul></div>
+          <div class="level"><h5>UG — as Tutor</h5><ul><li>Logic 1</li><li>Mind, Matter, and Language</li><li>LEL 1A</li><li>LEL 1B</li></ul></div>
+          <div class="level"><h5>PG — as Tutor</h5><ul><li>Introduction to Syntax</li><li>Semantic Theory</li></ul></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <span class="ftag">Summer School · ESSLLI 2026</span>
+        <h3><a class="feat-link" href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">The Function of Composition <svg class="lk" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a></h3>
+        <div class="meta">37th European Summer School in Logic, Language &amp; Information · Prague 2026 · with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a></div>
+        <p>An introduction to the formal tools and theoretical background for formulating and addressing questions about universals of the composition function in natural language — surveying the empirical landscape, describing composition as a single operation on meanings, introducing richer type theories, and formulating universals that constrain the observed variation (function application, type shifting, predicate modification, event identification, restriction, and intensional variants).</p>
+      </div>
+
+      <div class="sup">
+        <h4>Supervision</h4>
+        <div class="row"><div><span class="who">Joshua Bovin</span> — <span class="ti">Classes of Clause Embedding Predicates</span></div><span class="deg">MA · QMUL · 2024</span></div>
+        <div class="row"><div><span class="who">Stefan Pavlovic</span> — <span class="ti">From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row"><div><span class="who">Mengzhu Liang</span> — <span class="ti">Pragmatic Functions and Stance Orientations of the Sentence-Final Particles <em>ha</em> and <em>sai</em> in Southwestern Mandarin</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row"><div><span class="who">Zeqi Shan</span> — <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row"><div><span class="who">Thalia Tran</span> — <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPOSE -->
+  <section id="compose">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2 class="sec-title">COMPOSE<span class="sub">Compositional meaning practice &amp; online semantics engine</span></h2>
+      </div>
+      <div class="cmp-grid">
+        <div class="cmp-col-text">
+          <p class="cmp-intro">An interactive tool for practising compositional semantics inspired by the <a href="http://lambdacalculator.com/" target="_blank" rel="noopener">Lambda Calculator</a> (Champollion, Tauberer &amp; Romero). It allows you to build exercises by assigning lexical denotations and syntactic trees and having students work through the derivation compositionally. It currently supports Function Application, Predicate Modification, Intensional Function Application, Quantifier Raising and Various Type-Shifting Mechanisms. Includes tools for building exercises and for loading batches of them.</p>
+          <div class="cmp-versions">
+            <a class="cmpv cmpv-student" href="compose/problem-set-1.html" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Student version</span><span class="cmpv-arr">↗</span></div>
+              <p class="cmpv-desc">A guided problem set for students to work through independently.</p>
+            </a>
+            <a class="cmpv cmpv-full" href="compose/teacher-ch6-8.html" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Full Version</span><span class="cmpv-arr">↗</span></div>
+              <p class="cmpv-desc">Full current build with tools for writing and exporting problem sets for students. Preloaded with exercises for <em>Invitation to Formal Semantics</em> (Coppock &amp; Champollion).</p>
+            </a>
+          </div>
+        </div>
+        <div class="cmp-col-demo">
+          <iframe src="compose/demo.html" title="COMPOSE — interactive demo" loading="lazy" class="cmp-iframe"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2 class="sec-title">Resources<span class="sub">Teaching materials</span></h2>
+      </div>
+      <div class="res-groups">
+
+        <div class="res-feature">
+          <div class="rf-text">
+            <span class="pn">Classroom game · PDF</span>
+            <h3>A Game for Modal Logics</h3>
+            <p>Handouts for a classroom game building intuitions about Kripke models for modal logics. Based on a description in Hughes and Cresswell <em>New Introduction to Modal Logics</em>.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button type="button" class="btn" data-open-pdf="files/modal-logic-game.pdf" data-pdf-title="A Game for Modal Logics">View the handout <span class="ar">↗</span></button>
+              <a class="btn ghost" href="files/modal-logic-game.pdf" download>Download PDF <span class="ar">↓</span></a>
+            </div>
+          </div>
+          <button type="button" class="rf-media kripke-preview pdf-trigger" data-open-pdf="files/modal-logic-game.pdf" data-pdf-title="A Game for Modal Logics" aria-label="Open A Game for Modal Logics">
+            <img src="images/modal-game-preview.png" alt="A Game for Modal Logics — handout preview" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TALKS -->
+  <section id="talks">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <h2 class="sec-title">Talks &amp; Presentations<span class="sub">Selected, reverse chronological</span></h2>
+      </div>
+      <div class="talks">
+        <div class="talk"><div class="yr">2026</div><div class="tt"><span class="ev">The Nature and Objects of Thought and Assertion</span><em>Nominal and Clausal Relationships</em></div><div class="vn">University of Glasgow</div></div>
+        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">4th Intl. Conference on Formal Approaches to Meaning in Chinese</span><em>A Compositional Analysis of Mandarin Chinese Experiential Marker -Guo</em><span class="co">with Nan Wang &amp; Fausto Carcassi</span></div><div class="vn">University of Hong Kong</div></div>
+        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">Philosophy Colloquium Series</span><em>Why Propositional Attitude Reports are neither Propositional, Attitudes, nor Reports</em></div><div class="vn">University of Alberta</div></div>
+        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">TRISS Seminar Series</span><em>How (not) to embed a clause: Evidence from semantic puzzles</em></div><div class="vn">Trinity College Dublin</div></div>
+        <div class="talk"><div class="yr">2024</div><div class="tt"><span class="ev">London Semantics Day</span><em>The Communicative Factive Gap and the Landscape of Clausal Embedding</em></div><div class="vn">University of London</div></div>
+        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Syntax and Semantics Research Group</span><em>Identity and Content for CPs in Copulars and Appositions</em></div><div class="vn">Queen Mary, London</div></div>
+        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Language Lunch</span><em>Two Pathways for Composition of Clauses</em></div><div class="vn">Queen Mary, London</div></div>
+        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Philosophy WiP</span><em>What do we think? Propositional Objects and Strategies for Clausal Embedding</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2022</div><div class="tt"><span class="ev">Edinburgh Meaning Sciences Group</span><em>Two Strategies for Composing CPs in English: Restriction and Saturation for Propositions and Facts</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2020</div><div class="tt"><span class="ev">Philosophy WiP</span><em>Propositional Attitudes without Propositions</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2019</div><div class="tt"><span class="ev">London Semantics Symposium</span><em>The semantics of embedded wh-questions</em></div><div class="vn">University College London</div></div>
+        <div class="talk"><div class="yr">2019</div><div class="tt"><span class="ev">Sem Circle Conference</span><em>Categorising Content Nouns: Semantic and Syntactic Classes</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">London Semantics Day</span><em>'Explain'ing Clausal and Nominal Complementation</em></div><div class="vn">Queen Mary, London</div></div>
+        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">Sem Circle PhD Talks</span><em>Entailment Patterns with Clause Embedding Verbs</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">Edinburgh Graduate Conference in Linguistics</span><em>Explaining 'Explain'</em></div><div class="vn">University of Edinburgh</div></div>
+        <div class="talk"><div class="yr">2015</div><div class="tt"><span class="ev">Durham Undergraduate Philosophy Conference</span><em>Truth Value Gaps and Truth Eliminativism</em></div><div class="vn">Durham University</div></div>
+      </div>
+
+      <div class="roles">
+        <div>
+          <h4>Research assistant</h4>
+          <ul><li>University of Göttingen</li><li>Norwegian University of Science &amp; Technology</li></ul>
+        </div>
+        <div>
+          <h4>Reviewer</h4>
+          <ul><li>Oxford University Press</li><li>Amsterdam Colloquium</li><li>Western Canadian Philosophy Association</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <h2 class="sec-title">Curriculum Vitae<span class="sub">Full academic record</span></h2>
+      </div>
+      <div class="cv-row">
+        <p>A complete record of education, positions, teaching, and presentations.</p>
+        <a class="btn" href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">Download CV <span class="ar">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">08</span>
+        <h2 class="sec-title">Contact<span class="sub">Get in touch</span></h2>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <a class="bigmail" href="mailto:tmurrays@tcd.ie">tmurrays@tcd.ie</a>
+          <p style="margin:18px 0 0;color:var(--ink-soft);max-width:40ch;">School of Linguistic, Speech &amp; Communication Sciences, Trinity College Dublin.</p>
+        </div>
+        <div class="links">
+          <a href="mailto:tmurrays@tcd.ie">Email <span class="ext">tmurrays@tcd.ie</span></a>
+          <a href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">CV <span class="ext">PDF ↗</span></a>
+          <a href="https://philpeople.org/profiles/thomas-stephen" target="_blank" rel="noopener">PhilPeople <span class="ext">↗</span></a>
+          <a href="https://www.instagram.com/tom.stephen64" target="_blank" rel="noopener">Instagram <span class="ext">@tom.stephen64</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- PDF lightbox -->
+<div class="pdf-modal" id="pdfModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="PDF viewer">
+  <div class="pdf-modal-backdrop" data-close></div>
+  <div class="pdf-modal-panel">
+    <div class="pdf-modal-bar">
+      <span class="pmb-title" id="pdfTitle">Document</span>
+      <span class="pmb-actions">
+        <a class="pmb-dl" id="pdfDownload" href="#" download>Download ↓</a>
+        <button type="button" class="pmb-close" data-close aria-label="Close viewer">✕</button>
+      </span>
+    </div>
+    <div class="pdf-modal-body"><iframe id="pdfFrame" title="PDF document" src="about:blank"></iframe></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr"></span> Thomas Stephen</span>
+    <span>Formal Semantics · Trinity College Dublin</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // mobile nav
+  var nav = document.getElementById('nav'), tog = document.getElementById('navtoggle');
+  tog.addEventListener('click', function(){ nav.classList.toggle('open'); });
+  nav.addEventListener('click', function(e){ if(e.target.tagName==='A') nav.classList.remove('open'); });
+  // active section
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var id = '#'+en.target.id;
+        links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')===id); });
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+  secs.forEach(function(s){ if(s) obs.observe(s); });
+
+  // PDF lightbox
+  (function(){
+    var modal=document.getElementById('pdfModal'), frame=document.getElementById('pdfFrame'),
+        title=document.getElementById('pdfTitle'), dl=document.getElementById('pdfDownload');
+    function open(src, label){
+      title.textContent=label||'Document'; dl.setAttribute('href', src);
+      frame.setAttribute('src', src); modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function close(){
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+      frame.setAttribute('src','about:blank'); document.body.style.overflow='';
+    }
+    document.querySelectorAll('[data-open-pdf]').forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault();
+        open(el.getAttribute('data-open-pdf'), el.getAttribute('data-pdf-title')); });
+    });
+    modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+  })();
+</script>
+</body>
+</html>
