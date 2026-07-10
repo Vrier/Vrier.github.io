@@ -254,30 +254,26 @@
   .cmp-intro{font-size:1.0rem;line-height:1.6;color:var(--ink-soft);margin:0 0 26px;max-width:50ch;}
   .cmp-intro a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--rule-strong);}
   .cmp-intro a:hover{text-decoration-color:var(--accent);}
-  .cmp-versions{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);}
-  .cmpv{display:block;padding:18px 22px;text-decoration:none;color:var(--ink);background:var(--paper);transition:background .16s;}
-  .cmpv:hover{background:var(--accent-soft);}
-  .cmpv-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px;}
-  .cmpv-name{font-family:var(--sans);font-weight:600;font-size:0.97rem;letter-spacing:-0.01em;}
-  .cmpv-arr{font-family:var(--mono);font-size:0.82rem;color:var(--ink-faint);transition:transform .18s,color .18s;}
-  .cmpv:hover .cmpv-arr{color:var(--accent-deep);transform:translate(2px,-2px);}
-  .cmpv-desc{font-size:0.88rem;line-height:1.5;color:var(--ink-soft);margin:0;}
+  .cmp-versions{display:flex;flex-direction:column;gap:10px;}
+  .cmpv{display:block;padding:15px 18px;text-decoration:none;color:var(--ink);background:var(--paper);
+    border:1px solid var(--rule);border-left:3px solid var(--c,var(--rule-strong));
+    transition:background .16s,border-color .16s;}
+  .cmpv:hover{background:var(--cs,var(--paper-2));border-color:var(--c,var(--rule-strong));}
+  .cmpv-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;}
+  .cmpv-name{font-family:var(--sans);font-weight:600;font-size:0.95rem;letter-spacing:-0.01em;}
+  .cmpv-path{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--cd,var(--ink-faint));background:var(--cs,var(--paper-2));padding:3px 8px;white-space:nowrap;
+    transition:background .16s;}
+  .cmpv:hover .cmpv-path{background:var(--paper);}
+  .cmpv-desc{font-size:0.86rem;line-height:1.5;color:var(--ink-soft);margin:0;}
   .cmpv-desc a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;}
   .cmpv-desc em{font-style:italic;}
+  .cmp-author{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .cmpv-cta{background:var(--accent-soft);}
+  .cmpv-cta:hover{background:oklch(0.92 0.045 45);}
   .cmp-col-demo{height:400px;border:1px solid var(--rule);overflow:hidden;}
   .cmp-iframe{width:100%;height:100%;border:0;display:block;}
 
-  /* ---- compose button colours ---- */
-  .cmpv-student{background:oklch(0.94 0.04 78);color:oklch(0.38 0.06 65);}
-  .cmpv-student:hover{background:oklch(0.88 0.05 74);}
-  .cmpv-student .cmpv-arr{color:oklch(0.55 0.08 60);}
-  .cmpv-student:hover .cmpv-arr{color:oklch(0.38 0.06 65);}
-  .cmpv-full{background:oklch(0.93 0.012 248);color:oklch(0.30 0.018 252);}
-  .cmpv-full:hover{background:oklch(0.88 0.016 246);}
-  .cmpv-full .cmpv-arr{color:oklch(0.52 0.014 250);}
-  .cmpv-full .cmpv-desc{color:oklch(0.44 0.013 250);}
-  .cmpv-full .cmpv-desc a{color:oklch(0.38 0.02 250);text-decoration-color:oklch(0.72 0.013 248);}
-  .cmpv-full:hover .cmpv-arr{color:oklch(0.32 0.02 250);}
   /* ---- research stat anchor ---- */
   .proj .stat a.stat-anchor{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;
     text-decoration-color:var(--rule-strong);font-family:var(--mono);font-size:0.68rem;
@@ -331,6 +327,7 @@
     .res-feature{grid-template-columns:1fr;}
     .res-feature .rf-media{order:-1;border-left:none;border-bottom:1px solid var(--rule);min-height:180px;}
     .cmp-grid{grid-template-columns:1fr;}
+    .cmp-author{grid-template-columns:1fr;}
     .cmp-col-demo{height:360px;}
     .hero-grid{grid-template-columns:1fr;}
     .portrait{max-width:340px;}
@@ -547,31 +544,37 @@
         <div class="cmp-col-text">
           <p class="cmp-intro">An interactive tool for practising compositional semantics inspired by the <a href="http://lambdacalculator.com/" target="_blank" rel="noopener">Lambda Calculator</a> (Champollion, Tauberer &amp; Romero). It allows you to build exercises by assigning lexical denotations and syntactic trees and having students work through the derivation compositionally. It currently supports Function Application, Predicate Modification, Intensional Function Application, Quantifier Raising and Various Type-Shifting Mechanisms. It is now hosted as a free service at <a href="https://compose.tstephen.com" target="_blank" rel="noopener">compose.tstephen.com</a>, with a built-in worksheet library and a live editor for authoring your own problem sets.</p>
           <div class="cmp-versions">
-            <a class="cmpv cmpv-student" href="https://compose.tstephen.com" target="_blank" rel="noopener">
-              <div class="cmpv-head"><span class="cmpv-name">Try it</span><span class="cmpv-arr">↗</span></div>
+            <a class="cmpv" style="--c:oklch(0.75 0.12 75);--cs:oklch(0.955 0.035 80);--cd:oklch(0.45 0.09 65);" href="https://compose.tstephen.com" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Try it</span><span class="cmpv-path">compose.tstephen.com</span></div>
               <p class="cmpv-desc">Open the app with a short demo set — nothing to install or load.</p>
             </a>
-            <a class="cmpv" href="https://compose.tstephen.com/cc/" target="_blank" rel="noopener">
-              <div class="cmpv-head"><span class="cmpv-name">Coppock &amp; Champollion</span><span class="cmpv-arr">↗</span></div>
+            <a class="cmpv" style="--c:oklch(0.65 0.09 185);--cs:oklch(0.955 0.028 185);--cd:oklch(0.38 0.06 195);" href="https://compose.tstephen.com/cc/" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Coppock &amp; Champollion</span><span class="cmpv-path">/cc</span></div>
               <p class="cmpv-desc">The worksheet library for <em>Invitation to Formal Semantics</em> (§6–§13), whole book or single chapters (<code>/cc/ch7</code>, …).</p>
             </a>
-            <a class="cmpv" href="https://compose.tstephen.com/hk/" target="_blank" rel="noopener">
-              <div class="cmpv-head"><span class="cmpv-name">Heim &amp; Kratzer</span><span class="cmpv-arr">↗</span></div>
+            <a class="cmpv" style="--c:oklch(0.6 0.09 255);--cs:oklch(0.945 0.02 250);--cd:oklch(0.36 0.05 255);" href="https://compose.tstephen.com/hk/" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Heim &amp; Kratzer</span><span class="cmpv-path">/hk</span></div>
               <p class="cmpv-desc">Worksheets tracking <em>Semantics in Generative Grammar</em>, whole book or per chapter.</p>
             </a>
-            <a class="cmpv" href="https://compose.tstephen.com/papers/" target="_blank" rel="noopener">
-              <div class="cmpv-head"><span class="cmpv-name">Classic papers</span><span class="cmpv-arr">↗</span></div>
+            <a class="cmpv" style="--c:oklch(0.6 0.1 330);--cs:oklch(0.955 0.025 330);--cd:oklch(0.4 0.07 330);" href="https://compose.tstephen.com/papers/" target="_blank" rel="noopener">
+              <div class="cmpv-head"><span class="cmpv-name">Classic papers</span><span class="cmpv-path">/papers</span></div>
               <p class="cmpv-desc">Capstone sets after Partee 1986 and Montague's PTQ.</p>
-            </a>
-            <a class="cmpv cmpv-full" href="https://compose.tstephen.com/dash/" target="_blank" rel="noopener">
-              <div class="cmpv-head"><span class="cmpv-name">For instructors</span><span class="cmpv-arr">↗</span></div>
-              <p class="cmpv-desc">Author and host your own problem sets — live-validated editor, QR handouts, practice and assessment modes. Registration by invite code.</p>
             </a>
           </div>
         </div>
         <div class="cmp-col-demo">
           <iframe src="compose/demo.html" title="COMPOSE — interactive demo" loading="lazy" class="cmp-iframe"></iframe>
         </div>
+      </div>
+      <div class="cmp-author">
+        <a class="cmpv" style="--c:var(--accent);--cs:var(--accent-soft);--cd:var(--accent-deep);" href="https://compose.tstephen.com/editor/" target="_blank" rel="noopener">
+          <div class="cmpv-head"><span class="cmpv-name">Editor sandbox</span><span class="cmpv-path">/editor</span></div>
+          <p class="cmpv-desc">Author worksheets in the full live-validated editor and export them as JSON — no account needed.</p>
+        </a>
+        <a class="cmpv cmpv-cta" style="--c:var(--accent);--cs:var(--accent-soft);--cd:var(--accent-deep);" href="https://compose.tstephen.com/dash/" target="_blank" rel="noopener">
+          <div class="cmpv-head"><span class="cmpv-name">For instructors</span><span class="cmpv-path">/dash</span></div>
+          <p class="cmpv-desc">Host your own problem sets for students — QR handouts, live edits, practice and assessment modes. Registration by invite code.</p>
+        </a>
       </div>
     </div>
   </section>
