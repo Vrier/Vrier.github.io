@@ -1,0 +1,41 @@
+# ===========================================================================
+# Personal site — deploy on every push to main.
+#
+# Static site: no build step. SSHes to the VPS and fast-forwards the
+# clone Caddy serves at https://www.tstephen.com (root /srv/www).
+#
+# Required repository secret (Settings → Secrets and variables → Actions):
+#   DEPLOY_SSH_KEY — same Actions→server key as the Vrier/compose repo
+#                    (BASE64-encoded single line; raw keys also accepted)
+# ===========================================================================
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          if printf '%s' "$DEPLOY_SSH_KEY" | base64 -d > ~/.ssh/deploy_key 2>/dev/null \
+             && grep -q 'BEGIN OPENSSH PRIVATE KEY' ~/.ssh/deploy_key; then
+            :
+          else
+            printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          fi
+          chmod 600 ~/.ssh/deploy_key
+          ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=accept-new \
+              compose@167.233.233.109 \
+              'git -C /srv/www fetch -q origin main && git -C /srv/www reset --hard origin/main'
