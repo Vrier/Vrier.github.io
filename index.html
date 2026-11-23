@@ -186,6 +186,7 @@
   .btn .ar{transition:transform .2s;}
   .btn:hover .ar{transform:translateX(3px) translateY(-3px);}
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start;}
+  .contact-photo{width:100%;max-width:340px;justify-self:end;}
   .bigmail{font-family:var(--sans);font-weight:600;letter-spacing:-0.02em;font-size:clamp(1.5rem,3.6vw,2.5rem);
     text-decoration:none;color:var(--ink);display:inline-block;line-height:1.1;}
   .bigmail:hover{color:var(--accent-deep);}
@@ -343,6 +344,7 @@
     .aside{position:static;}
     .teach-inst{grid-template-columns:1fr;gap:16px;}
     .contact-grid{grid-template-columns:1fr;}
+    .contact-photo{justify-self:start;}
     .talk{grid-template-columns:50px 1fr;}
     .talk .vn{grid-column:2;text-align:left;margin-top:2px;}
   }
@@ -399,7 +401,7 @@
         </div>
         <figure class="portrait" style="margin:0;">
           <div class="frame">
-            <img src="https://tom-stephen.com/wp-content/uploads/2025/05/468324341_10226588187757584_7603611326052652907_n.jpg" alt="Thomas Stephen">
+            <img src="images/portrait.jpg" alt="Thomas Stephen">
           </div>
           <figcaption><span>Thomas Stephen</span><span>Dublin, IE</span></figcaption>
         </figure>
@@ -446,7 +448,7 @@
         </div>
       </div>
       <figure class="band">
-        <img src="https://tom-stephen.com/wp-content/uploads/2025/05/54386776365_7579d19bd9_o.jpg" alt="In the hills">
+        <img src="images/lecture-theatre.jpg" alt="In a lecture theatre" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
@@ -538,6 +540,9 @@
         <div class="row"><div><span class="who">Zeqi Shan</span> — <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
         <div class="row"><div><span class="who">Thalia Tran</span> — <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
       </div>
+      <figure class="band">
+        <img src="images/summit.jpg" alt="On a summit above the clouds" loading="lazy" decoding="async" style="object-position:center 20%;">
+      </figure>
     </div>
   </section>
 
@@ -696,13 +701,18 @@
         <div>
           <a class="bigmail" href="mailto:tmurrays@tcd.ie">tmurrays@tcd.ie</a>
           <p style="margin:18px 0 0;color:var(--ink-soft);max-width:40ch;">School of Linguistic, Speech &amp; Communication Sciences, Trinity College Dublin.</p>
-        </div>
-        <div class="links">
+        <div class="links" style="margin-top:36px;">
           <a href="mailto:tmurrays@tcd.ie">Email <span class="ext">tmurrays@tcd.ie</span></a>
           <a href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">CV <span class="ext">PDF ↗</span></a>
           <a href="https://philpeople.org/profiles/thomas-stephen" target="_blank" rel="noopener">PhilPeople <span class="ext">↗</span></a>
           <a href="https://www.instagram.com/tom.stephen64" target="_blank" rel="noopener">Instagram <span class="ext">@tom.stephen64</span></a>
         </div>
+        </div>
+        <figure class="portrait contact-photo" style="margin:0;">
+          <div class="frame">
+            <img src="images/climbing.jpg" alt="Climbing a red rock wall" loading="lazy" decoding="async">
+          </div>
+        </figure>
       </div>
     </div>
   </section>
