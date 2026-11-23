@@ -1,0 +1,326 @@
+# Curriculum vitae: the single source for www.tstephen.com/cv/ and
+# files/Thomas-Stephen-CV.pdf.
+#
+# Edit this file, then rebuild both from the repo root:
+#   python3 cv/build.py
+# (needs Python 3 with PyYAML and Playwright; Claude sessions have both).
+#
+# In any text: *italic*, **bold**, ~subscript~ and [link text](url).
+# Links that start with / point into this site, e.g. /files/TSPhD.pdf.
+# Write date ranges with a hyphen (2017-2023); the build sets them as 2017–2023.
+
+name: "Dr. Thomas Stephen"
+position: "Fellow (Semantics) · School of Linguistic, Speech, and Communication Sciences, Trinity College Dublin"
+updated: "November 2026"
+contact:
+  phone: "+44 7950 641625"
+  email: "tmurrays@tcd.ie"
+  website: "www.tstephen.com"
+
+# What the homepage (index.html) takes from this file on each rebuild.
+homepage:
+  summary_columns:          # the short CV in section 07, column by column
+    - - education
+      - {section: reviewing, group: "Research Assistant"}
+    - - employment
+      - {section: teaching, group: "Summer Schools", title: "Summer School Teaching"}
+      - {section: reviewing, group: "Reviewer"}
+  talks: presentations      # the Talks list in section 06
+
+sections:
+
+  - id: education
+    title: "Education"
+    nav: "Education"
+    items:
+      - when: "2017-2023"
+        what: "PhD Linguistics and English Language"
+        where: "University of Edinburgh"
+        notes:
+          - "Thesis: [*The Semantics of Nominal and Clausal Embedding*](/files/TSPhD.pdf)"
+          - "Supervisors: Dr. [Robert Truswell](http://robtruswell.com/), Dr. [Bryan Pickel](https://bryanpickel.weebly.com/), Dr. [Wataru Uegaki](https://www.wataruuegaki.com/)"
+      - when: "2015-2016"
+        what: "MSc Philosophy"
+        where: "University of Edinburgh"
+        notes:
+          - "Thesis: *The Modifier Analysis of Propositional Attitudes*"
+          - "Supervisor: Dr. Bryan Pickel"
+      - when: "2012-2015"
+        what: "BA Philosophy (First Class)"
+        where: "Durham University"
+        notes:
+          - "Dissertation: *Non-Belief Attitudes in Scientific Contexts*"
+          - "Supervisor: Prof. Peter Vickers"
+
+  - id: employment
+    title: "Employment"
+    nav: "Employment"
+    items:
+      - when: "2024-present"
+        what: "Fellow (Semantics)"
+        where: "Trinity College Dublin"
+      - when: "2023-2024"
+        what: "Lecturer in Linguistics (Semantics)"
+        where: "Queen Mary University of London"
+      - when: "2017-2023"
+        what: "Tutor in Linguistics and Philosophy"
+        where: "University of Edinburgh"
+
+  - id: teaching
+    title: "Teaching Experience"
+    nav: "Teaching"
+    groups:
+      - title: "Lecturing"
+        groups:
+          - title: "Trinity College Dublin"
+            items:
+              - when: "2025-2027"
+                what: "Semantics I"
+                detail: "First Year Undergraduate, Lecturer and Course Organiser"
+              - when: "2024-2025, 2026-2027"
+                what: "Semantics II"
+                detail: "Third Year Undergraduate, Lecturer and Course Organiser"
+              - when: "2025-2027"
+                what: "Semantics III"
+                detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
+              - when: "2026-2027"
+                what: "Pragmatics I"
+                detail: "Second Year Undergraduate, Lecturer and Course Organiser"
+              - when: "2024-2025, 2026-2027"
+                what: "Pragmatics II"
+                detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
+              - when: "2025-2026"
+                what: "Describing Meaning"
+                detail: "Masters Level, Lecturer and Course Organiser"
+              - when: "2026"
+                what: "Linguistic Pragmatics"
+                detail: "Masters Level, Lecturer and Course Organiser"
+              - when: "2024-2026"
+                what: "11 Week Special Topics Courses"
+                detail: "Final Year Undergraduate, Lecturer and Course Organiser, *Scalar Implicatures, Model Theory for Logic and Semantics, Presuppositions, Modality*"
+          - title: "Queen Mary University of London"
+            items:
+              - when: "2024"
+                what: "Meaning in the Real World"
+                detail: "Final Year Undergraduate, Convener and Lecturer"
+              - when: "2024"
+                what: "Syntax II: Explaining Grammatical Structures"
+                detail: "Second Year Undergraduate, 2 Lectures"
+              - when: "2023"
+                what: "Formal Semantics"
+                detail: "Masters level, Convener and Lecturer"
+              - when: "2023"
+                what: "Introduction to Semantics"
+                detail: "Second Year Undergraduate, Convener and Lecturer"
+          - title: "University of Edinburgh"
+            items:
+              - when: "2023"
+                what: "Logic 1"
+                detail: "First Year Undergraduate, 6 Lectures"
+              - when: "2022"
+                what: "Puzzles and Paradoxes"
+                detail: "Third/Fourth Year Undergraduate, 2 Seminars"
+      - title: "Supervision"
+        items:
+          - when: "2024-2026"
+            what: "5x Masters Theses *TCD*"
+          - when: "2025-2026"
+            what: "2x Undergraduate Final Year Dissertation *TCD*"
+          - when: "2024"
+            what: "Research Practicum"
+            detail: "Masters Level, A Database of Alternations for Clause Embedding Predicates"
+            where: "Joshua Bovin"
+          - when: "2023"
+            what: "Directed Study"
+            detail: "Masters Level, Experiential Predicates and German *Wie*-clauses"
+            where: "Joshua Bovin"
+          - when: "2023-2024"
+            what: "2x Undergraduate Final Year Dissertation *QMUL*"
+      - title: "Summer Schools"
+        items:
+          - when: "2026"
+            what: "[The Function of Composition](https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60), with [Fausto Carcassi](https://faustocarcassi.com/)"
+            detail: "37th European Summer School in Logic, Language, and Information, Advanced Courses"
+            where: "Prague"
+      - title: "Convener"
+        items:
+          - when: "2023"
+            what: "Research Practica"
+            detail: "Masters Level, 4 Research Projects"
+      - title: "Tutoring"
+        items:
+          - when: "2017-2023"
+            what: "Logic 1"
+            detail: "First Year Undergraduate, Tutoring and Marking"
+          - when: "2018-2023"
+            what: "Mind, Matter, and Language"
+            detail: "Second Year Undergraduate, Tutoring and Marking"
+          - when: "2022-2023"
+            what: "Semantic Theory"
+            detail: "Masters level, Marking and Assessment Design"
+          - when: "2019-2021"
+            what: "Introduction to Syntax"
+            detail: "Masters level, Tutoring and Marking"
+          - when: "2018-2019"
+            what: "LEL1A"
+            detail: "First Year Undergraduate, Tutoring and Marking"
+          - when: "2018-2019"
+            what: "LEL1B"
+            detail: "First Year Undergraduate, Tutoring and Marking"
+
+  - id: organisation
+    title: "Organisational Experience"
+    nav: "Organisation"
+    groups:
+      - title: "Academic"
+        items:
+          - when: "2024"
+            what: "Randolph Quirk Fellowship: Prof. Veneeta Dayal"
+            detail: "Organiser & Workshop Chair"
+          - when: "2024"
+            what: "ConSOLE32"
+            detail: "Staff Liaison"
+          - when: "2018-2022"
+            what: "Sem~i~Circle Research Group"
+            detail: "Organiser"
+          - when: "2018-2019"
+            what: "Meaning and Grammar Research Group"
+            detail: "Convener"
+          - when: "2019"
+            what: "Sem~i~Circle Conference"
+            detail: "Lead Organiser"
+          - when: "2017-2018"
+            what: "Edinburgh Graduate Conference"
+            detail: "Committee Member (Logistics)"
+      - title: "Extracurricular"
+        items:
+          - when: "2017-2022"
+            what: "University of Edinburgh Table Tennis Club"
+            detail: "Committee Member"
+          - when: "2013-2015"
+            what: "St. Mary's College Table Tennis Club"
+            detail: "President"
+
+  - id: reviewing
+    title: "Research and Reviewing"
+    nav: "Reviewing"
+    groups:
+      - title: "Research Assistant"
+        layout: inline
+        items:
+          - what: "University of Göttingen"
+          - what: "Norwegian University of Science & Technology"
+      - title: "Reviewer"
+        layout: inline
+        items:
+          - what: "Oxford University Press"
+          - what: "Amsterdam Colloquium"
+          - what: "Western Canadian Philosophy Association"
+
+  - id: presentations
+    title: "Presentations"
+    nav: "Presentations"
+    layout: talks
+    items:
+      - when: "2026"
+        event: "Meaning in Language Colloquium"
+        title: "Universals of composition and quantificational conservativity"
+        with: "Fausto Carcassi"
+        where: "Heinrich Heine University Düsseldorf"
+      - when: "2026"
+        event: "The Nature and Objects of Thought and Assertion"
+        title: "Nominal and Clausal Relationships"
+        where: "The University of Glasgow"
+      - when: "2025"
+        event: "Fourth International Conference on Formal Approaches to Meaning in Chinese"
+        title: "A Compositional Analysis of Mandarin Chinese Experiential Marker -Guo"
+        with: "Nan Wang and Fausto Carcassi"
+        where: "University of Hong Kong"
+      - when: "2025"
+        event: "University of Alberta Philosophy Colloquium Series"
+        title: "Why Propositional Attitude Reports are neither Propositional, Attitudes, nor Reports"
+        where: "University of Alberta"
+      - when: "2025"
+        event: "TRISS Seminar Series"
+        title: "How (not) to embed a clause: Evidence from semantic puzzles"
+        where: "Trinity College Dublin"
+      - when: "2024"
+        event: "London Semantics Day"
+        title: "The Communicative Factive Gap and the Landscape of Clausal Embedding"
+        where: "University of London"
+      - when: "2023"
+        event: "Syntax and Semantics Research Group"
+        title: "Identity and Content for CPs in Copulars and Appositions"
+        where: "Queen Mary University of London"
+      - when: "2023"
+        event: "Language Lunch"
+        title: "Two Pathways for Composition of Clauses"
+        where: "Queen Mary University of London"
+      - when: "2023"
+        event: "Philosophy WiP"
+        title: "What do we think? Propositional Objects and Strategies for Clausal Embedding"
+        where: "The University of Edinburgh"
+      - when: "2022"
+        event: "Edinburgh Meaning Sciences Group"
+        title: "Two Strategies for Composing CPs in English: Restriction and Saturation for Propositions and Facts"
+        where: "The University of Edinburgh"
+      - when: "2020"
+        event: "Philosophy WiP"
+        title: "Propositional Attitudes without Propositions"
+        where: "The University of Edinburgh"
+      - when: "2019"
+        event: "London Semantics Symposium"
+        title: "The semantics of embedded wh-questions"
+        where: "UCL"
+      - when: "2019"
+        event: "Sem~i~circle Conference"
+        title: "Categorising Content Nouns: Semantic and Syntactic Classes"
+        where: "The University of Edinburgh"
+      - when: "2018"
+        event: "London Semantics Day"
+        title: "‘Explain’ing Clausal and Nominal Complementation"
+        where: "Queen Mary University of London"
+      - when: "2018"
+        event: "Sem~i~circle PhD Talks"
+        title: "Entailment Patterns with Clause Embedding Verbs"
+        where: "The University of Edinburgh"
+      - when: "2018"
+        event: "Edinburgh Graduate Conference in Linguistics"
+        title: "Explaining ‘Explain’"
+        where: "The University of Edinburgh"
+      - when: "2015"
+        event: "Durham Undergraduate Philosophy Conference"
+        title: "Truth Value Gaps and Truth Eliminativism"
+        where: "Durham University"
+
+  - id: extracurricular
+    title: "Extracurricular Experience"
+    nav: "Extracurricular"
+    groups:
+      - title: "Coaching and Teaching"
+        items:
+          - when: "2018-2023"
+            what: "Table Tennis"
+            detail: "Level 1 Coaching Qualification, Beginners and Intermediate Coaching at University of Edinburgh"
+          - when: "2019"
+            what: "Sevenoaks School Invited Lectures"
+            detail: "Introduction to Philosophy of Language"
+      - title: "Training and Development"
+        items:
+          - when: "2022"
+            what: "Scottish Mountaineering"
+            detail: "Mountain Leader Training"
+          - when: "2017"
+            what: "Chinese Language Certification"
+            detail: "British Council and Confucius Institute Scholarship, Chongqing University"
+      - title: "Languages"
+        layout: inline
+        items:
+          - what: "English"
+            detail: "Native"
+          - what: "Spanish"
+            detail: "C2"
+          - what: "French"
+            detail: "B2"
+          - what: "Mandarin Chinese"
+            detail: "B2"

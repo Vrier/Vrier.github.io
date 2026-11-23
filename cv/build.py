@@ -1,0 +1,430 @@
+#!/usr/bin/env python3
+"""Build the CV page and PDF from cv/cv.yml.
+
+From the repo root:
+    python3 cv/build.py            # writes cv/index.html, files/Thomas-Stephen-CV.pdf,
+                                   # and the CV parts of index.html (Talks list, short CV)
+    python3 cv/build.py --no-pdf   # everything except the PDF
+
+Needs PyYAML, and Playwright with a Chromium browser for the PDF.
+Set CHROME=/path/to/chrome to print with an installed Chrome instead.
+"""
+import argparse
+import html
+import os
+import pathlib
+import re
+import sys
+import tempfile
+
+import yaml
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+SRC = ROOT / "cv" / "cv.yml"
+OUT_HTML = ROOT / "cv" / "index.html"
+HOME = ROOT / "index.html"
+OUT_PDF = ROOT / "files" / "Thomas-Stephen-CV.pdf"
+PDF_HREF = "../files/Thomas-Stephen-CV.pdf"
+SITE = "https://www.tstephen.com"
+
+
+# ---------------------------------------------------------------- text helpers
+
+def inline(text, root=".."):
+    """Escape text, then apply *italic*, **bold**, ~sub~ and [label](url).
+
+    Site links (/files/...) are made relative: root ".." for /cv/, "." for the homepage."""
+    s = html.escape(str(text), quote=False)
+
+    def link(m):
+        label, url = m.group(1), m.group(2)
+        if url.startswith("/"):
+            url = root + url
+        attrs = ' target="_blank" rel="noopener"' if url.startswith("http") else ""
+        return f'<a href="{url.replace(chr(34), "%22")}"{attrs}>{label}</a>'
+
+    s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, s)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = re.sub(r"\*(.+?)\*", r"<em>\1</em>", s)
+    s = re.sub(r"~(.+?)~", r"<sub>\1</sub>", s)
+    return s
+
+
+def dates(text):
+    return re.sub(r"(\d{4})\s*-\s*(\d{4}|present)", "\\1–\\2", str(text or ""))
+
+
+def plain(text):
+    """Text without markup, for attributes and the page title."""
+    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", str(text))
+    return re.sub(r"[*~]", "", s)
+
+
+# ---------------------------------------------------------------- blocks
+
+def row(item):
+    parts = []
+    for key, cls in (("what", "what"), ("detail", "detail"), ("where", "where")):
+        if item.get(key):
+            parts.append(f'<div class="{cls}">{inline(item[key])}</div>')
+    if item.get("notes"):
+        lis = "".join(f"<li>{inline(n)}</li>" for n in item["notes"])
+        parts.append(f'<ul class="notes">{lis}</ul>')
+    return (f'<div class="row"><div class="when">{html.escape(dates(item.get("when")))}</div>'
+            f'<div class="body">{"".join(parts)}</div></div>')
+
+
+def talks(items):
+    out, last = [], None
+    for t in items:
+        year = str(t.get("when", ""))
+        shown = html.escape(year) if year != last else ""
+        last = year
+        co = f'<span class="co">with {inline(t["with"])}</span>' if t.get("with") else ""
+        out.append(
+            f'<div class="talk"><div class="yr">{shown}</div>'
+            f'<div class="tt"><span class="ev">{inline(t["event"])}'
+            f'<span class="at">{" · " + inline(t["where"]) if t.get("where") else ""}</span></span>'
+            f'<em>{inline(t["title"])}</em>{co}</div>'
+            f'<div class="vn">{inline(t.get("where", ""))}</div></div>')
+    return '<div class="talks">' + "".join(out) + "</div>"
+
+
+def block(node, level=0):
+    out = []
+    if node.get("items"):
+        if node.get("layout") == "talks":
+            out.append(talks(node["items"]))
+        elif node.get("layout") == "inline":
+            lis = "".join(f'<li>{inline(i["what"])}' + (f' <span class="detail">{inline(i["detail"])}</span>' if i.get("detail") else "") + "</li>"
+                          for i in node["items"])
+            out.append(f'<div class="rows"><div class="row"><div class="when"></div><div class="body"><ul class="inline-list">{lis}</ul></div></div></div>')
+        else:
+            out.append('<div class="rows">' + "".join(row(i) for i in node["items"]) + "</div>")
+    for g in node.get("groups", []):
+        tag = "h3" if level == 0 else "h4"
+        out.append(f'<div class="group lvl{level}"><{tag}>{inline(g["title"])}</{tag}>{block(g, level + 1)}</div>')
+    return "".join(out)
+
+
+# ---------------------------------------------------------------- page
+
+CSS = """
+:root{--paper:oklch(0.986 0.004 95);--paper-2:oklch(0.968 0.006 88);--ink:oklch(0.245 0.012 260);
+--ink-soft:oklch(0.44 0.012 260);--ink-faint:oklch(0.6 0.01 260);--rule:oklch(0.885 0.008 260);
+--rule-strong:oklch(0.8 0.01 260);--accent:oklch(0.55 0.15 33);--accent-deep:oklch(0.46 0.14 33);
+--accent-soft:oklch(0.95 0.03 45);--sans:"Space Grotesk",system-ui,sans-serif;--serif:"Newsreader",Georgia,serif;
+--mono:"JetBrains Mono",ui-monospace,monospace;--maxw:1180px;--gutter:clamp(20px,5vw,64px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+font-size:clamp(1.02rem,0.5vw + 0.95rem,1.16rem);line-height:1.62;-webkit-font-smoothing:antialiased;font-synthesis:none}
+a{color:inherit}
+::selection{background:var(--accent-soft)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+header.site{position:sticky;top:0;z-index:50;background:color-mix(in oklab,var(--paper) 88%,transparent);
+backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px 18px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:12px;text-decoration:none}
+.brand b{font-family:var(--sans);font-weight:600;font-size:1.02rem;letter-spacing:-0.01em}
+.brand .tag{font-family:var(--mono);font-size:0.76rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint)}
+nav.secnav{display:flex;gap:2px;align-items:center}
+nav.secnav a{font-family:var(--mono);font-size:0.78rem;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;
+color:var(--ink-soft);padding:8px 10px;border-radius:6px;position:relative;white-space:nowrap;transition:color .18s,background .18s}
+nav.secnav a:hover{color:var(--ink);background:var(--paper-2)}
+nav.secnav a.active{color:var(--accent-deep)}
+nav.secnav a.active::before{content:"";position:absolute;left:10px;right:10px;bottom:3px;height:1.5px;background:var(--accent)}
+.btn{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;
+background:var(--ink);color:var(--paper);padding:13px 20px;border-radius:7px;display:inline-flex;gap:10px;align-items:center;
+transition:.18s;white-space:nowrap}
+.btn:hover{background:var(--accent-deep)}
+.intro{padding-block:clamp(44px,7vw,84px) clamp(28px,4vw,44px)}
+h1.name{font-family:var(--sans);font-weight:600;letter-spacing:-0.03em;line-height:1;font-size:clamp(2.4rem,6vw,4rem);margin:0 0 18px}
+.pos{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);
+margin:0 0 22px;max-width:72ch;line-height:1.6}
+ul.contact{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+ul.contact a{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.03em;color:var(--ink-soft);border:1px solid var(--rule-strong);
+border-radius:999px;padding:6px 14px;text-decoration:none;display:inline-flex;transition:.18s}
+ul.contact a:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.upd{font-family:var(--mono);font-size:0.78rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-faint)}
+main section{padding-block:clamp(40px,6vw,72px);border-top:1px solid var(--rule)}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:30px}
+.sec-num{font-family:var(--mono);font-size:0.8rem;color:var(--accent-deep);font-weight:600;letter-spacing:0.04em}
+.sec-title{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.05rem);letter-spacing:-0.02em;margin:0}
+.group{margin-top:34px}
+.group:first-child{margin-top:0}
+.group h3{font-family:var(--sans);font-weight:600;font-size:1.14rem;letter-spacing:-0.01em;margin:0 0 12px}
+.group.lvl1{margin-top:22px}
+.group h4{font-family:var(--mono);font-weight:500;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;
+color:var(--ink-soft);margin:0 0 8px}
+.rows,.talks{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:130px 1fr;gap:22px;padding:13px 0;border-top:1px solid var(--rule)}
+.row:first-child,.talk:first-child{border-top:1px solid var(--rule-strong)}
+.row .when,.talk .yr{font-family:var(--mono);font-size:0.84rem;color:var(--accent-deep);font-weight:500;padding-top:2px}
+.row .what{font-family:var(--sans);font-weight:500;font-size:1.02rem;letter-spacing:-0.01em;line-height:1.4}
+.row .detail{color:var(--ink-soft);line-height:1.5;margin-top:2px}
+.row .where{font-family:var(--mono);font-size:0.8rem;color:var(--ink-soft);margin-top:4px}
+.row ul.notes{margin:6px 0 0;padding-left:1.1em;color:var(--ink-soft)}
+.row ul.notes li{margin:2px 0}
+.inline-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;font-family:var(--sans);font-weight:500;font-size:1.02rem;letter-spacing:-0.01em;line-height:1.5}
+.inline-list li+li::before{content:"·";margin:0 12px;color:var(--ink-faint);font-weight:400}
+.inline-list .detail{font-family:var(--serif);font-weight:400;color:var(--ink-soft)}
+.body a,.tt a{text-decoration-color:var(--rule-strong);text-underline-offset:3px}
+.body a:hover,.tt a:hover{color:var(--accent-deep);text-decoration-color:var(--accent)}
+.talk{display:grid;grid-template-columns:130px 1fr 0.6fr;gap:22px;align-items:baseline;padding:16px 0;border-top:1px solid var(--rule)}
+.talk .tt{font-family:var(--serif);font-style:italic;font-size:1.06rem;line-height:1.4}
+.talk .tt .ev{display:block;font-style:normal;font-family:var(--sans);font-size:0.86rem;font-weight:500;letter-spacing:-0.01em;
+color:var(--ink);margin-bottom:3px}
+.talk .tt .co{font-style:normal;font-family:var(--mono);font-size:0.78rem;color:var(--ink-faint);display:block;margin-top:4px}
+.talk .vn{font-family:var(--mono);font-size:0.8rem;color:var(--ink-soft);text-align:right}
+.talk .at{display:none}
+footer{border-top:1px solid var(--rule);padding-block:34px}
+.foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-family:var(--mono);
+font-size:0.76rem;letter-spacing:0.04em;color:var(--ink-faint);text-transform:uppercase}
+@media screen and (max-width:900px){
+  nav.secnav{order:3;width:100%;overflow-x:auto;padding-bottom:8px;margin-top:-4px;scrollbar-width:none}
+  nav.secnav::-webkit-scrollbar{display:none}
+  html{scroll-padding-top:120px}
+  .talk{grid-template-columns:90px 1fr}
+  .talk .vn{grid-column:2;text-align:left;margin-top:2px}
+  .row{grid-template-columns:90px 1fr}
+}
+@media screen and (max-width:620px){
+  .row,.talk{grid-template-columns:1fr;gap:3px}
+  .talk .vn{grid-column:1}
+  .row .when:empty,.talk .yr:empty{display:none}
+  .inline-list{flex-direction:column;gap:6px}
+  .inline-list li+li::before{display:none}
+}
+@media print{
+  :root{--paper:#fff}
+  body{font-size:9.6pt;line-height:1.28;background:#fff}
+  header.site,footer,.actions{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .intro{padding:0 0 9pt}
+  h1.name{font-size:21pt;margin:0 0 5pt}
+  .pos{font-size:7.6pt;margin:0 0 5pt;letter-spacing:0.05em}
+  ul.contact{gap:0;margin:0}
+  ul.contact a{border:0;padding:0;font-size:8.2pt;color:var(--ink-soft)}
+  ul.contact li+li::before{content:"·";margin:0 7pt;color:var(--ink-faint);font-family:var(--mono)}
+  main section{padding:7pt 0 2pt;border-top:0.75pt solid var(--rule-strong)}
+  .sec-head{margin-bottom:5pt;gap:8pt;break-after:avoid}
+  .sec-num{font-size:7.6pt}
+  .sec-title{font-size:12.5pt}
+  .group{margin-top:6pt}
+  .group.lvl1{margin-top:6pt}
+  .group h3{font-size:10pt;margin:0 0 3pt;break-after:avoid}
+  .group h4{font-size:7.2pt;margin:0 0 2pt;break-after:avoid}
+  .row,.talk{grid-template-columns:20mm 1fr;gap:8pt;padding:1.9pt 0;border-top:0.5pt solid var(--rule);break-inside:avoid}
+  .row:first-child,.talk:first-child{border-top:0.5pt solid var(--rule-strong)}
+  .talk .vn{display:none}
+  .talk .at{display:inline;font-family:var(--serif);font-weight:400;color:var(--ink-soft)}
+  .row .when,.talk .yr{font-size:7.8pt;padding-top:1pt}
+  .row .what{font-size:9.6pt}
+  .row .detail{font-size:9.2pt;margin-top:0}
+  .row .what,.row .detail{display:inline}
+  .inline-list{font-size:9.6pt}
+  .inline-list li+li::before{margin:0 7pt}
+  .row .what+.detail::before{content:"  ·  ";white-space:pre;color:var(--ink-faint)}
+  .row .where{font-size:7.8pt;margin-top:1pt}
+  .row ul.notes{margin-top:1pt}
+  .row ul.notes li{margin:0}
+  .talk .tt{font-size:9.6pt;line-height:1.3}
+  .talk .tt .ev{font-size:8.4pt;margin-bottom:0}
+  .talk .tt .co{font-size:7.4pt;display:inline;margin:0 0 0 5pt}
+  .talk .tt .co::before{content:"· "}
+  a{text-decoration:none}
+}
+"""
+
+SCRIPT = """
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  var links={};
+  document.querySelectorAll('nav.secnav a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      Object.keys(links).forEach(function(k){links[k].classList.remove('active');});
+      if(links[e.target.id])links[e.target.id].classList.add('active');
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section[id]').forEach(function(s){obs.observe(s);});
+})();
+"""
+
+FONTS = ("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700"
+         "&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600"
+         "&family=JetBrains+Mono:wght@400;500;600&display=swap")
+
+
+def page(cv):
+    c = cv["contact"]
+    phone_href = "tel:" + re.sub(r"[^\d+]", "", c["phone"])
+    contact = (f'<li><a href="{phone_href}">{html.escape(c["phone"])}</a></li>'
+               f'<li><a href="mailto:{c["email"]}">{html.escape(c["email"])}</a></li>'
+               f'<li><a href="https://{c["website"]}">{html.escape(c["website"])}</a></li>')
+    nav = "".join(f'<a href="#{s["id"]}">{html.escape(s.get("nav", plain(s["title"])))}</a>' for s in cv["sections"])
+    sections = "".join(
+        f'<section id="{s["id"]}"><div class="wrap"><div class="sec-head"><span class="sec-num">{n:02d}</span>'
+        f'<h2 class="sec-title">{inline(s["title"])}</h2></div>{block(s)}</div></section>'
+        for n, s in enumerate(cv["sections"], 1))
+    name = plain(cv["name"])
+    updated = html.escape(cv["updated"])
+    year = re.search(r"\d{4}", cv["updated"]).group(0)
+    return f"""<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas Stephen: Curriculum Vitae</title>
+<meta name="description" content="Curriculum vitae of {html.escape(name)}: education, employment, teaching, organisation and presentations.">
+<link rel="icon" type="image/png" href="../images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{FONTS}" rel="stylesheet">
+<style>{CSS}</style>
+</head>
+<body>
+<!-- Generated by cv/build.py from cv/cv.yml. Edit cv.yml and rebuild; do not edit this file. -->
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="../"><b>Thomas Stephen</b><span class="tag">Curriculum Vitae</span></a>
+    <nav class="secnav" aria-label="Sections">{nav}</nav>
+  </div>
+</header>
+<main>
+  <div class="wrap intro">
+    <h1 class="name">{inline(cv["name"])}</h1>
+    <p class="pos">{inline(cv["position"])}</p>
+    <ul class="contact">{contact}</ul>
+    <div class="actions">
+      <a class="btn" href="{PDF_HREF}" download>Download PDF <span class="ar">↓</span></a>
+      <span class="upd">Updated {updated}</span>
+    </div>
+  </div>
+  {sections}
+</main>
+<footer>
+  <div class="wrap foot">
+    <span>© {year} Thomas Stephen</span>
+    <span>Curriculum Vitae · Updated {updated}</span>
+  </div>
+</footer>
+<script>{SCRIPT}</script>
+</body>
+</html>
+"""
+
+
+# ---------------------------------------------------------------- homepage parts
+
+def home_talks(items):
+    """The homepage Talks list, in its own markup (a year on every row)."""
+    rows = []
+    for t in items:
+        co = f'<span class="co">with {inline(t["with"], ".")}</span>' if t.get("with") else ""
+        rows.append(f'        <div class="talk"><div class="yr">{html.escape(str(t.get("when", "")))}</div>'
+                    f'<div class="tt"><span class="ev">{inline(t["event"], ".")}</span>'
+                    f'<em>{inline(t["title"], ".")}</em>{co}</div>'
+                    f'<div class="vn">{inline(t.get("where", ""), ".")}</div></div>')
+    return "\n".join(rows) + "\n"
+
+
+def home_rows(items):
+    out = []
+    for i in items:
+        body = f'<div class="what">{inline(i["what"], ".")}</div>'
+        if i.get("detail"):
+            body += f'<div class="where">{inline(i["detail"], ".")}</div>'
+        if i.get("where"):
+            body += f'<div class="where">{inline(i["where"], ".")}</div>'
+        if i.get("notes"):
+            body += '<ul class="notes">' + "".join(f"<li>{inline(n, '.')}</li>" for n in i["notes"]) + "</ul>"
+        out.append(f'          <div class="cvs-row"><div class="when">{html.escape(dates(i.get("when")))}</div><div>{body}</div></div>')
+    return out
+
+
+def home_summary(cv):
+    """The short CV in section 07: columns of sections, as listed under homepage: in cv.yml."""
+    by_id = {s["id"]: s for s in cv["sections"]}
+    cols = []
+    for col in cv["homepage"]["summary_columns"]:
+        parts = []
+        for entry in col:
+            if isinstance(entry, dict):  # one group of a section, optionally retitled
+                group = next(g for g in by_id[entry["section"]]["groups"] if g["title"] == entry["group"])
+                blocks = [(entry.get("title", group["title"]), group)]
+            else:
+                sec = by_id[entry]
+                blocks = [(sec["title"], sec)] if sec.get("items") else [(g["title"], g) for g in sec.get("groups", [])]
+            for title, node in blocks:
+                parts.append(f"          <h4>{inline(title, '.')}</h4>")
+                if node.get("layout") == "inline":
+                    lis = "".join(f"<li>{inline(i['what'], '.')}</li>" for i in node["items"])
+                    parts.append(f'          <ul class="cvs-list">{lis}</ul>')
+                else:
+                    parts.extend(home_rows(node["items"]))
+        cols.append('        <div>\n' + "\n".join(parts) + '\n        </div>')
+    return '      <div class="cvs">\n' + "\n".join(cols) + '\n      </div>\n'
+
+
+def fill(page_html, name, content):
+    """Replace what sits between the <!-- cv:NAME start ... --> and <!-- cv:NAME end --> markers."""
+    pat = re.compile(r"(<!-- cv:%s start[^>]*-->\n)(.*?)(<!-- cv:%s end -->)" % (name, name), re.S)
+    if not pat.search(page_html):
+        sys.exit(f"index.html has no cv:{name} markers; see cv/build.py")
+    return pat.sub(lambda m: m.group(1) + content + m.group(3), page_html, count=1)
+
+
+def update_homepage(cv):
+    by_id = {s["id"]: s for s in cv["sections"]}
+    page_html = HOME.read_text(encoding="utf-8")
+    page_html = fill(page_html, "talks", home_talks(by_id[cv["homepage"]["talks"]]["items"]))
+    page_html = fill(page_html, "summary", home_summary(cv))
+    HOME.write_text(page_html, encoding="utf-8")
+
+
+# ---------------------------------------------------------------- pdf
+
+def print_pdf(page_html, cv):
+    from playwright.sync_api import sync_playwright
+    # Relative links resolve against the live site inside the PDF.
+    printable = page_html.replace("<head>", f'<head>\n<base href="{SITE}/cv/">', 1)
+    footer = ('<div style="width:100%;padding:0 15mm;display:flex;justify-content:space-between;'
+              'font-family:monospace;font-size:7px;letter-spacing:0.05em;text-transform:uppercase;color:#8a8f98">'
+              f'<span>{html.escape(plain(cv["name"]))} · Curriculum Vitae · {html.escape(cv["updated"])}</span>'
+              '<span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>')
+    with tempfile.TemporaryDirectory() as tmp:
+        src = pathlib.Path(tmp) / "cv.html"
+        src.write_text(printable, encoding="utf-8")
+        with sync_playwright() as p:
+            chrome = os.environ.get("CHROME")
+            browser = p.chromium.launch(executable_path=chrome) if chrome else p.chromium.launch()
+            pg = browser.new_page()
+            pg.goto(src.as_uri(), wait_until="networkidle")
+            pg.evaluate("document.fonts.ready")
+            pg.pdf(path=str(OUT_PDF), format="A4", print_background=True,
+                   display_header_footer=True, header_template="<span></span>", footer_template=footer,
+                   margin={"top": "12mm", "bottom": "15mm", "left": "15mm", "right": "15mm"})
+            browser.close()
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--no-pdf", action="store_true", help="write the page only")
+    args = ap.parse_args()
+    cv = yaml.safe_load(SRC.read_text(encoding="utf-8"))
+    out = page(cv)
+    OUT_HTML.write_text(out, encoding="utf-8")
+    print(f"wrote {OUT_HTML.relative_to(ROOT)}")
+    update_homepage(cv)
+    print(f"updated {HOME.relative_to(ROOT)} (Talks list, short CV)")
+    if not args.no_pdf:
+        print_pdf(out, cv)
+        print(f"wrote {OUT_PDF.relative_to(ROOT)}")
+
+
+if __name__ == "__main__":
+    sys.exit(main())
