@@ -3,8 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thomas Stephen — Formal Semanticist, Trinity College Dublin</title>
-<meta name="description" content="Thomas Stephen is a Semanticist at Trinity College Dublin working on formal semantics, the syntax–semantics interface, and the philosophy of language.">
+<title>Thomas Stephen: Fellow in Linguistics, Trinity College Dublin</title>
+<meta name="description" content="Thomas Stephen is a Fellow in Linguistics at Trinity College Dublin working on formal semantics, the syntax–semantics interface, and the philosophy of language.">
+<link rel="canonical" href="https://www.tstephen.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Stephen">
+<meta property="og:title" content="Thomas Stephen: Fellow in Linguistics, Trinity College Dublin">
+<meta property="og:description" content="Formal semanticist working on the meaning of clauses and the syntax–semantics interface.">
+<meta property="og:url" content="https://www.tstephen.com/">
+<meta property="og:image" content="https://www.tstephen.com/images/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Thomas Stephen, Fellow in Linguistics, Trinity College Dublin">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +27,7 @@
     --paper-2: oklch(0.968 0.006 88);
     --ink: oklch(0.245 0.012 260);
     --ink-soft: oklch(0.44 0.012 260);
-    --ink-faint: oklch(0.6 0.01 260);
+    --ink-faint: oklch(0.54 0.01 260);
     --rule: oklch(0.885 0.008 260);
     --rule-strong: oklch(0.8 0.01 260);
     --accent: oklch(0.55 0.15 33);
@@ -48,17 +59,17 @@
   .bar{display:flex;align-items:center;justify-content:space-between;height:64px;}
   .brand{display:flex;align-items:baseline;gap:12px;text-decoration:none;}
   .brand b{font-family:var(--sans);font-weight:600;font-size:1.02rem;letter-spacing:-0.01em;}
-  .brand .tag{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);}
+  .brand .tag{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);}
   nav.main{display:flex;gap:4px;align-items:center;}
   nav.main a{
-    font-family:var(--mono);font-size:0.74rem;letter-spacing:0.04em;text-transform:uppercase;
+    font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;text-transform:uppercase;
     text-decoration:none;color:var(--ink-soft);padding:8px 11px;border-radius:6px;position:relative;
     transition:color .18s, background .18s;
   }
   nav.main a:hover{color:var(--ink);background:var(--paper-2);}
   nav.main a.active{color:var(--accent-deep);}
   nav.main a.active::before{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1.5px;background:var(--accent);}
-  .navtoggle{display:none;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;
+  .navtoggle{display:none;font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;
     border:1px solid var(--rule-strong);background:none;color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer;}
 
   /* ---- section scaffolding ---- */
@@ -67,7 +78,7 @@
   .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:38px;}
   .sec-num{font-family:var(--mono);font-size:0.78rem;color:var(--accent-deep);font-weight:600;letter-spacing:0.04em;}
   .sec-title{font-family:var(--sans);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.05rem);letter-spacing:-0.02em;margin:0;}
-  .sec-title .sub{display:block;font-family:var(--mono);font-weight:400;font-size:0.72rem;letter-spacing:0.06em;
+  .sec-title .sub{display:block;font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.06em;
     text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
 
   /* ---- hero ---- */
@@ -79,7 +90,7 @@
   .lede{font-size:clamp(1.18rem,1.4vw,1.42rem);line-height:1.5;color:var(--ink);max-width:30ch;margin:0 0 30px;}
   .lede em{font-style:italic;color:var(--accent-deep);}
   .hero-meta{display:flex;flex-wrap:wrap;gap:10px;}
-  .chip{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--ink-soft);
+  .chip{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.03em;color:var(--ink-soft);
     border:1px solid var(--rule-strong);border-radius:999px;padding:6px 13px;text-decoration:none;
     display:inline-flex;align-items:center;gap:7px;transition:.18s;white-space:nowrap;}
   .chip:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft);}
@@ -87,7 +98,7 @@
   .portrait{position:relative;}
   .portrait .frame{aspect-ratio:4/5;border:1px solid var(--rule-strong);background:var(--paper-2);overflow:hidden;}
   .portrait img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.12) contrast(1.02);}
-  .portrait figcaption{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+  .portrait figcaption{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--ink-faint);margin-top:10px;display:flex;justify-content:space-between;}
 
   /* ---- about ---- */
@@ -97,10 +108,10 @@
   .prose a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;text-decoration-color:var(--rule-strong);}
   .prose a:hover{text-decoration-color:var(--accent);}
   .aside{position:sticky;top:88px;}
-  .aside h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .aside h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule);}
   .keys{display:flex;flex-wrap:wrap;gap:8px;}
-  .key{font-family:var(--mono);font-size:0.72rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);
+  .key{font-family:var(--mono);font-size:0.75rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);
     border-radius:5px;padding:5px 9px;}
   a.keylink{text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:.16s;}
   a.keylink:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft);}
@@ -113,12 +124,12 @@
     border:1px solid var(--rule);}
   .proj{background:var(--paper);padding:28px 26px;display:flex;flex-direction:column;min-height:230px;transition:background .2s;}
   .proj:hover{background:var(--paper-2);}
-  .proj .pn{font-family:var(--mono);font-size:0.72rem;color:var(--accent-deep);letter-spacing:0.05em;margin-bottom:16px;}
+  .proj .pn{font-family:var(--mono);font-size:0.75rem;color:var(--accent-deep);letter-spacing:0.05em;margin-bottom:16px;}
   .proj h3{font-family:var(--sans);font-weight:600;font-size:1.24rem;letter-spacing:-0.015em;margin:0 0 12px;line-height:1.15;}
   .proj p{font-size:0.99rem;line-height:1.55;color:var(--ink-soft);margin:0;}
   .proj p a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--rule-strong);}
   .proj p a:hover{text-decoration-color:var(--accent);}
-  .proj .stat{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.05em;
+  .proj .stat{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:0.75rem;letter-spacing:0.05em;
     text-transform:uppercase;color:var(--ink-faint);}
 
   /* ---- talks table ---- */
@@ -130,11 +141,11 @@
   .talk .tt{font-family:var(--serif);font-style:italic;font-size:1.06rem;line-height:1.4;}
   .talk .tt .ev{display:block;font-style:normal;font-family:var(--sans);font-size:0.8rem;font-weight:500;
     letter-spacing:-0.01em;color:var(--ink);margin-bottom:3px;}
-  .talk .tt .co{font-style:normal;font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);display:block;margin-top:4px;}
-  .talk .vn{font-family:var(--mono);font-size:0.74rem;color:var(--ink-soft);letter-spacing:0.01em;text-align:right;}
+  .talk .tt .co{font-style:normal;font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);display:block;margin-top:4px;}
+  .talk .vn{font-family:var(--mono);font-size:0.75rem;color:var(--ink-soft);letter-spacing:0.01em;text-align:right;}
   /* ---- short cv (section 07; generated from cv/cv.yml) ---- */
   .cvs{display:grid;grid-template-columns:1fr 1fr;gap:28px clamp(28px,5vw,64px);margin-bottom:46px;}
-  .cvs h4{font-family:var(--mono);font-weight:400;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .cvs h4{font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0;padding-bottom:10px;border-bottom:1px solid var(--rule);}
   .cvs h4:not(:first-child){margin-top:34px;}
   .cvs-row{display:grid;grid-template-columns:112px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);}
@@ -149,15 +160,15 @@
   .teach-inst{padding:30px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:240px 1fr;gap:28px;}
   .teach-inst:first-of-type{border-top:none;padding-top:0;}
   .teach-inst .inst{font-family:var(--sans);font-weight:600;font-size:1.12rem;letter-spacing:-0.015em;}
-  .teach-inst .inst span{display:block;font-family:var(--mono);font-weight:400;font-size:0.68rem;letter-spacing:0.05em;
+  .teach-inst .inst span{display:block;font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.05em;
     text-transform:uppercase;color:var(--ink-faint);margin-top:6px;}
   .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px 28px;}
-  .level h5{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 9px;}
+  .level h5{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 9px;}
   .level ul{list-style:none;margin:0;padding:0;}
   .level li{font-size:0.97rem;padding:3px 0;color:var(--ink-soft);}
   .feature{margin-top:40px;background:var(--paper-2);border:1px solid var(--rule);padding:30px 30px;display:grid;
     grid-template-columns:1fr;gap:14px;}
-  .feature .ftag{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent-deep);}
+  .feature .ftag{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent-deep);}
   .feature h3{font-family:var(--sans);font-weight:600;font-size:1.3rem;letter-spacing:-0.015em;margin:0;}
   .feature h3 .feat-link{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .16s;}
   .feature h3 .feat-link:hover{color:var(--accent-deep);}
@@ -168,12 +179,12 @@
   .feature .meta{font-family:var(--mono);font-size:0.76rem;color:var(--ink-soft);}
   .feature p{margin:0;font-size:1.0rem;line-height:1.6;color:var(--ink-soft);max-width:72ch;}
   .sup{margin-top:40px;}
-  .sup h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .sup h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0 0 4px;}
   .sup .row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:14px 0;border-top:1px solid var(--rule);}
   .sup .row .who{font-family:var(--sans);font-weight:500;font-size:0.98rem;}
   .sup .row .ti{font-style:italic;color:var(--ink-soft);font-size:0.98rem;}
-  .sup .row .deg{font-family:var(--mono);font-size:0.7rem;color:var(--ink-faint);text-align:right;white-space:nowrap;letter-spacing:0.02em;}
+  .sup .row .deg{font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);text-align:right;white-space:nowrap;letter-spacing:0.02em;}
 
   /* ---- cv + contact ---- */
   .cv-row{display:flex;flex-wrap:wrap;align-items:center;gap:24px;justify-content:space-between;}
@@ -199,13 +210,13 @@
 
   footer{border-top:1px solid var(--rule);padding-block:34px;}
   .foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
-    font-family:var(--mono);font-size:0.7rem;letter-spacing:0.04em;color:var(--ink-faint);text-transform:uppercase;}
+    font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;color:var(--ink-faint);text-transform:uppercase;}
 
   /* ---- about band image ---- */
   .band{margin-top:48px;}
   .band img{width:100%;height:clamp(220px,32vw,400px);object-fit:cover;object-position:center 40%;display:block;
     border:1px solid var(--rule-strong);filter:grayscale(0.08) contrast(1.02);}
-  .band figcaption{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase;
+  .band figcaption{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--ink-faint);margin-top:10px;display:flex;justify-content:space-between;}
 
   /* ---- research intro + cube ---- */
@@ -219,18 +230,18 @@
   .cube-fig .nf{fill:var(--paper);stroke:var(--ink);stroke-width:1.6;}
   .cube-fig .nb{fill:var(--paper);stroke:var(--rule-strong);stroke-width:1.4;}
   .cube-fig text{fill:var(--accent-deep);font-family:var(--mono);font-size:13px;}
-  .cube-fig figcaption{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+  .cube-fig figcaption{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--ink-faint);margin-top:10px;text-align:right;}
 
   /* ---- resources ---- */
   .res-groups{display:flex;flex-direction:column;gap:46px;}
   .res-feature{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);overflow:hidden;}
   .res-feature .rf-text{padding:34px 32px;display:flex;flex-direction:column;gap:15px;align-items:flex-start;}
-  .res-feature .pn{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);}
+  .res-feature .pn{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);}
   .res-feature h3{font-family:var(--sans);font-weight:600;font-size:1.5rem;letter-spacing:-0.02em;margin:0;line-height:1.1;}
   .res-feature p{margin:0;color:var(--ink-soft);font-size:1.0rem;line-height:1.55;}
   .res-feature .rf-media{min-height:240px;border-left:1px solid var(--rule);display:flex;align-items:center;justify-content:center;}
-  .res-block h4{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-faint);
+  .res-block h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-faint);
     margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--rule-strong);}
   .res-note{font-size:0.98rem;color:var(--ink-soft);margin:-4px 0 18px;max-width:62ch;}
   .res-note a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule-strong);}
@@ -241,10 +252,10 @@
   .dl:first-child{border-top:none;}
   .dl:hover{padding-left:10px;color:var(--accent-deep);}
   .dl .nm{font-family:var(--serif);font-size:1.06rem;}
-  .dl .nm small{display:block;font-family:var(--mono);font-size:0.68rem;color:var(--ink-faint);text-transform:uppercase;
+  .dl .nm small{display:block;font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);text-transform:uppercase;
     letter-spacing:0.04em;margin-top:4px;}
   .dl:hover .nm small{color:var(--ink-soft);}
-  .dl .ty{font-family:var(--mono);font-size:0.72rem;color:var(--ink-faint);white-space:nowrap;}
+  .dl .ty{font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);white-space:nowrap;}
   .vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
   .vid{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:11px;transition:transform .18s;}
   .vid:hover{transform:translateY(-3px);}
@@ -253,7 +264,7 @@
   .vid .play{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent-deep);
     display:flex;align-items:center;justify-content:center;font-size:0.85rem;background:var(--paper);padding-left:3px;}
   .vid .vt{font-family:var(--sans);font-weight:500;font-size:0.99rem;letter-spacing:-0.01em;}
-  .vid .vd{font-family:var(--mono);font-size:0.66rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.04em;}
+  .vid .vd{font-family:var(--mono);font-size:0.75rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.04em;}
   /* ---- research lede ---- */
   .res-lede{font-family:var(--serif);font-size:clamp(1.1rem,1.4vw,1.36rem);line-height:1.5;margin:0 0 36px;max-width:58ch;color:var(--ink-soft);}
   .res-lede em{font-style:italic;color:var(--accent-deep);}
@@ -270,7 +281,7 @@
   .cmpv:hover{background:var(--cs,var(--paper-2));border-color:var(--c,var(--rule-strong));}
   .cmpv-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;}
   .cmpv-name{font-family:var(--sans);font-weight:600;font-size:0.95rem;letter-spacing:-0.01em;}
-  .cmpv-path{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;
+  .cmpv-path{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--cd,var(--ink-faint));background:var(--cs,var(--paper-2));padding:3px 8px;white-space:nowrap;
     transition:background .16s;}
   .cmpv:hover .cmpv-path{background:var(--paper);}
@@ -285,7 +296,7 @@
 
   /* ---- research stat anchor ---- */
   .proj .stat a.stat-anchor{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;
-    text-decoration-color:var(--rule-strong);font-family:var(--mono);font-size:0.68rem;
+    text-decoration-color:var(--rule-strong);font-family:var(--mono);font-size:0.75rem;
     letter-spacing:0.04em;text-transform:uppercase;}
   .proj .stat a.stat-anchor:hover{text-decoration-color:var(--accent);}
   .kripke-preview{border-left:1px solid var(--rule);background:var(--paper-2);padding:0;overflow:hidden;cursor:pointer;border:none;}
@@ -310,7 +321,7 @@
     border-bottom:1px solid var(--rule);background:var(--paper-2);}
   .pmb-title{font-family:var(--sans);font-weight:600;font-size:0.98rem;letter-spacing:-0.01em;}
   .pmb-actions{display:flex;align-items:center;gap:8px;}
-  .pmb-dl{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;text-transform:uppercase;text-decoration:none;
+  .pmb-dl{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.03em;text-transform:uppercase;text-decoration:none;
     color:var(--ink);border:1px solid var(--rule-strong);border-radius:6px;padding:8px 13px;transition:.16s;display:inline-flex;gap:7px;}
   .pmb-dl:hover{border-color:var(--accent);color:var(--accent-deep);background:var(--paper);}
   .pmb-close{font-family:var(--mono);font-size:0.9rem;line-height:1;border:1px solid var(--rule-strong);background:none;
@@ -319,7 +330,7 @@
   .pdf-modal-body{flex:1;min-height:0;background:oklch(0.3 0.01 260);}
   .pdf-modal-body iframe{width:100%;height:100%;border:0;display:block;}
   .ph{background:repeating-linear-gradient(135deg, var(--paper-2), var(--paper-2) 10px, var(--paper) 10px, var(--paper) 20px);}
-  .ph .lbl{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-faint);
+  .ph .lbl{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-faint);
     background:var(--paper);padding:5px 10px;border:1px solid var(--rule);border-radius:4px;}
 
   /* ---- pdf embed ---- */
@@ -374,7 +385,6 @@
       <a href="#research">Research</a>
       <a href="#teaching">Teaching</a>
       <a href="#compose">COMPOSE</a>
-      <a href="#resources">Resources</a>
       <a href="#talks">Talks</a>
       <a href="#cv">CV</a>
       <a href="#contact">Contact</a>
@@ -390,7 +400,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="eyebrow">Fellow in Linguistics — Trinity College Dublin</p>
+          <p class="eyebrow">Fellow in Linguistics · Trinity College Dublin</p>
           <h1 class="name">Thomas<br>Stephen</h1>
           <p class="lede">Formal semanticist working on the meaning of <em>clauses</em> and the syntax–semantics interface.</p>
           <div class="hero-meta">
@@ -592,39 +602,11 @@
     </div>
   </section>
 
-  <!-- RESOURCES -->
-  <section id="resources">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">05</span>
-        <h2 class="sec-title">Resources<span class="sub">Teaching materials</span></h2>
-      </div>
-      <div class="res-groups">
-
-        <div class="res-feature">
-          <div class="rf-text">
-            <span class="pn">Classroom game · PDF</span>
-            <h3>A Game for Modal Logics</h3>
-            <p>Handouts for a classroom game building intuitions about Kripke models for modal logics. Based on a description in Hughes and Cresswell <em>New Introduction to Modal Logics</em>.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button type="button" class="btn" data-open-pdf="files/modal-logic-game.pdf" data-pdf-title="A Game for Modal Logics">View the handout <span class="ar">↗</span></button>
-              <a class="btn ghost" href="files/modal-logic-game.pdf" download>Download PDF <span class="ar">↓</span></a>
-            </div>
-          </div>
-          <button type="button" class="rf-media kripke-preview pdf-trigger" data-open-pdf="files/modal-logic-game.pdf" data-pdf-title="A Game for Modal Logics" aria-label="Open A Game for Modal Logics">
-            <img src="images/modal-game-preview.png" alt="A Game for Modal Logics — handout preview" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- TALKS -->
   <section id="talks">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">06</span>
+        <span class="sec-num">05</span>
         <h2 class="sec-title">Talks &amp; Presentations<span class="sub">Selected, reverse chronological</span></h2>
       </div>
       <div class="talks">
@@ -655,7 +637,7 @@
   <section id="cv">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">07</span>
+        <span class="sec-num">06</span>
         <h2 class="sec-title">Curriculum Vitae<span class="sub">Full academic record</span></h2>
       </div>
 <!-- cv:summary start: generated by cv/build.py from cv/cv.yml; edit cv.yml and rebuild -->
@@ -670,7 +652,7 @@
         </div>
         <div>
           <h4>Employment</h4>
-          <div class="cvs-row"><div class="when">2024–present</div><div><div class="what">Fellow (Semantics)</div><div class="where">Trinity College Dublin</div></div></div>
+          <div class="cvs-row"><div class="when">2024–present</div><div><div class="what">Fellow in Linguistics</div><div class="where">Trinity College Dublin</div></div></div>
           <div class="cvs-row"><div class="when">2023–2024</div><div><div class="what">Lecturer in Linguistics (Semantics)</div><div class="where">Queen Mary University of London</div></div></div>
           <div class="cvs-row"><div class="when">2017–2023</div><div><div class="what">Tutor in Linguistics and Philosophy</div><div class="where">University of Edinburgh</div></div></div>
           <h4>Summer School Teaching</h4>
@@ -694,7 +676,7 @@
   <section id="contact">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">08</span>
+        <span class="sec-num">07</span>
         <h2 class="sec-title">Contact<span class="sub">Get in touch</span></h2>
       </div>
       <div class="contact-grid">
@@ -705,6 +687,7 @@
           <a href="mailto:tmurrays@tcd.ie">Email <span class="ext">tmurrays@tcd.ie</span></a>
           <a href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">CV <span class="ext">PDF ↗</span></a>
           <a href="https://philpeople.org/profiles/thomas-stephen" target="_blank" rel="noopener">PhilPeople <span class="ext">↗</span></a>
+          <a href="https://orcid.org/0009-0009-7721-8407" target="_blank" rel="noopener">ORCID <span class="ext">0009-0009-7721-8407</span></a>
           <a href="https://www.instagram.com/tom.stephen64" target="_blank" rel="noopener">Instagram <span class="ext">@tom.stephen64</span></a>
         </div>
         </div>
@@ -736,7 +719,7 @@
 <footer>
   <div class="wrap foot">
     <span>© <span id="yr"></span> Thomas Stephen</span>
-    <span>Formal Semantics · Trinity College Dublin</span>
+    <span>Fellow in Linguistics · Trinity College Dublin</span>
   </div>
 </footer>
 

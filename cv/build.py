@@ -111,7 +111,7 @@ def block(node, level=0):
 
 CSS = """
 :root{--paper:oklch(0.986 0.004 95);--paper-2:oklch(0.968 0.006 88);--ink:oklch(0.245 0.012 260);
---ink-soft:oklch(0.44 0.012 260);--ink-faint:oklch(0.6 0.01 260);--rule:oklch(0.885 0.008 260);
+--ink-soft:oklch(0.44 0.012 260);--ink-faint:oklch(0.54 0.01 260);--rule:oklch(0.885 0.008 260);
 --rule-strong:oklch(0.8 0.01 260);--accent:oklch(0.55 0.15 33);--accent-deep:oklch(0.46 0.14 33);
 --accent-soft:oklch(0.95 0.03 45);--sans:"Space Grotesk",system-ui,sans-serif;--serif:"Newsreader",Georgia,serif;
 --mono:"JetBrains Mono",ui-monospace,monospace;--maxw:1180px;--gutter:clamp(20px,5vw,64px)}
@@ -265,6 +265,8 @@ def page(cv):
     contact = (f'<li><a href="{phone_href}">{html.escape(c["phone"])}</a></li>'
                f'<li><a href="mailto:{c["email"]}">{html.escape(c["email"])}</a></li>'
                f'<li><a href="https://{c["website"]}">{html.escape(c["website"])}</a></li>')
+    if c.get("orcid"):
+        contact += f'<li><a href="https://orcid.org/{c["orcid"]}">ORCID {html.escape(c["orcid"])}</a></li>'
     nav = "".join(f'<a href="#{s["id"]}">{html.escape(s.get("nav", plain(s["title"])))}</a>' for s in cv["sections"])
     sections = "".join(
         f'<section id="{s["id"]}"><div class="wrap"><div class="sec-head"><span class="sec-num">{n:02d}</span>'
@@ -280,6 +282,17 @@ def page(cv):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thomas Stephen: Curriculum Vitae</title>
 <meta name="description" content="Curriculum vitae of {html.escape(name)}: education, employment, teaching, organisation and presentations.">
+<link rel="canonical" href="{SITE}/cv/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thomas Stephen">
+<meta property="og:title" content="Thomas Stephen: Curriculum Vitae">
+<meta property="og:description" content="Curriculum vitae of {html.escape(name)}: education, employment, teaching, organisation and presentations.">
+<meta property="og:url" content="{SITE}/cv/">
+<meta property="og:image" content="{SITE}/images/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Thomas Stephen, Fellow in Linguistics, Trinity College Dublin">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="../images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

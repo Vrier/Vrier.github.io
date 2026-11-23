@@ -10,12 +10,13 @@
 # Write date ranges with a hyphen (2017-2023); the build sets them as 2017–2023.
 
 name: "Dr. Thomas Stephen"
-position: "Fellow (Semantics) · School of Linguistic, Speech, and Communication Sciences, Trinity College Dublin"
+position: "Fellow in Linguistics · School of Linguistic, Speech, and Communication Sciences, Trinity College Dublin"
 updated: "November 2026"
 contact:
   phone: "+44 7950 641625"
   email: "tmurrays@tcd.ie"
   website: "www.tstephen.com"
+  orcid: "0009-0009-7721-8407"
 
 # What the homepage (index.html) takes from this file on each rebuild.
 homepage:
@@ -57,7 +58,7 @@ sections:
     nav: "Employment"
     items:
       - when: "2024-present"
-        what: "Fellow (Semantics)"
+        what: "Fellow in Linguistics"
         where: "Trinity College Dublin"
       - when: "2023-2024"
         what: "Lecturer in Linguistics (Semantics)"
