@@ -98,61 +98,75 @@ sections:
             items:
               - when: "2025-2027"
                 what: "Semantics I"
+                kw: [formal-semantics]
                 detail: "First Year Undergraduate, Lecturer and Course Organiser"
               - when: "2024-2025, 2026-2027"
                 what: "Semantics II"
+                kw: [formal-semantics]
                 detail: "Third Year Undergraduate, Lecturer and Course Organiser"
               - when: "2025-2027"
                 what: "Semantics III"
+                kw: [formal-semantics]
                 detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
               - when: "2026-2027"
                 what: "Pragmatics I"
+                kw: [bayesian-pragmatics]
                 detail: "Second Year Undergraduate, Lecturer and Course Organiser"
               - when: "2024-2025, 2026-2027"
                 what: "Pragmatics II"
+                kw: [bayesian-pragmatics]
                 detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
               - when: "2025-2026"
                 what: "Describing Meaning"
+                kw: [formal-semantics]
                 detail: "Masters Level, Lecturer and Course Organiser"
               - when: "2026"
                 what: "Linguistic Pragmatics"
+                kw: [bayesian-pragmatics]
                 detail: "Masters Level, Lecturer and Course Organiser"
               - when: "2024-2026"
                 what: "11 Week Special Topics Courses"
                 detail: "Final Year Undergraduate, Lecturer and Course Organiser"
                 topics: ["Scalar Implicatures", "Model Theory for Logic and Semantics", "Presuppositions", "Modality"]
+                topic_kw: {"Scalar Implicatures": [bayesian-pragmatics], "Model Theory for Logic and Semantics": [formal-semantics], "Presuppositions": [presupposition, formal-semantics], "Modality": [formal-semantics]}
           - title: "Queen Mary University of London"
             items:
               - when: "2024"
                 what: "Meaning in the Real World"
+                kw: [formal-semantics]
                 detail: "Final Year Undergraduate, Convener and Lecturer"
               - when: "2024"
                 what: "Syntax II: Explaining Grammatical Structures"
-                detail: "Second Year Undergraduate, 2 Lectures"
+                kw: [syntax-semantics]
+                detail: "Second Year Undergraduate"
               - when: "2023"
                 what: "Formal Semantics"
+                kw: [formal-semantics]
                 detail: "Masters level, Convener and Lecturer"
               - when: "2023"
                 what: "Introduction to Semantics"
+                kw: [formal-semantics]
                 detail: "Second Year Undergraduate, Convener and Lecturer"
           - title: "University of Edinburgh"
             items:
               - when: "2023"
                 what: "Logic 1"
-                detail: "First Year Undergraduate, 6 Lectures"
+                kw: [philosophy-of-language]
+                detail: "First Year Undergraduate"
               - when: "2022"
                 what: "Puzzles and Paradoxes"
-                detail: "Third/Fourth Year Undergraduate, 2 Seminars"
+                kw: [philosophy-of-language]
+                detail: "Third/Fourth Year Undergraduate"
       - title: "Supervision"
         # Named theses: listed on the homepage; the CV line below counts the TCD ones
         # ({theses:TCD} becomes the number), so the two cannot disagree.
         theses:
-          - {who: "Joshua Bovin", title: "Classes of Clause Embedding Predicates", degree: "MA", at: "QMUL", year: "2024"}
-          - {who: "Stefan Pavlovic", title: "From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis", degree: "MPhil", at: "TCD", year: "2025"}
+          - {who: "Joshua Bovin", title: "Classes of Clause Embedding Predicates", degree: "MA", at: "QMUL", year: "2024", kw: [formal-semantics, clausal-embedding]}
+          - {who: "Stefan Pavlovic", title: "From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis", degree: "MPhil", at: "TCD", year: "2025", kw: [grammar-cognition]}
           - {who: "Mengzhu Liang", title: "Pragmatic Functions and Stance Orientations of the Sentence-Final Particles *ha* and *sai* in Southwestern Mandarin", degree: "MPhil", at: "TCD", year: "2025"}
           - {who: "Zeqi Shan", title: "From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences", degree: "MPhil", at: "TCD", year: "2026"}
           - {who: "Thalia Tran", title: "A Corpus Analysis of the Manifestos of Violent \"Incels\" and Leaders of Destructive Cults", degree: "MPhil", at: "TCD", year: "2026"}
-          - {who: "Amanda Centofanti", title: "A Cause for Hope", degree: "MPhil", at: "TCD", year: "2026"}
+          - {who: "Amanda Centofanti", title: "A Cause for Hope", degree: "MPhil", at: "TCD", year: "2026", kw: [formal-semantics, clausal-embedding, philosophy-of-language]}
         items:
           - when: "2024-2026"
             what: "{theses:TCD}x Masters Theses *TCD*"
@@ -168,6 +182,8 @@ sections:
             where: "Joshua Bovin"
           - when: "2023-2024"
             what: "2x Undergraduate Final Year Dissertation *QMUL*"
+          - what: "Further study"
+            detail: "Supervised students, with my recommendation letters, have gone on to PhD and Masters programmes at Oxford, Harvard, MIT, UCL and Edinburgh"
       - title: "Summer Schools"
         items:
           - when: "2026"
@@ -175,25 +191,31 @@ sections:
             detail: "37th European Summer School in Logic, Language, and Information, Advanced Courses"
             where: "Prague"
             tag: "ESSLLI 2026"
+            kw: [formal-semantics, compositionality, type-theory]
             blurb: "An introduction to the formal tools and theoretical background for formulating and addressing questions about universals of the composition function in natural language: the empirical landscape, composition as a single operation on meanings, richer type theories, and universals that constrain the observed variation (function application, type shifting, predicate modification, event identification, restriction, and intensional variants)."
       - title: "Convener"
         items:
           - when: "2023"
             what: "Research Practica"
+            kw: [formal-semantics]
             detail: "Masters Level, 4 Research Projects"
       - title: "Tutoring"
         items:
           - when: "2017-2023"
             what: "Logic 1"
+            kw: [philosophy-of-language]
             detail: "First Year Undergraduate, Tutoring and Marking"
           - when: "2018-2023"
             what: "Mind, Matter, and Language"
+            kw: [philosophy-of-language, grammar-cognition]
             detail: "Second Year Undergraduate, Tutoring and Marking"
           - when: "2022-2023"
             what: "Semantic Theory"
+            kw: [formal-semantics]
             detail: "Masters level, Marking and Assessment Design"
           - when: "2019-2021"
             what: "Introduction to Syntax"
+            kw: [syntax-semantics]
             detail: "Masters level, Tutoring and Marking"
           - when: "2018-2019"
             what: "LEL1A"
@@ -259,72 +281,89 @@ sections:
       - when: "2026"
         event: "Meaning in Language Colloquium"
         title: "Universals of composition and quantificational conservativity"
+        kw: [formal-semantics, compositionality, type-theory]
         with: "Fausto Carcassi"
         where: "Heinrich Heine University Düsseldorf"
       - when: "2026"
         event: "The Nature and Objects of Thought and Assertion"
         title: "Nominal and Clausal Relationships"
+        kw: [formal-semantics, clausal-embedding, syntax-semantics]
         where: "The University of Glasgow"
       - when: "2025"
         event: "Fourth International Conference on Formal Approaches to Meaning in Chinese"
         title: "A Compositional Analysis of Mandarin Chinese Experiential Marker -Guo"
+        kw: [formal-semantics, compositionality]
         with: "Nan Wang and Fausto Carcassi"
         where: "University of Hong Kong"
       - when: "2025"
         event: "University of Alberta Philosophy Colloquium Series"
         title: "Why Propositional Attitude Reports are neither Propositional, Attitudes, nor Reports"
+        kw: [formal-semantics, clausal-embedding, philosophy-of-language]
         where: "University of Alberta"
       - when: "2025"
         event: "TRISS Seminar Series"
         title: "How (not) to embed a clause: Evidence from semantic puzzles"
+        kw: [formal-semantics, clausal-embedding]
         where: "Trinity College Dublin"
       - when: "2024"
         event: "London Semantics Day"
         title: "The Communicative Factive Gap and the Landscape of Clausal Embedding"
+        kw: [formal-semantics, clausal-embedding, presupposition]
         where: "University of London"
       - when: "2023"
         event: "Syntax and Semantics Research Group"
         title: "Identity and Content for CPs in Copulars and Appositions"
+        kw: [formal-semantics, clausal-embedding, syntax-semantics]
         where: "Queen Mary University of London"
       - when: "2023"
         event: "Language Lunch"
         title: "Two Pathways for Composition of Clauses"
+        kw: [formal-semantics, clausal-embedding, compositionality, syntax-semantics]
         where: "Queen Mary University of London"
       - when: "2023"
         event: "Philosophy WiP"
         title: "What do we think? Propositional Objects and Strategies for Clausal Embedding"
+        kw: [formal-semantics, clausal-embedding, philosophy-of-language]
         where: "The University of Edinburgh"
       - when: "2022"
         event: "Edinburgh Meaning Sciences Group"
         title: "Two Strategies for Composing CPs in English: Restriction and Saturation for Propositions and Facts"
+        kw: [formal-semantics, clausal-embedding, compositionality, syntax-semantics]
         where: "The University of Edinburgh"
       - when: "2020"
         event: "Philosophy WiP"
         title: "Propositional Attitudes without Propositions"
+        kw: [formal-semantics, clausal-embedding, philosophy-of-language]
         where: "The University of Edinburgh"
       - when: "2019"
         event: "London Semantics Symposium"
         title: "The semantics of embedded wh-questions"
+        kw: [formal-semantics, clausal-embedding]
         where: "UCL"
       - when: "2019"
         event: "Sem~i~circle Conference"
         title: "Categorising Content Nouns: Semantic and Syntactic Classes"
+        kw: [formal-semantics, syntax-semantics]
         where: "The University of Edinburgh"
       - when: "2018"
         event: "London Semantics Day"
         title: "‘Explain’ing Clausal and Nominal Complementation"
+        kw: [formal-semantics, clausal-embedding, syntax-semantics, argument-structure]
         where: "Queen Mary University of London"
       - when: "2018"
         event: "Sem~i~circle PhD Talks"
         title: "Entailment Patterns with Clause Embedding Verbs"
+        kw: [formal-semantics, clausal-embedding, argument-structure]
         where: "The University of Edinburgh"
       - when: "2018"
         event: "Edinburgh Graduate Conference in Linguistics"
         title: "Explaining ‘Explain’"
+        kw: [formal-semantics, clausal-embedding, argument-structure]
         where: "The University of Edinburgh"
       - when: "2015"
         event: "Durham Undergraduate Philosophy Conference"
         title: "Truth Value Gaps and Truth Eliminativism"
+        kw: [presupposition, philosophy-of-language]
         where: "Durham University"
 
   - id: extracurricular

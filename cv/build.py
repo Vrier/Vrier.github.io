@@ -347,12 +347,41 @@ def page(cv):
 
 # ---------------------------------------------------------------- homepage parts
 
+def kw_attr(kws):
+    """data-kw for the keyword highlighting in About (empty: fades for every keyword)."""
+    return f' data-kw="{html.escape(" ".join(kws or []))}"'
+
+
+def check_keywords(cv, page_html):
+    """Every kw slug in cv.yml must be one of the keyword buttons in index.html."""
+    known = set(re.findall(r'class="key"[^>]*data-kw="([a-z-]+)"', page_html))
+    used = set()
+
+    def walk(node):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if k == "kw":
+                    used.update(v or [])
+                elif k == "topic_kw":
+                    for kws in v.values():
+                        used.update(kws or [])
+                else:
+                    walk(v)
+        elif isinstance(node, list):
+            for x in node:
+                walk(x)
+    walk(cv)
+    unknown = sorted(used - known)
+    if unknown:
+        sys.exit(f"cv.yml uses keyword tags with no button in index.html: {', '.join(unknown)}")
+
+
 def home_talks(items):
     """The homepage Talks list, in its own markup (a year on every row)."""
     rows = []
     for t in items:
         co = f'<span class="co">with {inline(t["with"], ".")}</span>' if t.get("with") else ""
-        rows.append(f'        <div class="talk"><div class="yr">{html.escape(str(t.get("when", "")))}</div>'
+        rows.append(f'        <div class="talk"{kw_attr(t.get("kw"))}><div class="yr">{html.escape(str(t.get("when", "")))}</div>'
                     f'<div class="tt"><span class="ev">{inline(t["event"], ".")}</span>'
                     f'<em>{inline(t["title"], ".")}</em>{co}</div>'
                     f'<div class="vn">{inline(t.get("where", ""), ".")}</div></div>')
@@ -437,11 +466,11 @@ def home_teaching(cv):
         for col in inst["columns"]:
             if col.get("topics"):
                 item = next(i for i in find_group(teaching, inst["name"])["items"] if i["what"] == col["topics"])
-                names = item["topics"]
+                entries = [(n, item.get("topic_kw", {}).get(n)) for n in item["topics"]]
             else:
-                names = [i["what"] for src in col["from"] for i in find_group(teaching, src)["items"]
-                         if not i.get("topics") and col["level"].lower() in str(i.get("detail", "")).lower()]
-            lis = "".join(f"<li>{inline(n, '.')}</li>" for n in names)
+                entries = [(i["what"], i.get("kw")) for src in col["from"] for i in find_group(teaching, src)["items"]
+                           if not i.get("topics") and col["level"].lower() in str(i.get("detail", "")).lower()]
+            lis = "".join(f"<li{kw_attr(k)}>{inline(n, '.')}</li>" for n, k in entries)
             cols.append(f'          <div class="level"><h4>{html.escape(col["title"])}</h4><ul>{lis}</ul></div>')
         out.append('      <div class="teach-inst">\n'
                    f'        <div class="inst"><h3>{html.escape(inst["name"])}</h3><span>{html.escape(inst["role"])}</span></div>\n'
@@ -458,14 +487,14 @@ def home_teaching(cv):
         meta.append(html.escape(" ".join(x for x in (item.get("where"), str(item.get("when", ""))) if x)))
         if co:
             meta.append("with " + inline(co, "."))
-        out.append('      <div class="feature">\n'
+        out.append(f'      <div class="feature"{kw_attr(item.get("kw"))}>\n'
                    f'        <span class="ftag">Summer school · {html.escape(item["tag"])}</span>\n'
                    f'        <h3>{title}</h3>\n'
                    f'        <div class="meta">{" · ".join(meta)}</div>\n'
                    f'        <p>{inline(item["blurb"], ".")}</p>\n'
                    '      </div>\n')
     sup = find_group(teaching, conf["supervision"])
-    rows = [f'        <div class="row"><div><span class="who">{html.escape(t["who"])}:</span> '
+    rows = [f'        <div class="row"{kw_attr(t.get("kw"))}><div><span class="who">{html.escape(t["who"])}:</span> '
             f'<span class="ti">{inline(t["title"], ".")}</span></div>'
             f'<span class="deg">{html.escape(t["degree"])} · {html.escape(t["at"])} · {html.escape(str(t["year"]))}</span></div>'
             for t in sup["theses"]]
@@ -484,6 +513,7 @@ def fill(page_html, name, content):
 def update_homepage(cv):
     by_id = {s["id"]: s for s in cv["sections"]}
     page_html = HOME.read_text(encoding="utf-8")
+    check_keywords(cv, page_html)
     page_html = fill(page_html, "teaching", home_teaching(cv))
     page_html = fill(page_html, "talks", home_talks(by_id[cv["homepage"]["talks"]]["items"]))
     page_html = fill(page_html, "summary", home_summary(cv))

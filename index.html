@@ -41,6 +41,17 @@
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  /* keyword highlighting: the About keywords light up their parts of the page */
+  .keys button.key{cursor:pointer;line-height:inherit;transition:background-color .16s,border-color .16s,color .16s;}
+  .keys button.key:hover{border-color:var(--accent);color:var(--accent-deep);}
+  .keys button.key[aria-pressed="true"]{background:var(--accent-deep);border-color:var(--accent-deep);color:var(--paper);}
+  [data-kw]:not(.key), .proj > *{transition:opacity .25s;}
+  body.kw-on [data-kw]:not(.key):not(.kw-hit):not(.proj), body.kw-on .band{opacity:.25;}
+  body.kw-on .proj:not(.kw-hit) > *{opacity:.25;} /* cards keep their paper background over the grid */
+  body.kw-on .kw-hit{--kw-tint:color-mix(in srgb, var(--accent) 9%, var(--paper));background-image:linear-gradient(var(--kw-tint),var(--kw-tint));}
+  body.kw-on .proj.kw-hit, body.kw-on .feature.kw-hit, body.kw-on .cmp-grid.kw-hit{box-shadow:inset 3px 0 0 var(--accent);}
+  body.kw-on .talk.kw-hit, body.kw-on .sup .row.kw-hit, body.kw-on .level li.kw-hit, body.kw-on .prose p.kw-hit,
+  body.kw-on .res-lede.kw-hit{box-shadow:-10px 0 0 var(--kw-tint), 10px 0 0 var(--kw-tint), -12px 0 0 var(--accent);}
   .skip{position:absolute;left:12px;top:-64px;z-index:300;background:var(--ink);color:var(--paper);padding:10px 14px;
     border-radius:6px;font-family:var(--mono);font-size:0.8rem;letter-spacing:0.04em;text-decoration:none;}
   .skip:focus{top:12px;}
@@ -408,11 +419,15 @@
  },
  "knowsAbout": [
   "Formal semantics",
-  "Clausal embedding",
   "Syntax–semantics interface",
-  "Philosophy of language",
+  "Clausal embedding",
+  "Argument structure",
   "Presupposition",
-  "Compositionality"
+  "Compositionality",
+  "Type theory",
+  "Bayesian pragmatics",
+  "Philosophy of language",
+  "Metaethics"
  ],
  "sameAs": [
   "https://orcid.org/0009-0009-7721-8407",
@@ -463,7 +478,7 @@
           <div class="frame">
             <img src="images/portrait.jpg" alt="Thomas Stephen">
           </div>
-          <figcaption><span>Thomas Stephen</span><span>Dublin, IE</span></figcaption>
+          <figcaption><span>Thomas Stephen</span></figcaption>
         </figure>
       </div>
     </div>
@@ -478,24 +493,27 @@
       </div>
       <div class="about-grid">
         <div class="prose">
-          <p>I completed my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD</a> in Linguistics at the University of Edinburgh in 2023, under the supervision of Robert Truswell, Bryan Pickel, and Wataru Uegaki. Before starting a fellowship at Trinity College Dublin, I was a Lecturer in Semantics at Queen Mary University of London.</p>
-          <p>My work focuses on formal semantics, with particular attention to the syntax–semantics interface, the connections between linguistic theory and philosophy of language, and the relationship between grammar and cognition. I explore the semantics of finite clausal embedding and argument structure, aiming to give a unified explanation of their entailment patterns and alternations.</p>
-          <p>I am developing <strong>DACE</strong> (the <em>Dictionary of Alternations in Clause Embedding</em>), an online resource mapping the alternation patterns of clause-embedding predicates, initially with a focus on English.</p>
-          <p>I am also currently interested in the mechanistic interpretability of LLMs, in Bayesian models of communication in the Rational Speech Act tradition and, together with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>, in universals of semantic composition.</p>
-          <p>I have also developed several tools and resources for teaching formal semantics, most significantly <a href="#compose">COMPOSE</a> (Compositional Meaning Practice and Online Semantics Engine), which you can view below.</p>
+          <p data-kw="formal-semantics">I completed my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD</a> in Linguistics at the University of Edinburgh in 2023, under the supervision of Robert Truswell, Bryan Pickel, and Wataru Uegaki. Before starting a fellowship at Trinity College Dublin, I was a Lecturer in Semantics at Queen Mary University of London.</p>
+          <p data-kw="formal-semantics syntax-semantics philosophy-of-language grammar-cognition clausal-embedding argument-structure">My work focuses on formal semantics, with particular attention to the syntax–semantics interface, the connections between linguistic theory and philosophy of language, and the relationship between grammar and cognition. I explore the semantics of finite clausal embedding and argument structure, aiming to give a unified explanation of their entailment patterns and alternations.</p>
+          <p data-kw="clausal-embedding">I am developing <strong>DACE</strong> (the <em>Dictionary of Alternations in Clause Embedding</em>), an online resource mapping the alternation patterns of clause-embedding predicates, initially with a focus on English.</p>
+          <p data-kw="bayesian-pragmatics compositionality type-theory">I am also currently interested in the mechanistic interpretability of LLMs, in Bayesian models of communication in the Rational Speech Act tradition and, together with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>, in universals of semantic composition.</p>
+          <p data-kw="formal-semantics compositionality type-theory">I have also developed several tools and resources for teaching formal semantics, most significantly <a href="#compose">COMPOSE</a> (Compositional Meaning Practice and Online Semantics Engine), which you can view below.</p>
         </div>
         <div class="aside">
           <div class="blk">
             <h3>Research keywords</h3>
             <div class="keys">
-              <span class="key">Formal semantics</span>
-              <span class="key">Clausal embedding</span>
-              <span class="key">Syntax–semantics interface</span>
-              <span class="key">Philosophy of language</span>
-              <span class="key">Presupposition</span>
-              <span class="key">Argument structure</span>
-              <span class="key">Compositionality</span>
-              <span class="key">Grammar &amp; cognition</span>
+              <button type="button" class="key" data-kw="formal-semantics" aria-pressed="false" title="Highlight on this page">Formal semantics</button>
+              <button type="button" class="key" data-kw="syntax-semantics" aria-pressed="false" title="Highlight on this page">Syntax–semantics interface</button>
+              <button type="button" class="key" data-kw="clausal-embedding" aria-pressed="false" title="Highlight on this page">Clausal embedding</button>
+              <button type="button" class="key" data-kw="argument-structure" aria-pressed="false" title="Highlight on this page">Argument structure</button>
+              <button type="button" class="key" data-kw="presupposition" aria-pressed="false" title="Highlight on this page">Presupposition</button>
+              <button type="button" class="key" data-kw="compositionality" aria-pressed="false" title="Highlight on this page">Compositionality</button>
+              <button type="button" class="key" data-kw="type-theory" aria-pressed="false" title="Highlight on this page">Type theory</button>
+              <button type="button" class="key" data-kw="bayesian-pragmatics" aria-pressed="false" title="Highlight on this page">Bayesian pragmatics</button>
+              <button type="button" class="key" data-kw="philosophy-of-language" aria-pressed="false" title="Highlight on this page">Philosophy of language</button>
+              <button type="button" class="key" data-kw="metaethics" aria-pressed="false" title="Highlight on this page">Metaethics</button>
+              <button type="button" class="key" data-kw="grammar-cognition" aria-pressed="false" title="Highlight on this page">Grammar &amp; cognition</button>
             </div>
           </div>
           <div class="blk">
@@ -521,33 +539,33 @@
         <span class="sec-num">02</span>
         <h2 class="sec-title">Research<span class="sub">Current projects</span></h2>
       </div>
-      <p class="res-lede">My primary research aims to give a formally explicit account of how <em>clauses</em> contribute to meaning, working in the interface of semantics, syntax, philosophy of language and the study of cognition.</p>
+      <p class="res-lede" data-kw="formal-semantics clausal-embedding syntax-semantics philosophy-of-language grammar-cognition">My primary research aims to give a formally explicit account of how <em>clauses</em> contribute to meaning, working in the interface of semantics, syntax, philosophy of language and the study of cognition.</p>
       <div class="projects">
-        <div class="proj">
+        <div class="proj" data-kw="formal-semantics clausal-embedding syntax-semantics argument-structure">
           <div class="pn">→ 01</div>
           <h3>Clausal embedding</h3>
           <p>A unified account of the entailment patterns and alternations of finite clausal embedding and argument structure at the syntax–semantics interface, the subject of my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD thesis ↗</a>. <strong>DACE</strong>, the <em>Dictionary of Alternations in Clause Embedding</em>, maps these alternations for English clause-embedding predicates, after Levin's <em>English Verb Classes and Alternations</em>.</p>
           <div class="stat">Ongoing · Core programme</div>
         </div>
-        <div class="proj">
+        <div class="proj" data-kw="formal-semantics presupposition philosophy-of-language metaethics">
           <div class="pn">→ 02</div>
           <h3>Presupposition and error theory</h3>
           <p>A semantics for presuppositional moral error theory, built from standard tools in formal semantics. Deontic claims presuppose that the standard they are evaluated against is in force. Tested against grammatical evidence, with law as the control.</p>
           <div class="stat">Ongoing · Semantics and metaethics</div>
         </div>
-        <div class="proj">
+        <div class="proj" data-kw="formal-semantics compositionality type-theory">
           <div class="pn">→ 03</div>
           <h3>Universals of composition</h3>
           <p>Dependent type theory as a description of the mechanism of semantic composition. A typed composition function, and the universals that come from its interaction with the lexicon. With <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>; taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
           <div class="stat">Collaboration · F. Carcassi</div>
         </div>
-        <div class="proj">
+        <div class="proj" data-kw="bayesian-pragmatics">
           <div class="pn">→ 04</div>
           <h3>Rational Speech Act models</h3>
           <p>Communication modelled as Bayesian recursive mind reading, in the Rational Speech Act tradition. Speakers reason about listeners, and listeners about speakers.</p>
           <div class="stat">New · Pragmatics</div>
         </div>
-        <div class="proj">
+        <div class="proj" data-kw="formal-semantics compositionality type-theory">
           <div class="pn">→ 05</div>
           <h3>COMPOSE</h3>
           <p>Compositional Meaning Practice and Online Semantics Engine: an interactive tool and problem-set builder for teaching formal semantics.</p>
@@ -570,27 +588,27 @@
       <div class="teach-inst">
         <div class="inst"><h3>Trinity College Dublin</h3><span>Current</span></div>
         <div class="levels">
-          <div class="level"><h4>Undergraduate</h4><ul><li>Semantics I</li><li>Semantics II</li><li>Semantics III</li><li>Pragmatics I</li><li>Pragmatics II</li></ul></div>
-          <div class="level"><h4>Postgraduate</h4><ul><li>Describing Meaning</li><li>Linguistic Pragmatics</li></ul></div>
-          <div class="level"><h4>11-week in-depth</h4><ul><li>Scalar Implicatures</li><li>Model Theory for Logic and Semantics</li><li>Presuppositions</li><li>Modality</li></ul></div>
+          <div class="level"><h4>Undergraduate</h4><ul><li data-kw="formal-semantics">Semantics I</li><li data-kw="formal-semantics">Semantics II</li><li data-kw="formal-semantics">Semantics III</li><li data-kw="bayesian-pragmatics">Pragmatics I</li><li data-kw="bayesian-pragmatics">Pragmatics II</li></ul></div>
+          <div class="level"><h4>Postgraduate</h4><ul><li data-kw="formal-semantics">Describing Meaning</li><li data-kw="bayesian-pragmatics">Linguistic Pragmatics</li></ul></div>
+          <div class="level"><h4>11-week in-depth</h4><ul><li data-kw="bayesian-pragmatics">Scalar Implicatures</li><li data-kw="formal-semantics">Model Theory for Logic and Semantics</li><li data-kw="presupposition formal-semantics">Presuppositions</li><li data-kw="formal-semantics">Modality</li></ul></div>
         </div>
       </div>
       <div class="teach-inst">
         <div class="inst"><h3>Queen Mary University of London</h3><span>Lecturer in Semantics</span></div>
         <div class="levels">
-          <div class="level"><h4>Undergraduate</h4><ul><li>Meaning in the Real World</li><li>Syntax II: Explaining Grammatical Structures</li><li>Introduction to Semantics</li></ul></div>
-          <div class="level"><h4>Postgraduate</h4><ul><li>Formal Semantics</li><li>Research Practica</li></ul></div>
+          <div class="level"><h4>Undergraduate</h4><ul><li data-kw="formal-semantics">Meaning in the Real World</li><li data-kw="syntax-semantics">Syntax II: Explaining Grammatical Structures</li><li data-kw="formal-semantics">Introduction to Semantics</li></ul></div>
+          <div class="level"><h4>Postgraduate</h4><ul><li data-kw="formal-semantics">Formal Semantics</li><li data-kw="formal-semantics">Research Practica</li></ul></div>
         </div>
       </div>
       <div class="teach-inst">
         <div class="inst"><h3>University of Edinburgh</h3><span>Lecturer &amp; Tutor</span></div>
         <div class="levels">
-          <div class="level"><h4>UG · as lecturer</h4><ul><li>Logic 1</li><li>Puzzles and Paradoxes</li></ul></div>
-          <div class="level"><h4>UG · as tutor</h4><ul><li>Logic 1</li><li>Mind, Matter, and Language</li><li>LEL1A</li><li>LEL1B</li></ul></div>
-          <div class="level"><h4>PG · as tutor</h4><ul><li>Semantic Theory</li><li>Introduction to Syntax</li></ul></div>
+          <div class="level"><h4>UG · as lecturer</h4><ul><li data-kw="philosophy-of-language">Logic 1</li><li data-kw="philosophy-of-language">Puzzles and Paradoxes</li></ul></div>
+          <div class="level"><h4>UG · as tutor</h4><ul><li data-kw="philosophy-of-language">Logic 1</li><li data-kw="philosophy-of-language grammar-cognition">Mind, Matter, and Language</li><li data-kw="">LEL1A</li><li data-kw="">LEL1B</li></ul></div>
+          <div class="level"><h4>PG · as tutor</h4><ul><li data-kw="formal-semantics">Semantic Theory</li><li data-kw="syntax-semantics">Introduction to Syntax</li></ul></div>
         </div>
       </div>
-      <div class="feature">
+      <div class="feature" data-kw="formal-semantics compositionality type-theory">
         <span class="ftag">Summer school · ESSLLI 2026</span>
         <h3><a class="feat-link" href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">The Function of Composition <svg class="lk" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a></h3>
         <div class="meta">37th European Summer School in Logic, Language, and Information, Advanced Courses · Prague 2026 · with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a></div>
@@ -598,12 +616,12 @@
       </div>
       <div class="sup">
         <h3>Supervision</h3>
-        <div class="row"><div><span class="who">Joshua Bovin:</span> <span class="ti">Classes of Clause Embedding Predicates</span></div><span class="deg">MA · QMUL · 2024</span></div>
-        <div class="row"><div><span class="who">Stefan Pavlovic:</span> <span class="ti">From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis</span></div><span class="deg">MPhil · TCD · 2025</span></div>
-        <div class="row"><div><span class="who">Mengzhu Liang:</span> <span class="ti">Pragmatic Functions and Stance Orientations of the Sentence-Final Particles <em>ha</em> and <em>sai</em> in Southwestern Mandarin</span></div><span class="deg">MPhil · TCD · 2025</span></div>
-        <div class="row"><div><span class="who">Zeqi Shan:</span> <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
-        <div class="row"><div><span class="who">Thalia Tran:</span> <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
-        <div class="row"><div><span class="who">Amanda Centofanti:</span> <span class="ti">A Cause for Hope</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row" data-kw="formal-semantics clausal-embedding"><div><span class="who">Joshua Bovin:</span> <span class="ti">Classes of Clause Embedding Predicates</span></div><span class="deg">MA · QMUL · 2024</span></div>
+        <div class="row" data-kw="grammar-cognition"><div><span class="who">Stefan Pavlovic:</span> <span class="ti">From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row" data-kw=""><div><span class="who">Mengzhu Liang:</span> <span class="ti">Pragmatic Functions and Stance Orientations of the Sentence-Final Particles <em>ha</em> and <em>sai</em> in Southwestern Mandarin</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row" data-kw=""><div><span class="who">Zeqi Shan:</span> <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row" data-kw=""><div><span class="who">Thalia Tran:</span> <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row" data-kw="formal-semantics clausal-embedding philosophy-of-language"><div><span class="who">Amanda Centofanti:</span> <span class="ti">A Cause for Hope</span></div><span class="deg">MPhil · TCD · 2026</span></div>
       </div>
 <!-- cv:teaching end -->
       <figure class="band">
@@ -619,7 +637,7 @@
         <span class="sec-num">04</span>
         <h2 class="sec-title">COMPOSE<span class="sub">Compositional meaning practice &amp; online semantics engine</span></h2>
       </div>
-      <div class="cmp-grid">
+      <div class="cmp-grid" data-kw="formal-semantics compositionality type-theory">
         <div class="cmp-col-text">
           <p class="cmp-intro">An interactive tool for practising compositional semantics inspired by the <a href="http://lambdacalculator.com/" target="_blank" rel="noopener">Lambda Calculator</a> (Champollion, Tauberer &amp; Romero). It allows you to build exercises by assigning lexical denotations and syntactic trees and having students work through the derivation compositionally. It currently supports Function Application, Predicate Modification, Intensional Function Application, Quantifier Raising and Various Type-Shifting Mechanisms. It is now hosted as a free service at <a href="https://compose.tstephen.com" target="_blank" rel="noopener">compose.tstephen.com</a>, with a built-in worksheet library and a live editor for authoring your own problem sets.</p>
           <div class="cmp-versions">
@@ -667,23 +685,23 @@
       </div>
       <div class="talks">
 <!-- cv:talks start: generated by cv/build.py from cv/cv.yml; edit cv.yml and rebuild -->
-        <div class="talk"><div class="yr">2026</div><div class="tt"><span class="ev">Meaning in Language Colloquium</span><em>Universals of composition and quantificational conservativity</em><span class="co">with Fausto Carcassi</span></div><div class="vn">Heinrich Heine University Düsseldorf</div></div>
-        <div class="talk"><div class="yr">2026</div><div class="tt"><span class="ev">The Nature and Objects of Thought and Assertion</span><em>Nominal and Clausal Relationships</em></div><div class="vn">The University of Glasgow</div></div>
-        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">Fourth International Conference on Formal Approaches to Meaning in Chinese</span><em>A Compositional Analysis of Mandarin Chinese Experiential Marker -Guo</em><span class="co">with Nan Wang and Fausto Carcassi</span></div><div class="vn">University of Hong Kong</div></div>
-        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">University of Alberta Philosophy Colloquium Series</span><em>Why Propositional Attitude Reports are neither Propositional, Attitudes, nor Reports</em></div><div class="vn">University of Alberta</div></div>
-        <div class="talk"><div class="yr">2025</div><div class="tt"><span class="ev">TRISS Seminar Series</span><em>How (not) to embed a clause: Evidence from semantic puzzles</em></div><div class="vn">Trinity College Dublin</div></div>
-        <div class="talk"><div class="yr">2024</div><div class="tt"><span class="ev">London Semantics Day</span><em>The Communicative Factive Gap and the Landscape of Clausal Embedding</em></div><div class="vn">University of London</div></div>
-        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Syntax and Semantics Research Group</span><em>Identity and Content for CPs in Copulars and Appositions</em></div><div class="vn">Queen Mary University of London</div></div>
-        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Language Lunch</span><em>Two Pathways for Composition of Clauses</em></div><div class="vn">Queen Mary University of London</div></div>
-        <div class="talk"><div class="yr">2023</div><div class="tt"><span class="ev">Philosophy WiP</span><em>What do we think? Propositional Objects and Strategies for Clausal Embedding</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2022</div><div class="tt"><span class="ev">Edinburgh Meaning Sciences Group</span><em>Two Strategies for Composing CPs in English: Restriction and Saturation for Propositions and Facts</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2020</div><div class="tt"><span class="ev">Philosophy WiP</span><em>Propositional Attitudes without Propositions</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2019</div><div class="tt"><span class="ev">London Semantics Symposium</span><em>The semantics of embedded wh-questions</em></div><div class="vn">UCL</div></div>
-        <div class="talk"><div class="yr">2019</div><div class="tt"><span class="ev">Sem<sub>i</sub>circle Conference</span><em>Categorising Content Nouns: Semantic and Syntactic Classes</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">London Semantics Day</span><em>‘Explain’ing Clausal and Nominal Complementation</em></div><div class="vn">Queen Mary University of London</div></div>
-        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">Sem<sub>i</sub>circle PhD Talks</span><em>Entailment Patterns with Clause Embedding Verbs</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2018</div><div class="tt"><span class="ev">Edinburgh Graduate Conference in Linguistics</span><em>Explaining ‘Explain’</em></div><div class="vn">The University of Edinburgh</div></div>
-        <div class="talk"><div class="yr">2015</div><div class="tt"><span class="ev">Durham Undergraduate Philosophy Conference</span><em>Truth Value Gaps and Truth Eliminativism</em></div><div class="vn">Durham University</div></div>
+        <div class="talk" data-kw="formal-semantics compositionality type-theory"><div class="yr">2026</div><div class="tt"><span class="ev">Meaning in Language Colloquium</span><em>Universals of composition and quantificational conservativity</em><span class="co">with Fausto Carcassi</span></div><div class="vn">Heinrich Heine University Düsseldorf</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding syntax-semantics"><div class="yr">2026</div><div class="tt"><span class="ev">The Nature and Objects of Thought and Assertion</span><em>Nominal and Clausal Relationships</em></div><div class="vn">The University of Glasgow</div></div>
+        <div class="talk" data-kw="formal-semantics compositionality"><div class="yr">2025</div><div class="tt"><span class="ev">Fourth International Conference on Formal Approaches to Meaning in Chinese</span><em>A Compositional Analysis of Mandarin Chinese Experiential Marker -Guo</em><span class="co">with Nan Wang and Fausto Carcassi</span></div><div class="vn">University of Hong Kong</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding philosophy-of-language"><div class="yr">2025</div><div class="tt"><span class="ev">University of Alberta Philosophy Colloquium Series</span><em>Why Propositional Attitude Reports are neither Propositional, Attitudes, nor Reports</em></div><div class="vn">University of Alberta</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding"><div class="yr">2025</div><div class="tt"><span class="ev">TRISS Seminar Series</span><em>How (not) to embed a clause: Evidence from semantic puzzles</em></div><div class="vn">Trinity College Dublin</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding presupposition"><div class="yr">2024</div><div class="tt"><span class="ev">London Semantics Day</span><em>The Communicative Factive Gap and the Landscape of Clausal Embedding</em></div><div class="vn">University of London</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding syntax-semantics"><div class="yr">2023</div><div class="tt"><span class="ev">Syntax and Semantics Research Group</span><em>Identity and Content for CPs in Copulars and Appositions</em></div><div class="vn">Queen Mary University of London</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding compositionality syntax-semantics"><div class="yr">2023</div><div class="tt"><span class="ev">Language Lunch</span><em>Two Pathways for Composition of Clauses</em></div><div class="vn">Queen Mary University of London</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding philosophy-of-language"><div class="yr">2023</div><div class="tt"><span class="ev">Philosophy WiP</span><em>What do we think? Propositional Objects and Strategies for Clausal Embedding</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding compositionality syntax-semantics"><div class="yr">2022</div><div class="tt"><span class="ev">Edinburgh Meaning Sciences Group</span><em>Two Strategies for Composing CPs in English: Restriction and Saturation for Propositions and Facts</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding philosophy-of-language"><div class="yr">2020</div><div class="tt"><span class="ev">Philosophy WiP</span><em>Propositional Attitudes without Propositions</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding"><div class="yr">2019</div><div class="tt"><span class="ev">London Semantics Symposium</span><em>The semantics of embedded wh-questions</em></div><div class="vn">UCL</div></div>
+        <div class="talk" data-kw="formal-semantics syntax-semantics"><div class="yr">2019</div><div class="tt"><span class="ev">Sem<sub>i</sub>circle Conference</span><em>Categorising Content Nouns: Semantic and Syntactic Classes</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding syntax-semantics argument-structure"><div class="yr">2018</div><div class="tt"><span class="ev">London Semantics Day</span><em>‘Explain’ing Clausal and Nominal Complementation</em></div><div class="vn">Queen Mary University of London</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding argument-structure"><div class="yr">2018</div><div class="tt"><span class="ev">Sem<sub>i</sub>circle PhD Talks</span><em>Entailment Patterns with Clause Embedding Verbs</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="formal-semantics clausal-embedding argument-structure"><div class="yr">2018</div><div class="tt"><span class="ev">Edinburgh Graduate Conference in Linguistics</span><em>Explaining ‘Explain’</em></div><div class="vn">The University of Edinburgh</div></div>
+        <div class="talk" data-kw="presupposition philosophy-of-language"><div class="yr">2015</div><div class="tt"><span class="ev">Durham Undergraduate Philosophy Conference</span><em>Truth Value Gaps and Truth Eliminativism</em></div><div class="vn">Durham University</div></div>
 <!-- cv:talks end -->
       </div>
     </div>
@@ -818,6 +836,32 @@
     modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', close); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
   })();
+</script>
+<script>
+/* Keyword highlighting: a keyword button in About lights up the parts of the page tagged
+   with it (data-kw, space-separated slugs; Talks and Teaching get theirs from cv/cv.yml)
+   and fades the other tagged parts. Again, or Esc, clears. #kw=<slug> opens with one on. */
+(function(){
+  var keys = [].slice.call(document.querySelectorAll('.keys button.key[data-kw]'));
+  var tagged = [].slice.call(document.querySelectorAll('[data-kw]:not(.key)'));
+  var current = '';
+  function set(kw){
+    current = kw;
+    keys.forEach(function(k){ k.setAttribute('aria-pressed', k.getAttribute('data-kw') === kw ? 'true' : 'false'); });
+    document.body.classList.toggle('kw-on', !!kw);
+    tagged.forEach(function(el){
+      el.classList.toggle('kw-hit', !!kw && (' ' + el.getAttribute('data-kw') + ' ').indexOf(' ' + kw + ' ') > -1);
+    });
+    var hash = kw ? '#kw=' + kw : (/^#kw=/.test(location.hash) ? '' : location.hash);
+    try { history.replaceState(null, '', location.pathname + location.search + hash); } catch (e) {}
+  }
+  keys.forEach(function(k){
+    k.addEventListener('click', function(){ var kw = k.getAttribute('data-kw'); set(current === kw ? '' : kw); });
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && current) set(''); });
+  var m = location.hash.match(/^#kw=([a-z-]+)$/);
+  if (m && keys.some(function(k){ return k.getAttribute('data-kw') === m[1]; })) set(m[1]);
+})();
 </script>
 </body>
 </html>
