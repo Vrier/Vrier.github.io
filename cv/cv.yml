@@ -20,13 +20,34 @@ contact:
 
 # What the homepage (index.html) takes from this file on each rebuild.
 homepage:
-  summary_columns:          # the short CV in section 07, column by column
+  summary_columns:          # the short CV in section 06, column by column
     - - education
       - {section: reviewing, group: "Research Assistant"}
     - - employment
       - {section: teaching, group: "Summer Schools", title: "Summer School Teaching"}
       - {section: reviewing, group: "Reviewer"}
-  talks: presentations      # the Talks list in section 06
+  talks: presentations      # the Talks list in section 05
+  teaching:                 # section 03, built from the teaching section below
+    institutions:           # one row each; `name` is a group under Lecturing
+      - name: "Trinity College Dublin"
+        role: "Current"
+        columns:            # `from`: groups to draw on; `level`: kept when the detail says it
+          - {title: "Undergraduate", from: ["Trinity College Dublin"], level: "Undergraduate"}
+          - {title: "Postgraduate", from: ["Trinity College Dublin"], level: "Masters"}
+          - {title: "11-week in-depth", topics: "11 Week Special Topics Courses"}
+      - name: "Queen Mary University of London"
+        role: "Lecturer in Semantics"
+        columns:
+          - {title: "Undergraduate", from: ["Queen Mary University of London"], level: "Undergraduate"}
+          - {title: "Postgraduate", from: ["Queen Mary University of London", "Convener"], level: "Masters"}
+      - name: "University of Edinburgh"
+        role: "Lecturer & Tutor"
+        columns:
+          - {title: "UG · as lecturer", from: ["University of Edinburgh"], level: "Undergraduate"}
+          - {title: "UG · as tutor", from: ["Tutoring"], level: "Undergraduate"}
+          - {title: "PG · as tutor", from: ["Tutoring"], level: "Masters"}
+    features: "Summer Schools"   # one card per item (needs `tag` and `blurb`)
+    supervision: "Supervision"   # its `theses` list
 
 sections:
 
@@ -98,7 +119,8 @@ sections:
                 detail: "Masters Level, Lecturer and Course Organiser"
               - when: "2024-2026"
                 what: "11 Week Special Topics Courses"
-                detail: "Final Year Undergraduate, Lecturer and Course Organiser, *Scalar Implicatures, Model Theory for Logic and Semantics, Presuppositions, Modality*"
+                detail: "Final Year Undergraduate, Lecturer and Course Organiser"
+                topics: ["Scalar Implicatures", "Model Theory for Logic and Semantics", "Presuppositions", "Modality"]
           - title: "Queen Mary University of London"
             items:
               - when: "2024"
@@ -122,9 +144,18 @@ sections:
                 what: "Puzzles and Paradoxes"
                 detail: "Third/Fourth Year Undergraduate, 2 Seminars"
       - title: "Supervision"
+        # Named theses: listed on the homepage; the CV line below counts the TCD ones
+        # ({theses:TCD} becomes the number), so the two cannot disagree.
+        theses:
+          - {who: "Joshua Bovin", title: "Classes of Clause Embedding Predicates", degree: "MA", at: "QMUL", year: "2024"}
+          - {who: "Stefan Pavlovic", title: "From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis", degree: "MPhil", at: "TCD", year: "2025"}
+          - {who: "Mengzhu Liang", title: "Pragmatic Functions and Stance Orientations of the Sentence-Final Particles *ha* and *sai* in Southwestern Mandarin", degree: "MPhil", at: "TCD", year: "2025"}
+          - {who: "Zeqi Shan", title: "From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences", degree: "MPhil", at: "TCD", year: "2026"}
+          - {who: "Thalia Tran", title: "A Corpus Analysis of the Manifestos of Violent \"Incels\" and Leaders of Destructive Cults", degree: "MPhil", at: "TCD", year: "2026"}
+          - {who: "Amanda Centofanti", title: "A Cause for Hope", degree: "MPhil", at: "TCD", year: "2026"}
         items:
           - when: "2024-2026"
-            what: "5x Masters Theses *TCD*"
+            what: "{theses:TCD}x Masters Theses *TCD*"
           - when: "2025-2026"
             what: "2x Undergraduate Final Year Dissertation *TCD*"
           - when: "2024"
@@ -143,6 +174,8 @@ sections:
             what: "[The Function of Composition](https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60), with [Fausto Carcassi](https://faustocarcassi.com/)"
             detail: "37th European Summer School in Logic, Language, and Information, Advanced Courses"
             where: "Prague"
+            tag: "ESSLLI 2026"
+            blurb: "An introduction to the formal tools and theoretical background for formulating and addressing questions about universals of the composition function in natural language: the empirical landscape, composition as a single operation on meanings, richer type theories, and universals that constrain the observed variation (function application, type shifting, predicate modification, event identification, restriction, and intensional variants)."
       - title: "Convener"
         items:
           - when: "2023"

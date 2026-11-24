@@ -3,7 +3,7 @@
 
 From the repo root:
     python3 cv/build.py            # writes cv/index.html, files/Thomas-Stephen-CV.pdf,
-                                   # and the CV parts of index.html (Talks list, short CV)
+                                   # and the CV parts of index.html (Teaching, Talks list, short CV)
     python3 cv/build.py --no-pdf   # everything except the PDF
 
 Needs PyYAML, and Playwright with a Chromium browser for the PDF.
@@ -62,11 +62,20 @@ def plain(text):
 
 # ---------------------------------------------------------------- blocks
 
+def with_topics(item):
+    """The detail line, with any topics list added in italics."""
+    detail = item.get("detail") or ""
+    if item.get("topics"):
+        detail = (detail + ", " if detail else "") + "*" + ", ".join(item["topics"]) + "*"
+    return detail
+
+
 def row(item):
     parts = []
+    fields = {"what": item.get("what"), "detail": with_topics(item), "where": item.get("where")}
     for key, cls in (("what", "what"), ("detail", "detail"), ("where", "where")):
-        if item.get(key):
-            parts.append(f'<div class="{cls}">{inline(item[key])}</div>')
+        if fields[key]:
+            parts.append(f'<div class="{cls}">{inline(fields[key])}</div>')
     if item.get("notes"):
         lis = "".join(f"<li>{inline(n)}</li>" for n in item["notes"])
         parts.append(f'<ul class="notes">{lis}</ul>')
@@ -373,7 +382,7 @@ def home_summary(cv):
                 sec = by_id[entry]
                 blocks = [(sec["title"], sec)] if sec.get("items") else [(g["title"], g) for g in sec.get("groups", [])]
             for title, node in blocks:
-                parts.append(f"          <h4>{inline(title, '.')}</h4>")
+                parts.append(f"          <h3>{inline(title, '.')}</h3>")
                 if node.get("layout") == "inline":
                     lis = "".join(f"<li>{inline(i['what'], '.')}</li>" for i in node["items"])
                     parts.append(f'          <ul class="cvs-list">{lis}</ul>')
@@ -381,6 +390,82 @@ def home_summary(cv):
                     parts.extend(home_rows(node["items"]))
         cols.append('        <div>\n' + "\n".join(parts) + '\n        </div>')
     return '      <div class="cvs">\n' + "\n".join(cols) + '\n      </div>\n'
+
+
+LINK_ICON = ('<svg class="lk" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">'
+             '<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/>'
+             '<path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>')
+
+
+def find_group(node, title):
+    """The group with this title anywhere under node (a section or group)."""
+    for g in node.get("groups", []):
+        if g.get("title") == title:
+            return g
+        hit = find_group(g, title)
+        if hit:
+            return hit
+    return None
+
+
+def count_theses(cv):
+    """Replace {theses:AT} in the teaching section with the number of named theses at AT."""
+    teaching = next(s for s in cv["sections"] if s["id"] == "teaching")
+
+    def walk(node):
+        for g in node.get("groups", []):
+            for item in g.get("items", []):
+                for at in re.findall(r"\{theses:([^}]+)\}", str(item.get("what", ""))):
+                    n = sum(1 for t in g.get("theses", []) if t.get("at") == at)
+                    item["what"] = item["what"].replace("{theses:%s}" % at, str(n))
+            walk(g)
+    walk(teaching)
+
+
+def home_teaching(cv):
+    """Section 03: institutions, summer-school cards and supervision, as mapped under homepage: teaching."""
+    conf = cv["homepage"]["teaching"]
+    teaching = next(s for s in cv["sections"] if s["id"] == "teaching")
+    out = []
+    for inst in conf["institutions"]:
+        cols = []
+        for col in inst["columns"]:
+            if col.get("topics"):
+                item = next(i for i in find_group(teaching, inst["name"])["items"] if i["what"] == col["topics"])
+                names = item["topics"]
+            else:
+                names = [i["what"] for src in col["from"] for i in find_group(teaching, src)["items"]
+                         if not i.get("topics") and col["level"].lower() in str(i.get("detail", "")).lower()]
+            lis = "".join(f"<li>{inline(n, '.')}</li>" for n in names)
+            cols.append(f'          <div class="level"><h4>{html.escape(col["title"])}</h4><ul>{lis}</ul></div>')
+        out.append('      <div class="teach-inst">\n'
+                   f'        <div class="inst"><h3>{html.escape(inst["name"])}</h3><span>{html.escape(inst["role"])}</span></div>\n'
+                   '        <div class="levels">\n' + "\n".join(cols) + '\n        </div>\n      </div>\n')
+    for item in find_group(teaching, conf["features"])["items"]:
+        m = re.match(r"\[([^\]]+)\]\(([^)\s]+)\)(?:,\s*with\s+(.+))?$", item["what"])
+        if m:
+            title = (f'<a class="feat-link" href="{m.group(2)}" target="_blank" rel="noopener">'
+                     f'{inline(m.group(1), ".")} {LINK_ICON}</a>')
+            co = m.group(3)
+        else:
+            title, co = inline(item["what"], "."), None
+        meta = [inline(item["detail"], ".")] if item.get("detail") else []
+        meta.append(html.escape(" ".join(x for x in (item.get("where"), str(item.get("when", ""))) if x)))
+        if co:
+            meta.append("with " + inline(co, "."))
+        out.append('      <div class="feature">\n'
+                   f'        <span class="ftag">Summer school · {html.escape(item["tag"])}</span>\n'
+                   f'        <h3>{title}</h3>\n'
+                   f'        <div class="meta">{" · ".join(meta)}</div>\n'
+                   f'        <p>{inline(item["blurb"], ".")}</p>\n'
+                   '      </div>\n')
+    sup = find_group(teaching, conf["supervision"])
+    rows = [f'        <div class="row"><div><span class="who">{html.escape(t["who"])}:</span> '
+            f'<span class="ti">{inline(t["title"], ".")}</span></div>'
+            f'<span class="deg">{html.escape(t["degree"])} · {html.escape(t["at"])} · {html.escape(str(t["year"]))}</span></div>'
+            for t in sup["theses"]]
+    out.append('      <div class="sup">\n        <h3>Supervision</h3>\n' + "\n".join(rows) + '\n      </div>\n')
+    return "".join(out)
 
 
 def fill(page_html, name, content):
@@ -394,6 +479,7 @@ def fill(page_html, name, content):
 def update_homepage(cv):
     by_id = {s["id"]: s for s in cv["sections"]}
     page_html = HOME.read_text(encoding="utf-8")
+    page_html = fill(page_html, "teaching", home_teaching(cv))
     page_html = fill(page_html, "talks", home_talks(by_id[cv["homepage"]["talks"]]["items"]))
     page_html = fill(page_html, "summary", home_summary(cv))
     HOME.write_text(page_html, encoding="utf-8")
@@ -429,11 +515,12 @@ def main():
     ap.add_argument("--no-pdf", action="store_true", help="write the page only")
     args = ap.parse_args()
     cv = yaml.safe_load(SRC.read_text(encoding="utf-8"))
+    count_theses(cv)
     out = page(cv)
     OUT_HTML.write_text(out, encoding="utf-8")
     print(f"wrote {OUT_HTML.relative_to(ROOT)}")
     update_homepage(cv)
-    print(f"updated {HOME.relative_to(ROOT)} (Talks list, short CV)")
+    print(f"updated {HOME.relative_to(ROOT)} (Teaching, Talks list, short CV)")
     if not args.no_pdf:
         print_pdf(out, cv)
         print(f"wrote {OUT_PDF.relative_to(ROOT)}")

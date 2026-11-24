@@ -108,7 +108,7 @@
   .prose a{color:var(--accent-deep);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;text-decoration-color:var(--rule-strong);}
   .prose a:hover{text-decoration-color:var(--accent);}
   .aside{position:sticky;top:88px;}
-  .aside h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .aside h3{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule);}
   .keys{display:flex;flex-wrap:wrap;gap:8px;}
   .key{font-family:var(--mono);font-size:0.75rem;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);
@@ -120,8 +120,17 @@
   .aside + .aside, .aside .blk{margin-top:30px;}
 
   /* ---- research / projects ---- */
-  .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--rule);
+  .projects{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);
     border:1px solid var(--rule);}
+  @media (min-width: 620px){
+    .projects{grid-template-columns:repeat(2,1fr);}
+    .proj:last-child:nth-child(odd){grid-column:1 / -1;}
+  }
+  @media (min-width: 1000px){ /* five cards: three, then two */
+    .projects{grid-template-columns:repeat(6,1fr);}
+    .proj{grid-column:span 2;}
+    .proj:nth-child(n+4), .proj:last-child:nth-child(odd){grid-column:span 3;}
+  }
   .proj{background:var(--paper);padding:28px 26px;display:flex;flex-direction:column;min-height:230px;transition:background .2s;}
   .proj:hover{background:var(--paper-2);}
   .proj .pn{font-family:var(--mono);font-size:0.75rem;color:var(--accent-deep);letter-spacing:0.05em;margin-bottom:16px;}
@@ -145,9 +154,9 @@
   .talk .vn{font-family:var(--mono);font-size:0.75rem;color:var(--ink-soft);letter-spacing:0.01em;text-align:right;}
   /* ---- short cv (section 07; generated from cv/cv.yml) ---- */
   .cvs{display:grid;grid-template-columns:1fr 1fr;gap:28px clamp(28px,5vw,64px);margin-bottom:46px;}
-  .cvs h4{font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .cvs h3{font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0;padding-bottom:10px;border-bottom:1px solid var(--rule);}
-  .cvs h4:not(:first-child){margin-top:34px;}
+  .cvs h3:not(:first-child){margin-top:34px;}
   .cvs-row{display:grid;grid-template-columns:112px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);}
   .cvs-row .when{font-family:var(--mono);font-size:0.8rem;color:var(--accent-deep);font-weight:500;padding-top:2px;}
   .cvs-row .what{font-family:var(--sans);font-weight:500;font-size:0.98rem;letter-spacing:-0.01em;line-height:1.4;}
@@ -160,10 +169,11 @@
   .teach-inst{padding:30px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:240px 1fr;gap:28px;}
   .teach-inst:first-of-type{border-top:none;padding-top:0;}
   .teach-inst .inst{font-family:var(--sans);font-weight:600;font-size:1.12rem;letter-spacing:-0.015em;}
+  .teach-inst .inst h3{font:inherit;letter-spacing:inherit;margin:0;}
   .teach-inst .inst span{display:block;font-family:var(--mono);font-weight:400;font-size:0.75rem;letter-spacing:0.05em;
     text-transform:uppercase;color:var(--ink-faint);margin-top:6px;}
   .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px 28px;}
-  .level h5{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 9px;}
+  .level h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 9px;}
   .level ul{list-style:none;margin:0;padding:0;}
   .level li{font-size:0.97rem;padding:3px 0;color:var(--ink-soft);}
   .feature{margin-top:40px;background:var(--paper-2);border:1px solid var(--rule);padding:30px 30px;display:grid;
@@ -179,7 +189,7 @@
   .feature .meta{font-family:var(--mono);font-size:0.76rem;color:var(--ink-soft);}
   .feature p{margin:0;font-size:1.0rem;line-height:1.6;color:var(--ink-soft);max-width:72ch;}
   .sup{margin-top:40px;}
-  .sup h4{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
+  .sup h3{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);
     margin:0 0 4px;}
   .sup .row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:14px 0;border-top:1px solid var(--rule);}
   .sup .row .who{font-family:var(--sans);font-weight:500;font-size:0.98rem;}
@@ -371,6 +381,37 @@
     .sup .row .deg{text-align:left;}
   }
 </style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Person",
+ "name": "Thomas Stephen",
+ "url": "https://www.tstephen.com/",
+ "image": "https://www.tstephen.com/images/portrait.jpg",
+ "jobTitle": "Fellow in Linguistics",
+ "worksFor": {
+  "@type": "CollegeOrUniversity",
+  "name": "Trinity College Dublin",
+  "url": "https://www.tcd.ie/"
+ },
+ "alumniOf": {
+  "@type": "CollegeOrUniversity",
+  "name": "University of Edinburgh"
+ },
+ "knowsAbout": [
+  "Formal semantics",
+  "Clausal embedding",
+  "Syntax–semantics interface",
+  "Philosophy of language",
+  "Presupposition",
+  "Compositionality"
+ ],
+ "sameAs": [
+  "https://orcid.org/0009-0009-7721-8407",
+  "https://philpeople.org/profiles/thomas-stephen"
+ ]
+}
+</script>
 </head>
 <body>
 
@@ -405,7 +446,7 @@
           <p class="lede">Formal semanticist working on the meaning of <em>clauses</em> and the syntax–semantics interface.</p>
           <div class="hero-meta">
             <a class="chip" href="#research"><span class="dot"></span>Research</a>
-            <a class="chip" href="files/Thomas-Stephen-CV.pdf" target="_blank" rel="noopener">Curriculum Vitae ↗</a>
+            <a class="chip" href="cv/">Curriculum Vitae</a>
             <a class="chip" href="mailto:tmurrays@tcd.ie">tmurrays@tcd.ie</a>
           </div>
         </div>
@@ -431,24 +472,25 @@
           <p>I completed my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD</a> in Linguistics at the University of Edinburgh in 2023, under the supervision of Robert Truswell, Bryan Pickel, and Wataru Uegaki. Before starting a fellowship at Trinity College Dublin, I was a Lecturer in Semantics at Queen Mary University of London.</p>
           <p>My work focuses on formal semantics, with particular attention to the syntax–semantics interface, the connections between linguistic theory and philosophy of language, and the relationship between grammar and cognition. I explore the semantics of finite clausal embedding and argument structure, aiming to give a unified explanation of their entailment patterns and alternations.</p>
           <p>I am developing <strong>DACE</strong> (the <em>Dictionary of Alternations in Clause Embedding</em>), an online resource mapping the alternation patterns of clause-embedding predicates, initially with a focus on English.</p>
-          <p>I am also currently interested in the mechanistic interpretation of LLMs and, together with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>, in the evolution of compositionality in natural languages.</p>
+          <p>I am also currently interested in the mechanistic interpretability of LLMs and, together with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>, in the evolution of compositionality in natural languages.</p>
           <p>I have also developed several tools and resources for teaching formal semantics, most significantly <a href="#compose">COMPOSE</a> (Compositional Meaning Practice and Online Semantics Engine), which you can view below.</p>
         </div>
         <div class="aside">
           <div class="blk">
-            <h4>Research keywords</h4>
+            <h3>Research keywords</h3>
             <div class="keys">
               <span class="key">Formal semantics</span>
               <span class="key">Clausal embedding</span>
               <span class="key">Syntax–semantics interface</span>
               <span class="key">Philosophy of language</span>
+              <span class="key">Presupposition</span>
               <span class="key">Argument structure</span>
               <span class="key">Compositionality</span>
               <span class="key">Grammar &amp; cognition</span>
             </div>
           </div>
           <div class="blk">
-            <h4>Doctoral supervision</h4>
+            <h3>PhD supervisors</h3>
             <div class="keys">
               <a class="key keylink" href="http://robtruswell.com/" target="_blank" rel="noopener">R. Truswell <svg class="lk" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
               <a class="key keylink" href="https://bryanpickel.weebly.com/" target="_blank" rel="noopener">B. Pickel <svg class="lk" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>
@@ -475,7 +517,7 @@
         <div class="proj">
           <div class="pn">→ 01</div>
           <h3>DACE</h3>
-          <p>The <em>Dictionary of Alternations in Clause Embedding</em> — an online resource mapping the alternation patterns of clause-embedding predicates in English. Inspired by Levin's <em>English Verb Classes and Alternations</em>.</p>
+          <p>The <em>Dictionary of Alternations in Clause Embedding</em>: an online resource mapping the alternation patterns of clause-embedding predicates in English. Inspired by Levin's <em>English Verb Classes and Alternations</em>.</p>
           <div class="stat">In development · Online resource</div>
         </div>
         <div class="proj">
@@ -486,14 +528,20 @@
         </div>
         <div class="proj">
           <div class="pn">→ 03</div>
-          <h3>Evolution of compositionality</h3>
-          <p>With <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a> — explaining the observed inventory of composition operations in natural language and the universals that constrain it. Taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
-          <div class="stat">Collaboration · F. Carcassi</div>
+          <h3>Presupposition and error theory</h3>
+          <p>A semantics for presuppositional moral error theory, built from standard tools in formal semantics. Deontic claims presuppose that the standard they are evaluated against is in force. Tested against grammatical evidence, with law as the control.</p>
+          <div class="stat">Ongoing · Semantics and metaethics</div>
         </div>
         <div class="proj">
           <div class="pn">→ 04</div>
+          <h3>Evolution of compositionality</h3>
+          <p>The observed inventory of composition operations in natural language, and the universals that constrain it, with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>. Taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
+          <div class="stat">Collaboration · F. Carcassi</div>
+        </div>
+        <div class="proj">
+          <div class="pn">→ 05</div>
           <h3>COMPOSE</h3>
-          <p>Compositional Meaning Practice and Online Semantics Engine — an interactive tool and problem-set builder for teaching formal semantics.</p>
+          <p>Compositional Meaning Practice and Online Semantics Engine: an interactive tool and problem-set builder for teaching formal semantics.</p>
           <div class="stat"><a href="#compose" class="stat-anchor">Demo ↓</a> · <a href="https://compose.tstephen.com" target="_blank" rel="noopener" class="stat-anchor">Full version ↗</a><br><span style="margin-top:5px;display:inline-block;">Teaching Tool · Online Resource</span></div>
         </div>
 
@@ -509,47 +557,46 @@
         <h2 class="sec-title">Teaching<span class="sub">Courses, summer school &amp; supervision</span></h2>
       </div>
 
+<!-- cv:teaching start: generated by cv/build.py from cv/cv.yml; edit cv.yml and rebuild -->
       <div class="teach-inst">
-        <div class="inst">Trinity College Dublin<span>Current</span></div>
+        <div class="inst"><h3>Trinity College Dublin</h3><span>Current</span></div>
         <div class="levels">
-          <div class="level"><h5>Undergraduate</h5><ul><li>Semantics I</li><li>Semantics II</li><li>Semantics III</li><li>Pragmatics I</li><li>Pragmatics II</li></ul></div>
-          <div class="level"><h5>Postgraduate</h5><ul><li>Linguistic Pragmatics</li><li>Describing Meaning</li></ul></div>
-          <div class="level"><h5>11-Week In-depth</h5><ul><li>Scalar Implicature</li><li>Presuppositions</li><li>Model Theory &amp; Indirect Semantics</li><li>Modality</li></ul></div>
+          <div class="level"><h4>Undergraduate</h4><ul><li>Semantics I</li><li>Semantics II</li><li>Semantics III</li><li>Pragmatics I</li><li>Pragmatics II</li></ul></div>
+          <div class="level"><h4>Postgraduate</h4><ul><li>Describing Meaning</li><li>Linguistic Pragmatics</li></ul></div>
+          <div class="level"><h4>11-week in-depth</h4><ul><li>Scalar Implicatures</li><li>Model Theory for Logic and Semantics</li><li>Presuppositions</li><li>Modality</li></ul></div>
         </div>
       </div>
-
       <div class="teach-inst">
-        <div class="inst">Queen Mary, London<span>Lecturer in Semantics</span></div>
+        <div class="inst"><h3>Queen Mary University of London</h3><span>Lecturer in Semantics</span></div>
         <div class="levels">
-          <div class="level"><h5>Undergraduate</h5><ul><li>Introduction to Semantics</li><li>Syntax II</li><li>Meaning in the Real World</li></ul></div>
-          <div class="level"><h5>Postgraduate</h5><ul><li>Formal Semantics</li><li>Research Practicum</li></ul></div>
+          <div class="level"><h4>Undergraduate</h4><ul><li>Meaning in the Real World</li><li>Syntax II: Explaining Grammatical Structures</li><li>Introduction to Semantics</li></ul></div>
+          <div class="level"><h4>Postgraduate</h4><ul><li>Formal Semantics</li><li>Research Practica</li></ul></div>
         </div>
       </div>
-
       <div class="teach-inst">
-        <div class="inst">University of Edinburgh<span>Lecturer &amp; Tutor</span></div>
+        <div class="inst"><h3>University of Edinburgh</h3><span>Lecturer &amp; Tutor</span></div>
         <div class="levels">
-          <div class="level"><h5>UG — as Lecturer</h5><ul><li>Logic 1</li><li>Puzzles and Paradoxes</li></ul></div>
-          <div class="level"><h5>UG — as Tutor</h5><ul><li>Logic 1</li><li>Mind, Matter, and Language</li><li>LEL 1A</li><li>LEL 1B</li></ul></div>
-          <div class="level"><h5>PG — as Tutor</h5><ul><li>Introduction to Syntax</li><li>Semantic Theory</li></ul></div>
+          <div class="level"><h4>UG · as lecturer</h4><ul><li>Logic 1</li><li>Puzzles and Paradoxes</li></ul></div>
+          <div class="level"><h4>UG · as tutor</h4><ul><li>Logic 1</li><li>Mind, Matter, and Language</li><li>LEL1A</li><li>LEL1B</li></ul></div>
+          <div class="level"><h4>PG · as tutor</h4><ul><li>Semantic Theory</li><li>Introduction to Syntax</li></ul></div>
         </div>
       </div>
-
       <div class="feature">
-        <span class="ftag">Summer School · ESSLLI 2026</span>
+        <span class="ftag">Summer school · ESSLLI 2026</span>
         <h3><a class="feat-link" href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">The Function of Composition <svg class="lk" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a></h3>
-        <div class="meta">37th European Summer School in Logic, Language &amp; Information · Prague 2026 · with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a></div>
-        <p>An introduction to the formal tools and theoretical background for formulating and addressing questions about universals of the composition function in natural language — surveying the empirical landscape, describing composition as a single operation on meanings, introducing richer type theories, and formulating universals that constrain the observed variation (function application, type shifting, predicate modification, event identification, restriction, and intensional variants).</p>
+        <div class="meta">37th European Summer School in Logic, Language, and Information, Advanced Courses · Prague 2026 · with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a></div>
+        <p>An introduction to the formal tools and theoretical background for formulating and addressing questions about universals of the composition function in natural language: the empirical landscape, composition as a single operation on meanings, richer type theories, and universals that constrain the observed variation (function application, type shifting, predicate modification, event identification, restriction, and intensional variants).</p>
       </div>
-
       <div class="sup">
-        <h4>Supervision</h4>
-        <div class="row"><div><span class="who">Joshua Bovin</span> — <span class="ti">Classes of Clause Embedding Predicates</span></div><span class="deg">MA · QMUL · 2024</span></div>
-        <div class="row"><div><span class="who">Stefan Pavlovic</span> — <span class="ti">From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis</span></div><span class="deg">MPhil · TCD · 2025</span></div>
-        <div class="row"><div><span class="who">Mengzhu Liang</span> — <span class="ti">Pragmatic Functions and Stance Orientations of the Sentence-Final Particles <em>ha</em> and <em>sai</em> in Southwestern Mandarin</span></div><span class="deg">MPhil · TCD · 2025</span></div>
-        <div class="row"><div><span class="who">Zeqi Shan</span> — <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
-        <div class="row"><div><span class="who">Thalia Tran</span> — <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <h3>Supervision</h3>
+        <div class="row"><div><span class="who">Joshua Bovin:</span> <span class="ti">Classes of Clause Embedding Predicates</span></div><span class="deg">MA · QMUL · 2024</span></div>
+        <div class="row"><div><span class="who">Stefan Pavlovic:</span> <span class="ti">From Crisis to Convergence: Minimalist Syntax and the Search for a Neurolinguistic Linking Hypothesis</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row"><div><span class="who">Mengzhu Liang:</span> <span class="ti">Pragmatic Functions and Stance Orientations of the Sentence-Final Particles <em>ha</em> and <em>sai</em> in Southwestern Mandarin</span></div><span class="deg">MPhil · TCD · 2025</span></div>
+        <div class="row"><div><span class="who">Zeqi Shan:</span> <span class="ti">From Syntax to Semantics: ChatGPT and Deepseek's Explanation Styles on CEFR-Leveled Chinese Learner Sentences</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row"><div><span class="who">Thalia Tran:</span> <span class="ti">A Corpus Analysis of the Manifestos of Violent "Incels" and Leaders of Destructive Cults</span></div><span class="deg">MPhil · TCD · 2026</span></div>
+        <div class="row"><div><span class="who">Amanda Centofanti:</span> <span class="ti">A Cause for Hope</span></div><span class="deg">MPhil · TCD · 2026</span></div>
       </div>
+<!-- cv:teaching end -->
       <figure class="band">
         <img src="images/summit.jpg" alt="On a summit above the clouds" loading="lazy" decoding="async" style="object-position:center 20%;">
       </figure>
@@ -569,7 +616,7 @@
           <div class="cmp-versions">
             <a class="cmpv" style="--c:oklch(0.75 0.12 75);--cs:oklch(0.955 0.035 80);--cd:oklch(0.45 0.09 65);" href="https://compose.tstephen.com" target="_blank" rel="noopener">
               <div class="cmpv-head"><span class="cmpv-name">Try it</span><span class="cmpv-path">compose.tstephen.com</span></div>
-              <p class="cmpv-desc">Open the app with a short demo set — nothing to install or load.</p>
+              <p class="cmpv-desc">Open the app with a short demo set. Nothing to install or load.</p>
             </a>
             <a class="cmpv" style="--c:oklch(0.65 0.09 185);--cs:oklch(0.955 0.028 185);--cd:oklch(0.38 0.06 195);" href="https://compose.tstephen.com/cc/" target="_blank" rel="noopener">
               <div class="cmpv-head"><span class="cmpv-name">Coppock &amp; Champollion</span><span class="cmpv-path">/cc</span></div>
@@ -586,17 +633,17 @@
           </div>
         </div>
         <div class="cmp-col-demo">
-          <iframe src="compose/demo.html" title="COMPOSE — interactive demo" loading="lazy" class="cmp-iframe"></iframe>
+          <iframe src="compose/demo.html" title="COMPOSE: interactive demo" loading="lazy" class="cmp-iframe"></iframe>
         </div>
       </div>
       <div class="cmp-author">
         <a class="cmpv" style="--c:var(--accent);--cs:var(--accent-soft);--cd:var(--accent-deep);" href="https://compose.tstephen.com/editor/" target="_blank" rel="noopener">
           <div class="cmpv-head"><span class="cmpv-name">Editor sandbox</span><span class="cmpv-path">/editor</span></div>
-          <p class="cmpv-desc">Author worksheets in the full live-validated editor and export them as JSON — no account needed.</p>
+          <p class="cmpv-desc">Author worksheets in the full live-validated editor and export them as JSON. No account needed.</p>
         </a>
         <a class="cmpv cmpv-cta" style="--c:var(--accent);--cs:var(--accent-soft);--cd:var(--accent-deep);" href="https://compose.tstephen.com/dash/" target="_blank" rel="noopener">
           <div class="cmpv-head"><span class="cmpv-name">For instructors</span><span class="cmpv-path">/dash</span></div>
-          <p class="cmpv-desc">Host your own problem sets for students — QR handouts, live edits, practice and assessment modes. Registration by invite code.</p>
+          <p class="cmpv-desc">Host your own problem sets for students: QR handouts, live edits, practice and assessment modes. Registration by invite code.</p>
         </a>
       </div>
     </div>
@@ -607,7 +654,7 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="sec-num">05</span>
-        <h2 class="sec-title">Talks &amp; Presentations<span class="sub">Selected, reverse chronological</span></h2>
+        <h2 class="sec-title">Talks &amp; Presentations<span class="sub">Reverse chronological</span></h2>
       </div>
       <div class="talks">
 <!-- cv:talks start: generated by cv/build.py from cv/cv.yml; edit cv.yml and rebuild -->
@@ -643,21 +690,21 @@
 <!-- cv:summary start: generated by cv/build.py from cv/cv.yml; edit cv.yml and rebuild -->
       <div class="cvs">
         <div>
-          <h4>Education</h4>
+          <h3>Education</h3>
           <div class="cvs-row"><div class="when">2017–2023</div><div><div class="what">PhD Linguistics and English Language</div><div class="where">University of Edinburgh</div><ul class="notes"><li>Thesis: <a href="./files/TSPhD.pdf"><em>The Semantics of Nominal and Clausal Embedding</em></a></li><li>Supervisors: Dr. <a href="http://robtruswell.com/" target="_blank" rel="noopener">Robert Truswell</a>, Dr. <a href="https://bryanpickel.weebly.com/" target="_blank" rel="noopener">Bryan Pickel</a>, Dr. <a href="https://www.wataruuegaki.com/" target="_blank" rel="noopener">Wataru Uegaki</a></li></ul></div></div>
           <div class="cvs-row"><div class="when">2015–2016</div><div><div class="what">MSc Philosophy</div><div class="where">University of Edinburgh</div><ul class="notes"><li>Thesis: <em>The Modifier Analysis of Propositional Attitudes</em></li><li>Supervisor: Dr. Bryan Pickel</li></ul></div></div>
           <div class="cvs-row"><div class="when">2012–2015</div><div><div class="what">BA Philosophy (First Class)</div><div class="where">Durham University</div><ul class="notes"><li>Dissertation: <em>Non-Belief Attitudes in Scientific Contexts</em></li><li>Supervisor: Prof. Peter Vickers</li></ul></div></div>
-          <h4>Research Assistant</h4>
+          <h3>Research Assistant</h3>
           <ul class="cvs-list"><li>University of Göttingen</li><li>Norwegian University of Science &amp; Technology</li></ul>
         </div>
         <div>
-          <h4>Employment</h4>
+          <h3>Employment</h3>
           <div class="cvs-row"><div class="when">2024–present</div><div><div class="what">Fellow in Linguistics</div><div class="where">Trinity College Dublin</div></div></div>
           <div class="cvs-row"><div class="when">2023–2024</div><div><div class="what">Lecturer in Linguistics (Semantics)</div><div class="where">Queen Mary University of London</div></div></div>
           <div class="cvs-row"><div class="when">2017–2023</div><div><div class="what">Tutor in Linguistics and Philosophy</div><div class="where">University of Edinburgh</div></div></div>
-          <h4>Summer School Teaching</h4>
+          <h3>Summer School Teaching</h3>
           <div class="cvs-row"><div class="when">2026</div><div><div class="what"><a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">The Function of Composition</a>, with <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a></div><div class="where">37th European Summer School in Logic, Language, and Information, Advanced Courses</div><div class="where">Prague</div></div></div>
-          <h4>Reviewer</h4>
+          <h3>Reviewer</h3>
           <ul class="cvs-list"><li>Oxford University Press</li><li>Amsterdam Colloquium</li><li>Western Canadian Philosophy Association</li></ul>
         </div>
       </div>
