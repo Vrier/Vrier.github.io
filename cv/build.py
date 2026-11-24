@@ -62,18 +62,11 @@ def plain(text):
 
 # ---------------------------------------------------------------- blocks
 
-def with_topics(item):
-    """The detail line, with any topics list added in italics."""
-    detail = item.get("detail") or ""
-    if item.get("topics"):
-        detail = (detail + ", " if detail else "") + "*" + ", ".join(item["topics"]) + "*"
-    return detail
-
-
 def row(item):
     parts = []
-    fields = {"what": item.get("what"), "detail": with_topics(item), "where": item.get("where")}
-    for key, cls in (("what", "what"), ("detail", "detail"), ("where", "where")):
+    fields = {"what": item.get("what"), "detail": item.get("detail"),
+              "topics": " · ".join(item.get("topics") or []), "where": item.get("where")}
+    for key, cls in (("what", "what"), ("detail", "detail"), ("topics", "detail topics"), ("where", "where")):
         if fields[key]:
             parts.append(f'<div class="{cls}">{inline(fields[key])}</div>')
     if item.get("notes"):
@@ -241,6 +234,7 @@ font-size:0.76rem;letter-spacing:0.04em;color:var(--ink-faint);text-transform:up
   .inline-list{font-size:9.6pt}
   .inline-list li+li::before{margin:0 7pt}
   .row .what+.detail::before{content:"  ·  ";white-space:pre;color:var(--ink-faint)}
+  .row .detail.topics::before{content:": "}
   .row .where{font-size:7.8pt;margin-top:1pt}
   .row ul.notes{margin-top:1pt}
   .row ul.notes li{margin:0}

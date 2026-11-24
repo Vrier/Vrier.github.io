@@ -34,7 +34,7 @@ homepage:
         columns:            # `from`: groups to draw on; `level`: kept when the detail says it
           - {title: "Undergraduate", from: ["Trinity College Dublin"], level: "Undergraduate"}
           - {title: "Postgraduate", from: ["Trinity College Dublin"], level: "Masters"}
-          - {title: "11-week in-depth", topics: "11 Week Special Topics Courses"}
+          - {title: "Advanced topics", topics: "Advanced Topics in Semantics and Pragmatics"}
       - name: "Queen Mary University of London"
         role: "Lecturer in Semantics"
         columns:
@@ -96,7 +96,7 @@ sections:
         groups:
           - title: "Trinity College Dublin"
             items:
-              - when: "2025-2027"
+              - when: "2024-2027"
                 what: "Semantics I"
                 kw: [formal-semantics]
                 detail: "First Year Undergraduate, Lecturer and Course Organiser"
@@ -104,11 +104,11 @@ sections:
                 what: "Semantics II"
                 kw: [formal-semantics]
                 detail: "Third Year Undergraduate, Lecturer and Course Organiser"
-              - when: "2025-2027"
+              - when: "2024-2027"
                 what: "Semantics III"
                 kw: [formal-semantics]
                 detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
-              - when: "2026-2027"
+              - when: "2024-2027"
                 what: "Pragmatics I"
                 kw: [bayesian-pragmatics]
                 detail: "Second Year Undergraduate, Lecturer and Course Organiser"
@@ -116,19 +116,19 @@ sections:
                 what: "Pragmatics II"
                 kw: [bayesian-pragmatics]
                 detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
-              - when: "2025-2026"
+              - when: "2024-2027"
                 what: "Describing Meaning"
                 kw: [formal-semantics]
                 detail: "Masters Level, Lecturer and Course Organiser"
-              - when: "2026"
+              - when: "2024-2027"
                 what: "Linguistic Pragmatics"
                 kw: [bayesian-pragmatics]
                 detail: "Masters Level, Lecturer and Course Organiser"
-              - when: "2024-2026"
-                what: "11 Week Special Topics Courses"
+              - when: "2024-2027"
+                what: "Advanced Topics in Semantics and Pragmatics"
                 detail: "Final Year Undergraduate, Lecturer and Course Organiser"
-                topics: ["Scalar Implicatures", "Model Theory for Logic and Semantics", "Presuppositions", "Modality"]
-                topic_kw: {"Scalar Implicatures": [bayesian-pragmatics], "Model Theory for Logic and Semantics": [formal-semantics], "Presuppositions": [presupposition, formal-semantics], "Modality": [formal-semantics]}
+                topics: ["Model Theory", "Modality", "Presupposition", "Dynamic Semantics", "Scalar Implicature", "Rational Speech Act Models"]
+                topic_kw: {"Model Theory": [formal-semantics], "Modality": [formal-semantics], "Presupposition": [presupposition, formal-semantics], "Dynamic Semantics": [formal-semantics], "Scalar Implicature": [bayesian-pragmatics], "Rational Speech Act Models": [bayesian-pragmatics]}
           - title: "Queen Mary University of London"
             items:
               - when: "2024"
