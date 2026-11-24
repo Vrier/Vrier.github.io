@@ -361,6 +361,21 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
     var allowed = EXERCISES[idx].rules;
     return F.candidateRules(node.children.map(getMeaning)).filter(function (r) { return allowed.indexOf(r.key) >= 0; });
   }
+  /* non-branching nodes take their child's meaning as soon as it has one,
+     as with the app's "Auto-resolve non-branching" option */
+  function autoNN() {
+    var again = true, guard = 0;
+    while (again && guard++ < 50) {
+      again = false;
+      layout.nodes.forEach(function (e) {
+        var n = e.node;
+        if (isLeaf(n) || meanings[n.id] || n.children.length !== 1) return;
+        var cm = getMeaning(n.children[0]);
+        if (cm) { meanings[n.id] = { term: cm.term, type: cm.type, rule: 'NN', auto: true }; again = true; }
+      });
+    }
+    if (allDone()) solvedFlag[idx] = true;
+  }
   function spanOf(n) {
     if (isLeaf(n)) return n.word;
     return n.children.map(spanOf).join(' ');
@@ -411,6 +426,7 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
     meanings = solved[i] || (solved[i] = {});
     sel = null; chosen = null; val = ''; fb = null; rejected = {}; hint = null;
     layout = layoutTree(root);
+    autoNN();
     buildCanvas();
     renderHead();
     renderDock();
@@ -551,7 +567,7 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
 
   function resolveNode(node, resolved) {
     meanings[node.id] = resolved;
-    if (allDone()) solvedFlag[idx] = true;
+    autoNN();
     refreshNodes(); renderHead();
   }
 
@@ -584,6 +600,7 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
       if (parent) clearUp(parent);
     })(node);
     delete solvedFlag[idx];
+    autoNN();
     sel = null; fb = null; chosen = null;
     renderAll(); renderHead();
   }
@@ -591,6 +608,7 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
   function resetAll() {
     solved[idx] = meanings = {};
     delete solvedFlag[idx];
+    autoNN();
     sel = null; chosen = null; val = ''; fb = null; rejected = {}; hint = null;
     renderAll(); renderHead();
   }
@@ -658,14 +676,17 @@ button.node-box:hover { border-color: var(--accent); box-shadow: var(--shadow); 
     }
 
     if (sel.mode === 'view') {
-      $dock.appendChild(el('div', 'dock-label', label(sel.node) + ' · resolved by ' + sel.m.rule));
+      $dock.appendChild(el('div', 'dock-label', label(sel.node) + ' · resolved ' + (sel.m.auto ? 'automatically ' : '') + 'by ' + sel.m.rule));
       $dock.appendChild(el('div', 'compose-line', nota(sel.m.term) + ' <span class="node-type-badge">' + typeHTML(sel.m.type) + '</span>'));
       var vrow = el('div', 'dock-row');
-      var rst = el('button', 'btn-ghost', '↺ Reset this node'); rst.type = 'button';
-      rst.addEventListener('click', function () { resetNode(sel.node); });
+      if (!sel.m.auto) {
+        var rst = el('button', 'btn-ghost', '↺ Reset this node'); rst.type = 'button';
+        rst.addEventListener('click', function () { resetNode(sel.node); });
+        vrow.appendChild(rst);
+      }
       var cls = el('button', 'btn-ghost', 'Close'); cls.type = 'button';
       cls.addEventListener('click', function () { sel = null; fb = null; renderAll(); });
-      vrow.appendChild(rst); vrow.appendChild(cls);
+      vrow.appendChild(cls);
       $dock.appendChild(vrow);
       return;
     }
