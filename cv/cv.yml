@@ -100,7 +100,7 @@ sections:
                 what: "Semantics I"
                 kw: [formal-semantics]
                 detail: "First Year Undergraduate, Lecturer and Course Organiser"
-              - when: "2024-2025, 2026-2027"
+              - when: "2024-2027"
                 what: "Semantics II"
                 kw: [formal-semantics]
                 detail: "Third Year Undergraduate, Lecturer and Course Organiser"
@@ -112,7 +112,7 @@ sections:
                 what: "Pragmatics I"
                 kw: [bayesian-pragmatics]
                 detail: "Second Year Undergraduate, Lecturer and Course Organiser"
-              - when: "2024-2025, 2026-2027"
+              - when: "2024-2027"
                 what: "Pragmatics II"
                 kw: [bayesian-pragmatics]
                 detail: "Fourth Year Undergraduate, Lecturer and Course Organiser"
