@@ -18,9 +18,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root{
     --paper: oklch(0.986 0.004 95);
@@ -41,6 +41,14 @@
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  .skip{position:absolute;left:12px;top:-64px;z-index:300;background:var(--ink);color:var(--paper);padding:10px 14px;
+    border-radius:6px;font-family:var(--mono);font-size:0.8rem;letter-spacing:0.04em;text-decoration:none;}
+  .skip:focus{top:12px;}
+  a:focus-visible, button:focus-visible, iframe:focus-visible{outline:2px solid var(--accent-deep);outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *, *::before, *::after{transition:none !important;animation:none !important;}
+  }
   body{
     margin:0;background:var(--paper);color:var(--ink);
     font-family:var(--serif);font-size:clamp(1.02rem,0.5vw + 0.95rem,1.16rem);
@@ -414,6 +422,7 @@
 </script>
 </head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 
 <header class="site">
   <div class="wrap bar">
@@ -430,7 +439,7 @@
       <a href="#cv">CV</a>
       <a href="#contact">Contact</a>
     </nav>
-    <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation">Menu</button>
+    <button type="button" class="navtoggle" id="navtoggle" aria-label="Toggle navigation" aria-controls="nav" aria-expanded="false">Menu</button>
   </div>
 </header>
 
@@ -774,8 +783,8 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
   // mobile nav
   var nav = document.getElementById('nav'), tog = document.getElementById('navtoggle');
-  tog.addEventListener('click', function(){ nav.classList.toggle('open'); });
-  nav.addEventListener('click', function(e){ if(e.target.tagName==='A') nav.classList.remove('open'); });
+  tog.addEventListener('click', function(){ tog.setAttribute('aria-expanded', nav.classList.toggle('open') ? 'true' : 'false'); });
+  nav.addEventListener('click', function(e){ if(e.target.tagName==='A'){ nav.classList.remove('open'); tog.setAttribute('aria-expanded','false'); } });
   // active section
   var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
   var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
