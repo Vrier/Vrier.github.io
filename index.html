@@ -141,14 +141,9 @@
   /* ---- research / projects ---- */
   .projects{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);
     border:1px solid var(--rule);}
-  @media (min-width: 620px){
+  @media (min-width: 620px){ /* four cards: two by two */
     .projects{grid-template-columns:repeat(2,1fr);}
     .proj:last-child:nth-child(odd){grid-column:1 / -1;}
-  }
-  @media (min-width: 1000px){ /* five cards: three, then two */
-    .projects{grid-template-columns:repeat(6,1fr);}
-    .proj{grid-column:span 2;}
-    .proj:nth-child(n+4), .proj:last-child:nth-child(odd){grid-column:span 3;}
   }
   .proj{background:var(--paper);padding:28px 26px;display:flex;flex-direction:column;min-height:230px;transition:background .2s;}
   .proj:hover{background:var(--paper-2);}
@@ -545,31 +540,25 @@
           <div class="pn">→ 01</div>
           <h3>Clausal embedding</h3>
           <p>A unified account of the entailment patterns and alternations of finite clausal embedding and argument structure at the syntax–semantics interface, the subject of my <a href="files/TSPhD.pdf" target="_blank" rel="noopener">PhD thesis ↗</a>. <strong>DACE</strong>, the <em>Dictionary of Alternations in Clause Embedding</em>, maps these alternations for English clause-embedding predicates, after Levin's <em>English Verb Classes and Alternations</em>.</p>
-          <div class="stat">Ongoing · Core programme</div>
+          <div class="stat">Clause-embedding predicates · Alternations · Argument structure</div>
         </div>
-        <div class="proj" data-kw="formal-semantics presupposition philosophy-of-language metaethics">
+        <div class="proj" data-kw="formal-semantics compositionality type-theory">
           <div class="pn">→ 02</div>
-          <h3>Presupposition and error theory</h3>
-          <p>A semantics for presuppositional moral error theory, built from standard tools in formal semantics. Deontic claims presuppose that the standard they are evaluated against is in force. Tested against grammatical evidence, with law as the control.</p>
-          <div class="stat">Ongoing · Semantics and metaethics</div>
+          <h3>Universals of composition</h3>
+          <p>Dependent type theory as a description of the mechanism of semantic composition. A typed composition function, and the universals that come from its interaction with the lexicon. With <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>; taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
+          <div class="stat">Composition function · Dependent types · Semantic universals</div>
         </div>
         <div class="proj" data-kw="formal-semantics compositionality type-theory">
           <div class="pn">→ 03</div>
-          <h3>Universals of composition</h3>
-          <p>Dependent type theory as a description of the mechanism of semantic composition. A typed composition function, and the universals that come from its interaction with the lexicon. With <a href="https://faustocarcassi.com/" target="_blank" rel="noopener">Fausto Carcassi</a>; taught as an <a href="https://2026.esslli.eu/courses-workshops-accepted/course-information.html#C60" target="_blank" rel="noopener">ESSLLI 2026 course</a>.</p>
-          <div class="stat">Collaboration · F. Carcassi</div>
-        </div>
-        <div class="proj" data-kw="bayesian-pragmatics">
-          <div class="pn">→ 04</div>
-          <h3>Rational Speech Act models</h3>
-          <p>Communication modelled as Bayesian recursive mind reading, in the Rational Speech Act tradition. Speakers reason about listeners, and listeners about speakers.</p>
-          <div class="stat">New · Pragmatics</div>
-        </div>
-        <div class="proj" data-kw="formal-semantics compositionality type-theory">
-          <div class="pn">→ 05</div>
           <h3>COMPOSE</h3>
           <p>Compositional Meaning Practice and Online Semantics Engine: an interactive tool and problem-set builder for teaching formal semantics.</p>
-          <div class="stat"><a href="#compose" class="stat-anchor">Demo ↓</a> · <a href="https://compose.tstephen.com" target="_blank" rel="noopener" class="stat-anchor">Full version ↗</a><br><span style="margin-top:5px;display:inline-block;">Teaching Tool · Online Resource</span></div>
+          <div class="stat"><a href="#compose" class="stat-anchor">Demo ↓</a> · <a href="https://compose.tstephen.com" target="_blank" rel="noopener" class="stat-anchor">Full version ↗</a><br><span style="margin-top:5px;display:inline-block;"><span style="text-transform:none">λ</span>-calculus · Type-driven interpretation · Teaching</span></div>
+        </div>
+        <div class="proj" data-kw="formal-semantics presupposition philosophy-of-language metaethics">
+          <div class="pn">→ 04</div>
+          <h3>Presupposition and error theory</h3>
+          <p>A semantics for presuppositional moral error theory, built from standard tools in formal semantics. Deontic claims presuppose that the standard they are evaluated against is in force. Tested against grammatical evidence, with law as the control.</p>
+          <div class="stat">Presupposition · Deontic modality · Metaethics</div>
         </div>
 
       </div>
