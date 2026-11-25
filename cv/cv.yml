@@ -279,6 +279,12 @@ sections:
     layout: talks
     items:
       - when: "2026"
+        event: "37th European Summer School in Logic, Language, and Information, Advanced Course"
+        title: "The Function of Composition. Composition in dependent type theory"
+        kw: [formal-semantics, compositionality, type-theory]
+        with: "Fausto Carcassi"
+        where: "ESSLLI 2026, Prague"
+      - when: "2026"
         event: "Meaning in Language Colloquium"
         title: "Universals of composition and quantificational conservativity"
         kw: [formal-semantics, compositionality, type-theory]
