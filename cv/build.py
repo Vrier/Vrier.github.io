@@ -92,11 +92,16 @@ def talks(items):
     return '<div class="talks">' + "".join(out) + "</div>"
 
 
+def on_cv(items):
+    """Items for the CV page and PDF: an item marked `cv: false` shows on the homepage only."""
+    return [i for i in items if i.get("cv", True) is not False]
+
+
 def block(node, level=0):
     out = []
     if node.get("items"):
         if node.get("layout") == "talks":
-            out.append(talks(node["items"]))
+            out.append(talks(on_cv(node["items"])))
         elif node.get("layout") == "inline":
             lis = "".join(f'<li>{inline(i["what"])}' + (f' <span class="detail">{inline(i["detail"])}</span>' if i.get("detail") else "") + "</li>"
                           for i in node["items"])
